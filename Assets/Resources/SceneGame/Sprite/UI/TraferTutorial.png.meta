@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: b61f567583bafcb4cb05c03453c14992
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8376027680477374626
+    second: TraferTutorial_0
+  - first:
+      213: 4004718024484194285
+    second: TraferTutorial_1
+  - first:
+      213: -2024165800294648772
+    second: TraferTutorial_2
+  - first:
+      213: -7625117588310178569
+    second: TraferTutorial_3
+  - first:
+      213: -7271797419058207530
+    second: TraferTutorial_4
+  - first:
+      213: -5017227541408511071
+    second: TraferTutorial_5
+  - first:
+      213: 7450275640799704089
+    second: TraferTutorial_6
+  - first:
+      213: -2897582612099067461
+    second: TraferTutorial_7
+  - first:
+      213: -2351391551808261074
+    second: TraferTutorial_8
+  - first:
+      213: 1171980535830323962
+    second: TraferTutorial_9
+  - first:
+      213: 2577403662789393147
+    second: TraferTutorial_10
+  - first:
+      213: -4235957122638279540
+    second: TraferTutorial_11
+  - first:
+      213: -946284386884275701
+    second: TraferTutorial_12
+  - first:
+      213: 4396798257429744383
+    second: TraferTutorial_13
+  - first:
+      213: -1189315613295400025
+    second: TraferTutorial_14
+  - first:
+      213: -5228663803098362389
+    second: TraferTutorial_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TraferTutorial_0
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 277
+        width: 22
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a861bb1cc0ad3470800000000000000
+      internalID: 8376027680477374626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 276
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de70cfa43dd939730800000000000000
+      internalID: 4004718024484194285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_2
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 276
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3471fadde7b8e3e0800000000000000
+      internalID: -2024165800294648772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_3
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 277
+        width: 23
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f4403af3f32e2690800000000000000
+      internalID: -7625117588310178569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_4
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 276
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d4ee6666c2651b90800000000000000
+      internalID: -7271797419058207530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_5
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 277
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ab0a0d222a3f5ab0800000000000000
+      internalID: -5017227541408511071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_6
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 274
+        width: 63
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 914bc98d832b46760800000000000000
+      internalID: 7450275640799704089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_7
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 274
+        width: 47
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb19c7267f7b9c7d0800000000000000
+      internalID: -2897582612099067461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_8
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 274
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e243d9287dd2e5fd0800000000000000
+      internalID: -2351391551808261074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_9
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 274
+        width: 22
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af2a6d18616b34010800000000000000
+      internalID: 1171980535830323962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_10
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 27
+        width: 199
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfa3a53c9f6c4c320800000000000000
+      internalID: 2577403662789393147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_11
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 93
+        width: 83
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8c0c55a07bd635c0800000000000000
+      internalID: -4235957122638279540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_12
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 67
+        width: 221
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b02b34f1d5f1ed2f0800000000000000
+      internalID: -946284386884275701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_13
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 134
+        width: 69
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa082b48b0940d30800000000000000
+      internalID: 4396798257429744383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_14
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 27
+        width: 199
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aba3bf30c3be7fe0800000000000000
+      internalID: -1189315613295400025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TraferTutorial_15
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 111
+        width: 69
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bed016649fd0077b0800000000000000
+      internalID: -5228663803098362389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      TraferTutorial_0: 8376027680477374626
+      TraferTutorial_1: 4004718024484194285
+      TraferTutorial_10: 2577403662789393147
+      TraferTutorial_11: -4235957122638279540
+      TraferTutorial_12: -946284386884275701
+      TraferTutorial_13: 4396798257429744383
+      TraferTutorial_14: -1189315613295400025
+      TraferTutorial_15: -5228663803098362389
+      TraferTutorial_2: -2024165800294648772
+      TraferTutorial_3: -7625117588310178569
+      TraferTutorial_4: -7271797419058207530
+      TraferTutorial_5: -5017227541408511071
+      TraferTutorial_6: 7450275640799704089
+      TraferTutorial_7: -2897582612099067461
+      TraferTutorial_8: -2351391551808261074
+      TraferTutorial_9: 1171980535830323962
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2513b35d7b3839a4f9212da12feb243c, type: 3}
+  m_Name: Menu (13)
+  m_EditorClassIdentifier: 
+  FoodRequest:
+  - item: {fileID: 11400000, guid: 36061af20228b7442b23fe70691b9bd0, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 09c90aeed82c13943a874a987261aad4, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 15ba71b2a7ca7e543bb26a7ad3f814ea, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: cbc88109e6f1f9946a30224b849d0f6d, type: 2}
+    count: 1
+  FoodSpanw:
+  - item: {fileID: 11400000, guid: b760c7de32a7527418549c9d0e335c0d, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 09c90aeed82c13943a874a987261aad4, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 89fe958389d9cda4aa3b5785536e0f4c, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: e25c70851555c7d4aa211041f15aa5cf, type: 2}
+    count: 1
+  OtherFoodSpawn:
+  - item: {fileID: 11400000, guid: 5f33578578edb7a44b83cb2da4d89faf, type: 2}
+    count: 1
+  Score: 250

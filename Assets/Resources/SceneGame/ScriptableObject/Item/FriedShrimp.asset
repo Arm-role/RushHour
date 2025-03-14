@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
+  m_Name: FriedShrimp
+  m_EditorClassIdentifier: 
+  foodName: FriedShrimp
+  prefab: {fileID: 3324200611714768555, guid: dc3500a09dc162f4cb4c50e22df64944, type: 3}
+  sprite: {fileID: 21300000, guid: b6f31c7e020152c4580541851f39baeb, type: 3}
+  foodState: []

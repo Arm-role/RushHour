@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 7388e217aecda6442b032aaf9cde0c05
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PlayerPrefab: {fileID: 6175153337953874522, guid: 2adc50f4f568af54fa0395730ba13c37, type: 3}
+  - roomNameInput: {instanceID: 0}
+  - createRoomButton: {instanceID: 0}
+  - joinRoomButton: {instanceID: 0}
+  - fusionObject: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
