@@ -1,10 +1,8 @@
 ﻿using Fusion;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class DILobby : MonoBehaviour
+public class DILobby
 {
     private static DILobby instance;
     public static DILobby Instance => instance ??= new DILobby();

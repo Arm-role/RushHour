@@ -1,29 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class KitchenWare : MonoBehaviour
+public class KitchenWare : KitchenItem
 {
-    [SerializeField]
-    private Transform child;
-
-    private List<GameObject> foodObjectOnWare = new List<GameObject>();
-    private List<Item> foodOnWare = new List<Item>();
+    private Dictionary<Item, Queue<GameObject>> _itemOnWare = new Dictionary<Item, Queue<GameObject>>();
+    private Stack<Item> _stackItem = new Stack<Item>();
 
     private Item foodLalest;
-    public delegate void KeepFood(GameObject gameObject);
-    public event KeepFood OnKeepFood;
-
-    private ItemRendering itemRendering;
-
-    [SerializeField]
-    private Slider slider;
 
     [SerializeField]
     private float Time_Origin;
 
-    private float _timer;
-    private float Timer
+    public override float Timer
     {
         get
         {
@@ -35,83 +23,95 @@ public class KitchenWare : MonoBehaviour
             slider.value = _timer;
         }
     }
-    private void Start()
+
+    protected override void Start()
     {
-        itemRendering = GetComponent<ItemRendering>();
-        EvenManager.NextFoodRequest += SetTime;
+        base.Start();
+
+        ItemEvents.Instance.OnNextFood.Subscribe(SetTime);
+
         slider.maxValue = Time_Origin;
         Timer = Time_Origin;
     }
-    private void Update()
+    private void OnDestroy()
     {
-        if(EvenManager.IsReady)
+        ItemEvents.Instance.OnNextFood.UnSubscribe(SetTime);
+    }
+    protected override void Update()
+    {
+        if (GameEvents.Instance.IsGameRun)
         {
             Timer -= Time.deltaTime;
 
             if (0.1 >= Timer)
             {
-                EvenManager.OnTimeOut();
+                ItemEvents.Instance.OnTimeOut.Invoke();
                 Timer = Time_Origin;
             }
+
+            if (InputHandle.GetHoldBack() && TouchOverMe(gameObject)) DropItem();
         }
-        
     }
     private void SetTime()
     {
         Timer = Time_Origin;
     }
-    private void CreateOnPlate(GameObject OB)
+    public override void PickUpItem(ItemHandle Handle)
     {
-        GameObject ob = Instantiate(OB, child.position, child.rotation, child);
-
-        float randomZ = Random.Range(0f, 360f);
-
-        ob.transform.rotation = Quaternion.Euler(
-        ob.transform.rotation.eulerAngles.x,
-        ob.transform.rotation.eulerAngles.y,
-        randomZ);
-
-        var renderer = ob.GetComponent<SpriteRenderer>();
-        var rendererRef = OB.GetComponent<SpriteRenderer>();
-
-        renderer.sortingOrder = rendererRef.sortingOrder + 1;
-
-        itemRendering.AddRenderor(renderer);
-        itemRendering.AddSortingOrder(rendererRef.sortingOrder + 1);
-
-        foodObjectOnWare.Add(ob);
-    }
-    public void GetOb(GameObject ob)
-    {
-        Transform tex = ob.transform.GetChild(0);
-
-        var itemHandle = ob.GetComponent<ItemHandle>();
-        Item item = itemHandle.Item;
+        Item item = Handle.Item;
         foodLalest = item;
-        foodOnWare.Add(item);
 
-        CreateOnPlate(tex.gameObject);
-        OnKeepFood?.Invoke(ob);
+        GameObject prefab = item.prefab;
+        GameObject texture = CreateOnPlate(prefab.transform.GetChild(0).gameObject, true);
 
-        Destroy(ob);
-        EvenManager.OnSentToCounter(foodLalest);
+        if (!_itemOnWare.ContainsKey(item))
+        {
+            _itemOnWare[item] = new Queue<GameObject>();
+        }
+
+        _itemOnWare[item].Enqueue(texture);
+        _stackItem.Push(item);
+
+        Handle.Self_Destruct();
+
+        ItemEvents.Instance.OnSentToCounter.Invoke(foodLalest);
+    }
+
+    public override void DropItem()
+    {
+        Item item = _stackItem?.Pop();
+        GameObject obj = _itemOnWare[item]?.Dequeue();
+
+        if (obj != null && item != null)
+        {
+            Destroy(obj);
+            SpawnManager.Instance.OnSpawnItem(item, transform.position);
+        }
     }
     public void ClearIntregients()
     {
-        foreach (GameObject item in foodObjectOnWare)
+        foreach (var queue in _itemOnWare.Values)
         {
-            if (item != null)
+            while (queue.Count > 0)
             {
-                Destroy(item);
+                Destroy(queue.Dequeue());
             }
         }
-        foodObjectOnWare.Clear();
-        foodOnWare.Clear();
+        _itemOnWare.Clear();
+        _stackItem.Clear();
     }
-
     public List<Item> GetFoodOnWare()
     {
-        return foodOnWare;
+        List<Item> list = new List<Item>();
+
+        foreach (var item in _itemOnWare)
+        {
+            for (int i = 0; i < item.Value.Count; i++)
+            {
+                list.Add(item.Key);
+            }
+        }
+
+        return list;
     }
 }
-

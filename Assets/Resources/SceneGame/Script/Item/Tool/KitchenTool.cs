@@ -1,35 +1,25 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class KitchenTool : MonoBehaviour
+public class KitchenTool : KitchenItem
 {
-    public Transform child;
+    public Item RawItem { get; private set; }
+    public Item CookedItem { get; private set; }
+    public float TimeCooking { get; private set; }
 
-    public float Timer;
-
-    public Slider slider;
-
-    public (Item, Item, float TimeLimit) foodItem;
-
-    [HideInInspector]
-    public bool isWorking = false;
-    [HideInInspector]
-    public GameObject ObjectSprite = null;
-    [HideInInspector]
-    public GameObject SoundOB = null;
+    public bool isWorking { get; private set; }
+    public GameObject ObjectSprite { get; private set; }
+    public GameObject SoundOB { get; set; }
 
     [SerializeField]
-    private ToolType toolType;
-
+    private EToolType toolType;
     private IKitchenTool currentTool;
 
-    public delegate void AddRenderer(SpriteRenderer renderer);
-    public AddRenderer addRenderer;
-
-    public delegate void RemoveRenderer(SpriteRenderer renderer);
-    public RemoveRenderer removeRenderer;
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         Timer = Time.deltaTime;
 
         slider.minValue = 0;
@@ -37,38 +27,57 @@ public class KitchenTool : MonoBehaviour
 
         switch (toolType)
         {
-            case ToolType.ToolFried:
+            case EToolType.ToolFried:
                 currentTool = new ToolFriedState();
                 break;
-            case ToolType.ToolCutted:
+            case EToolType.ToolCutted:
                 currentTool = new ToolCuttedState();
                 break;
         }
+    }
 
-    }
-    private void Update()
+
+    protected override void Update() => currentTool?.Execute(this);
+    public void StopWorking()
     {
-        currentTool?.Execute(this);
+        slider.transform.gameObject.SetActive(false);
+        slider.maxValue = 1;
+        isWorking = false;
+        Timer = 0;
     }
-    public void GetOb(GameObject ob)
+
+    public override void PickUpItem(ItemHandle Handle)
     {
         if (!isWorking)
         {
-            Item item = ob.GetComponent<ItemHandle>().Item;
+            Item item = Handle.Item;
 
             foreach (FoodState foodState in item.foodState)
             {
                 if (foodState.ToolType == toolType)
                 {
-                    foodItem.Item1 = Instantiate(item);
-                    foodItem.Item2 = foodState.item;
-                    foodItem.TimeLimit = foodState.Timer;
+                    RawItem = Instantiate(item);
+                    CookedItem = foodState.item;
+                    TimeCooking = foodState.Timer;
 
-                    Destroy(ob);
+                    GameObject prefab = item.prefab;
+                    ObjectSprite = CreateOnPlate(prefab.transform.GetChild(0).gameObject, false);
+
+                    Handle.Self_Destruct();
                     isWorking = true;
+
                     return;
                 }
             }
+        }
+    }
+    public override void DropItem()
+    {
+        if (RawItem != null && ObjectSprite)
+        {
+            Destroy(ObjectSprite);
+            SpawnManager.Instance.OnSpawnItem(RawItem, transform.position);
+            StopWorking();
         }
     }
 }

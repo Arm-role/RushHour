@@ -14,14 +14,9 @@ public class DIPlayerContain
     private List<Action<PlayerRef>> RemovePlayerListener = new List<Action<PlayerRef>>();
 
     public PlayerNetwork LocalPlayer { get; private set; }
-    public void SetNetworkRunner(NetworkRunner runnerImport)
-    {
-        runner = runnerImport;
-    }
-    public NetworkRunner GetNetworkRunner()
-    {
-        return runner;
-    }
+    public void SetNetworkRunner(NetworkRunner runnerImport) => runner = runnerImport;
+    public NetworkRunner GetNetworkRunner() => runner;
+
 
     public void RegisterPlayer(PlayerNetwork playerNetwork)
     {
@@ -40,7 +35,6 @@ public class DIPlayerContain
             LocalPlayer = playerNetwork;
         }
     }
-
     public void UnregisterPlayer(PlayerRef playerRef)
     {
         if (playerDataMap.ContainsKey(playerRef))
@@ -54,19 +48,14 @@ public class DIPlayerContain
             action(playerRef);
         }
     }
-    public PlayerNetwork GetPlayer(PlayerRef playerRef)
-    {
-        return playerDataMap.TryGetValue(playerRef, out var player) ? player : null;
-    }
-    public PlayerNetwork LocalPlayerNetwork()
-    {
-        return playerDataMap[LocalPlayer.playerRef];
-    }
 
-    public Dictionary<PlayerRef, PlayerNetwork> GetPlayers()
-    {
-        return playerDataMap;
-    }
+
+
+    public PlayerNetwork GetPlayer(PlayerRef playerRef) => playerDataMap.TryGetValue(playerRef, out var player) ? player : null;
+    public PlayerNetwork LocalPlayerNetwork() => playerDataMap[LocalPlayer.playerRef];
+    public Dictionary<PlayerRef, PlayerNetwork> GetPlayers() => playerDataMap;
+
+
 
     public void RegisterAddPlayerNetwork(Action<PlayerNetwork> action)
     {

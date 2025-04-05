@@ -55,12 +55,10 @@ public class ScriptTable_Contain : MonoBehaviour
 
 
         }
-
-        Debug.Log(scriptObject.Count);
     }
     public Item GetItem(object key)
     {
-        if (key is Enum KEnum)
+        if (key is EItem KEnum)
         {
             string enumKey = KEnum.ToString();
             if (Items.TryGetValue(enumKey, out Item item))

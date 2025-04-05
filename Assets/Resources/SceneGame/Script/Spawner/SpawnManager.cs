@@ -1,26 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
-public class SpawnManager
+public class SpawnManager : SingletonLazy<SpawnManager>
 {
-    private static SpawnManager instance;
-    public static SpawnManager Instance => instance ??= new SpawnManager();
-
     public Dictionary<Type, object> DI_Spawnner = new Dictionary<Type, object>();
 
-    public InputSpawner _InputSpawner => GetSriptFromDI<InputSpawner>();
-    public ItemCreator _ItemCreator = new ItemCreator();
+    public InputSpawner InputSpawner;
+    public ItemCreator ItemCreator = new ItemCreator();
 
-    private bool IsRandom { get; set; } = false;
-    private SpawnManager()
+    protected override void OnAwake()
     {
-        //EvenManager.SentMenu += SortItemFromMenu;
-        EvenManager.SentItem += SpawnItem;
+        ItemEvents.Instance.OnSentItem.Subscribe(SpawnItem);
     }
-
 
     public void RegisterDI<T>(object ob) where T : class
     {
@@ -31,18 +24,17 @@ public class SpawnManager
         return DI_Spawnner[typeof(T)] as T;
     }
 
-
     public void SpawnItem(Item item)
     {
         OnSpawnItem(item);
     }
     public GameObject OnSpawnItem(Item item)
     {
-        return _ItemCreator.Spawn(item, _InputSpawner.ForcePower, _InputSpawner.SpawnPoint);
+        return ItemCreator.Spawn(item, InputSpawner.ForcePower, InputSpawner.SpawnPoint);
     }
     public GameObject OnSpawnItem(Item item, Vector2 position)
     {
-        return _ItemCreator.Spawn(item, position);
+        return ItemCreator.Spawn(item, position);
     }
     public void SpawnItems(IEnumerable<ItemAndCount> listItem)
     {
@@ -55,6 +47,8 @@ public class SpawnManager
             });
         }
     }
+
+
     public void SortItemFromMenu(Menu menu)
     {
         IEnumerable<ItemAndCount> CombinedList = menu.FoodSpanw.Union(menu.OtherFoodSpawn);

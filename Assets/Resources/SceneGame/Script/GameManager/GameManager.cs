@@ -11,8 +11,6 @@ public class GameLevel
 
 public class GameManager : StateMachine<GameManager>
 {
-    public static GameManager instance;
-
     public string BasePath;
     public List<Menu> LevelLst;
 
@@ -22,27 +20,21 @@ public class GameManager : StateMachine<GameManager>
     public bool RandomItemBetweenPlayer;
 
     public bool isTutorial = false;
-    protected override void Awake()
-    {
-        base.Awake();
 
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        SetState(new GameManager_Setup());
-    }
     private void Start()
     {
-        EvenManager.MenuFinished += GetMenuFinished;
+        ItemEvents.Instance.OnMenuFinished.Subscribe(GetMenuFinished);
         currentIndex = UnityEngine.Random.Range(0, LevelLst.Count);
+        SetState(new GameManager_Setup());
     }
+    private void OnDestroy()
+    {
+        ItemEvents.Instance.OnMenuFinished.UnSubscribe(GetMenuFinished);
+    }
+
     private void Update() { Execute(); }
+
+
     public void RunMenu(int menuIndex)
     {
         if (menuIndex >= LevelLst.Count)
@@ -58,15 +50,11 @@ public class GameManager : StateMachine<GameManager>
 
         Menu menu = LevelLst[currentIndex];
 
-        if(RandomItemBetweenPlayer)
+        if (RandomItemBetweenPlayer)
         {
             ConnectorManager.TranferToPlayer(menu);
-            EvenManager.OnSentMenu(menu);
         }
-        else
-        {
-            EvenManager.OnSentMenu(menu);
-        }
+        ItemEvents.Instance.OnSentMenu.Invoke(menu);
     }
     public void GetMenuFinished(Menu menu)
     {
@@ -89,5 +77,4 @@ public class GameManager : StateMachine<GameManager>
             Debug.Log($"All menus completed!");
         }
     }
-
 }

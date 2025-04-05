@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Pan
   m_EditorClassIdentifier: 
-  foodName: Pan
+  id: 1004
+  _name: Pan
+  kitchenType: 2
   prefab: {fileID: 1003453453357154365, guid: 46fd6b2f6b4cf3a49a85878b590a3b48, type: 3}
   sprite: {fileID: 21300000, guid: b95117621dca8e040a2c87527cb39810, type: 3}
+  foodState: []

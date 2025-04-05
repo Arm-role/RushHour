@@ -36,6 +36,8 @@ public class LobbyManager : MonoBehaviour
         DIPlayerContain.Instance.RegisterAddPlayerNetwork(GetPlayer);
         DILobby.Instance.RegisterReady(OnReadyChanged);
 
+        PlayerEvents.Instance.OnReady.Invoke(false);
+
         foreach (var player in players.Values)
         {
             GetPlayer(player);
@@ -50,8 +52,8 @@ public class LobbyManager : MonoBehaviour
 
         if (playerNetwork.isLocalPlayer)
         {
-            readyButton.onClick.AddListener(() => playerNetwork.Ready(true));
-            cancelButton.onClick.AddListener(() => playerNetwork.Ready(false));
+            readyButton.onClick.AddListener(() => playerNetwork.OnSetReady(true));
+            cancelButton.onClick.AddListener(() => playerNetwork.OnSetReady(false));
         }
     }
     public void OnReadyChanged()
@@ -79,6 +81,6 @@ public class LobbyManager : MonoBehaviour
     public void OnChangeScene()
     {
         Ready = true;
-        SceneManager.LoadScene("Game");
+        SceneController.Instance.LoadScene("Game");
     }
 }

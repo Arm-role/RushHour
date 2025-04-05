@@ -23,7 +23,11 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         Score = 0;
-        EvenManager.SentScore += SetScore;
+        GameEvents.Instance.OnSentScore.Subscribe(SetScore);
+    }
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnSentScore.UnSubscribe(SetScore);
     }
     private void SetScore(float score)
     {

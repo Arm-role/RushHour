@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrashBox : MonoBehaviour
@@ -10,10 +8,16 @@ public class TrashBox : MonoBehaviour
     {
         collider2d = GetComponent<Collider2D>();
 
-        EvenManager.OnTouchItemChanged += GetDelegate;
+        GameEvents.Instance.OnTouchItem.Subscribe(GetDelegate);
+        GetDelegate(false);
+    }
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnTouchItem.UnSubscribe(GetDelegate);
     }
     public void GetDelegate(bool isTouch)
     {
+        //Debug.Log(isTouch);
         if (collider2d != null && texture != null)
         {
             texture.SetActive(isTouch);

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CounterManager : MonoBehaviour
 {
-    [SerializeField]
-    private ServeManager serverManager;
+    [SerializeField] private ServeManager serverManager;
     private List<Item> foodOnWare = new List<Item>();
 
     private Menu currentMenu;
@@ -20,12 +19,18 @@ public class CounterManager : MonoBehaviour
     private bool OutOfStock;
     private void Start()
     {
-        EvenManager.SentMenu += LoadMenu;
-        EvenManager.OnSentToCounterChanged += ImportedItem;
-        EvenManager.TimeOut += TimeOut;
+        ItemEvents.Instance.OnSentMenu.Subscribe(LoadMenu);
+        ItemEvents.Instance.OnSentToCounter.Subscribe(ImportedItem);
+        ItemEvents.Instance.OnTimeOut.Subscribe(TimeOut);
 
         serverManager.FoodOnWare += GetFoodOnWare;
         serverManager.Serve += Serve;
+    }
+    private void OnDestroy()
+    {
+        ItemEvents.Instance.OnSentMenu.UnSubscribe(LoadMenu);
+        ItemEvents.Instance.OnSentToCounter.UnSubscribe(ImportedItem);
+        ItemEvents.Instance.OnTimeOut.UnSubscribe(TimeOut);
     }
     private List<Item> FlattenMenu(List<ItemAndCount> menus)
     {
@@ -67,15 +72,16 @@ public class CounterManager : MonoBehaviour
     {
         if (ListFood_Count.Count > 0)
         {
-            EvenManager.OnNextIngredient(currentItem.item.sprite, IntrigrintAmmount, currentItem.count);
+            ItemEvents.Instance.OnNextIngredientDisplay(currentItem.item.sprite, IntrigrintAmmount, currentItem.count);
         }
         else
         {
-            EvenManager.OnfoodStateDisplay(OutOfStock);
+            ItemEvents.Instance.OnFoodDisplay.Invoke(OutOfStock);
         }
     }
     public void ImportedItem(Item item)
     {
+        //Debug.Log(item.name);
         if (item == currentItem.item)
         {
             IntrigrintAmmount++;
@@ -100,9 +106,8 @@ public class CounterManager : MonoBehaviour
         if (OutOfStock)
         {
             float newScore = CalculateScore();
-            EvenManager.OnSentScore(newScore);
-
-            EvenManager.OnMenuFinished(currentMenu);
+            GameEvents.Instance.OnSentScore.Invoke(newScore);
+            ItemEvents.Instance.OnMenuFinished.Invoke(currentMenu);
         }
     }
     private void TimeOut()
@@ -113,6 +118,7 @@ public class CounterManager : MonoBehaviour
         }
         else if (ListFood_Count != null && ListFood_Count.Count > 0)
         {
+            Debug.Log("FormTimeOut");
             ImportedItem(currentItem.item);
         }
     }

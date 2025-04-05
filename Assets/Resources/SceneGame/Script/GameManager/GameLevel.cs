@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GameManager_Setup : IGameLevel
 {
     public void Enter(GameManager manager)
@@ -5,7 +7,7 @@ public class GameManager_Setup : IGameLevel
     }
     public void Execute(GameManager manager)
     {
-        if (EvenManager.IsReady)
+        if (GameEvents.Instance.IsGameRun)
         {
             manager.SetState(new Wait_For_NextLevel());
         }

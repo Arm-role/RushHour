@@ -71,6 +71,7 @@ public class InputHandle
         if (Input.GetMouseButtonDown(1))
             return true;
 
+
         if (Input.touchCount > 0 && Input.GetTouch(0).tapCount == 2)
             return true;
 
@@ -89,6 +90,33 @@ public class InputHandle
                 lastTapTime = Time.deltaTime;
             }
         }
+        return false;
+    }
+
+    public static bool GetHoldBack()
+    {
+        if (Input.GetMouseButtonDown(2))
+        {
+            return true;
+        }
+
+        if (Input.touchCount < 2)
+        {
+            return false;
+        }
+
+        Touch firstTouch = Input.GetTouch(0);
+        Touch secondTouch = Input.GetTouch(1);
+
+        bool isFirstTouch = firstTouch.phase == TouchPhase.Stationary;
+        bool isSecorndTouch = secondTouch.phase == TouchPhase.Began;
+
+
+        if(isFirstTouch && isSecorndTouch)
+        {
+            return true;
+        }
+
         return false;
     }
 }

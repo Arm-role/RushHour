@@ -16,15 +16,11 @@ EditorBuildSettings:
     guid: cca81d8f81adc1a40b30a3e79ff07219
   - enabled: 1
     path: Assets/Resources/Scene/Join.unity
-    guid: bc94fc49b680fb84f8062b7e10acfadf
+    guid: 2f0634ca2c21b214b8238edaad23578c
   - enabled: 1
     path: Assets/Resources/Scene/Lobby.unity
     guid: 7fcd0b7411300e047bb9354d4147f4cd
   - enabled: 1
-    path: Assets/Resources/Scene/Loading.unity
-    guid: ea45e810f0969014d92be62e5c03b121
-  - enabled: 1
     path: Assets/Resources/Scene/Game.unity
     guid: 1981213b13732a04486dcb01c8c41d41
   m_configObjects: {}
-  m_UseUCBPForAssetBundles: 0

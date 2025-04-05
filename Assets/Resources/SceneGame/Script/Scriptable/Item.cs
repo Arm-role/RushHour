@@ -7,6 +7,7 @@ public class Item : ScriptableObject, IIdentifiable
     [SerializeField] private string _name;
     public int ID => id;
     public string Name => _name;
+    public EKitchenType kitchenType;
 
     public GameObject prefab;
     public Sprite sprite;
@@ -23,6 +24,6 @@ public class Item : ScriptableObject, IIdentifiable
     }
     private void OnDisable()
     {
-        IDManager.Instance.RemoveID<Item>(id);
+        //IDManager.Instance.RemoveID<Item>(id);
     }
 }

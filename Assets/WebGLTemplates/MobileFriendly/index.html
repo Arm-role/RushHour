@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Unity WebGL Player | Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #000; }
+    canvas { width: 100%; height: 100%; display: block; }
+  </style>
+</head>
+<body>
+  <div id="unityContainer" style="width: 100%; height: 100%"></div>
+  <script src="Build/UnityLoader.js"></script>
+  <script>
+    UnityLoader.instantiate("unityContainer", "Build/YourBuild.json");
+  </script>
+</body>
+</html>

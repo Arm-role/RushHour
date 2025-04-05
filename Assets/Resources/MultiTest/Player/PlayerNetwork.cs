@@ -1,7 +1,7 @@
 ﻿using Fusion;
 using UnityEngine;
 
-public class PlayerNetwork : NetworkBehaviour
+public class PlayerNetwork : Network_StateMachine<PlayerNetwork>
 {
     private string _name;
     [Networked]
@@ -31,14 +31,14 @@ public class PlayerNetwork : NetworkBehaviour
     public PlayerRef playerRef { get; private set; }
     public bool isLocalPlayer => Object.HasInputAuthority;
 
-    private IPlayerNetworkState currentState;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         DontDestroyOnLoad(this);
     }
     private void Start()
     {
-        ChangeState(new PlayerLobbyState());
+        SetState(new PlayerLobbyState());
     }
     void isReadyChanged()
     {
@@ -46,24 +46,15 @@ public class PlayerNetwork : NetworkBehaviour
     }
     void isScoreChange()
     {
-        Debug.Log(playerName + " " + MyScore);
-        EvenManager.OnSentTotalScore(currentScore);
+        GameEvents.Instance.OnSentTotalScore.Invoke(currentScore);
     }
 
     void Update()
     {
-        if (HasStateAuthority == false)
-        {
-            return;
-        }
-        currentState?.Execute(this);
+        if (HasStateAuthority == false) return;
+        Execute();
     }
-    public void ChangeState(IPlayerNetworkState playerNet)
-    {
-        currentState?.Exit(this);
-        currentState = playerNet;
-        currentState.Enter(this);
-    }
+
     public override void Spawned()
     {
         if (isLocalPlayer)
@@ -76,11 +67,11 @@ public class PlayerNetwork : NetworkBehaviour
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        // ✅ ลบข้อมูลผู้เล่นเมื่อออกจากเกม
         DIPlayerContain.Instance.UnregisterPlayer(playerRef);
     }
-    public void Ready(bool isReady) => IsReady = isReady;
 
+    public void OnSetReady(bool isReady) => IsReady = isReady;
+    public void OnSetScore(float score) => MyScore = score;
 
     #region Score
     public void GetScore(float score)
@@ -88,10 +79,8 @@ public class PlayerNetwork : NetworkBehaviour
         currentScore = score;
         MyScore += score;
     }
-    public float GetCurrentScore()
-    {
-        return MyScore;
-    }
+    public float GetCurrentScore() => MyScore;
+
     #endregion
 
 
@@ -120,7 +109,7 @@ public class PlayerNetwork : NetworkBehaviour
         Item item = ScriptTable_Contain.instance.GetItem(ID);
         if (item != null)
         {
-            EvenManager.OnSentItem(item);
+            ItemEvents.Instance.OnSentItem.Invoke(item);
         }
     }
 
@@ -135,6 +124,7 @@ public class PlayerNetwork : NetworkBehaviour
             Debug.LogWarning("TransportStatus can only be called by the State Authority.");
         }
     }
+
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     public void RPC_SendItems(PlayerRef player, byte[] ID)
     {
@@ -152,9 +142,8 @@ public class PlayerNetwork : NetworkBehaviour
             Item item = ScriptTable_Contain.instance.GetItem(id);
             if (item != null)
             {
-                EvenManager.OnSentItem(item);
+                ItemEvents.Instance.OnSentItem.Invoke(item);
             }
-            Debug.Log(playerName + " " + item.Name);
         }
     }
     #endregion

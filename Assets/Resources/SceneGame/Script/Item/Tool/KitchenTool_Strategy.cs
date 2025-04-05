@@ -1,76 +1,59 @@
-﻿
-using UnityEngine;
-public interface IKitchenTool
-{
-    void Enter(KitchenTool tool);
-    void Execute(KitchenTool tool);
-    void Exit(KitchenTool tool);
-}
+﻿using UnityEngine;
 
 [System.Serializable]
 public struct FoodState
 {
-    public ToolType ToolType;
+    public EToolType ToolType;
     public float Timer;
     public Item item;
 }
-public enum ToolType
-{
-    ToolFried, ToolCutted
-}
+
 public abstract class ToolBaseState : IKitchenTool
 {
-    public virtual void Enter(KitchenTool tool) { }
     public virtual void Execute(KitchenTool tool)
     {
-        if (tool.foodItem.Item2 != null && tool.isWorking)
+        if (tool.isWorking && GameEvents.Instance.IsGameRun)
         {
+            if (InputHandle.GetHoldBack() && tool.TouchOverMe(tool.gameObject))
+            {
+                tool.DropItem();
+                OnTaskComplete(tool);
+                return;
+            }
+
             tool.slider.value = tool.Timer;
 
-            if (tool.child.childCount < 1)
+            if (tool.slider.maxValue != tool.TimeCooking)
             {
-                SetupObjectSprite(tool);
-
-                tool.slider.maxValue = tool.foodItem.TimeLimit;
+                tool.slider.maxValue = tool.TimeCooking;
                 tool.slider.transform.gameObject.SetActive(true);
 
                 OnStateStart(tool);
             }
 
-            if (tool.foodItem.TimeLimit < tool.Timer)
-            {
-                CompleteTask(tool);
-            }
+            if (tool.TimeCooking < tool.Timer) CompleteTask(tool);
         }
-    }
-    public virtual void Exit(KitchenTool tool) { }
-    protected virtual void SetupObjectSprite(KitchenTool tool)
-    {
-        GameObject prefab = tool.foodItem.Item1.prefab;
-        GameObject texture = prefab.transform.GetChild(0).gameObject;
-        tool.ObjectSprite = Object.Instantiate(texture, tool.child.position, tool.child.rotation, tool.child);
-
-        SpriteRenderer renderer = tool.ObjectSprite.GetComponent<SpriteRenderer>();
-        SpriteRenderer ThisRenderer = tool.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        renderer.sortingOrder = ThisRenderer.sortingOrder + 1;
-        tool.addRenderer?.Invoke(renderer);
+        else if (tool.isWorking && !GameEvents.Instance.IsGameRun)
+        {
+            FeilTask(tool);
+        }
     }
     protected virtual void OnStateStart(KitchenTool tool) { }
     protected virtual void CompleteTask(KitchenTool tool)
     {
-        tool.Timer = 0;
+        tool.StopWorking();
+        Object.Destroy(tool.ObjectSprite);
 
-        SpriteRenderer renderer = tool.ObjectSprite.GetComponent<SpriteRenderer>();
-        tool.removeRenderer?.Invoke(renderer);
-        MonoBehaviour.Destroy(tool.ObjectSprite);
-
-        tool.slider.transform.gameObject.SetActive(false);
-        tool.isWorking = false;
-
-        SpawnManager.Instance.OnSpawnItem(tool.foodItem.Item2, tool.transform.position);
+        SpawnManager.Instance.OnSpawnItem(tool.CookedItem, tool.transform.position);
         OnTaskComplete(tool);
     }
     protected virtual void OnTaskComplete(KitchenTool tool) { }
+    protected virtual void FeilTask(KitchenTool tool)
+    {
+        tool.StopWorking();
+        OnTaskFail(tool);
+    }
+    protected virtual void OnTaskFail(KitchenTool tool) { }
 }
 
 
@@ -79,10 +62,7 @@ public class ToolFriedState : ToolBaseState
     public override void Execute(KitchenTool tool)
     {
         base.Execute(tool);
-        if (tool.isWorking)
-        {
-            tool.Timer += Time.deltaTime;
-        }
+        if (tool.isWorking) tool.Timer += Time.deltaTime;
     }
     protected override void OnStateStart(KitchenTool tool)
     {
@@ -90,21 +70,22 @@ public class ToolFriedState : ToolBaseState
     }
     protected override void OnTaskComplete(KitchenTool tool)
     {
-        MonoBehaviour.Destroy(tool.SoundOB);
+        Object.Destroy(tool.SoundOB);
         ParticleManager.instance.CreateParticle("SmokeParticle", tool.transform.position);
     }
+    protected override void OnTaskFail(KitchenTool tool)
+    {
+        Debug.Log(tool.SoundOB != null);
+        Object.Destroy(tool.SoundOB);
+    }
 }
-
 
 public class ToolCuttedState : ToolBaseState
 {
     public override void Execute(KitchenTool tool)
     {
         base.Execute(tool);
-        if (tool.isWorking && InputHandle.GetDoubleTouch())
-        {
-            OnDoubleTap(tool);
-        }
+        if (tool.isWorking && InputHandle.GetDoubleTouch()) OnDoubleTap(tool);
     }
     private void OnDoubleTap(KitchenTool tool)
     {
@@ -115,5 +96,4 @@ public class ToolCuttedState : ToolBaseState
     {
         ParticleManager.instance.CreateParticle("SmokeParticle", tool.transform.position);
     }
-
 }

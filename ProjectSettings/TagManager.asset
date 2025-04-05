@@ -4,14 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - item
   - TrashBox
   - Wall
   - Counter
   - Tool
-  - Ware
   - ArrowLeft
   - ArrowRight
+  - Item
   layers:
   - Default
   - TransparentFX

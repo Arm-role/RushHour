@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemCreator
@@ -59,8 +58,8 @@ public class ItemCreator
         ob.transform.position = position;
         ob.SetActive(true);
 
-        var itemDrag = ob.GetComponent<ItemDrag>();
-        itemDrag.OnDestroyMe += AddToPool;
+        var handle = ob.GetComponent<ItemHandle>();
+        handle.OnDestroyMe += AddToPool;
     }
 
     private void SetUpItem_RandomPoint(GameObject ob, float ForcePower, List<Transform> SpawnPoint)
@@ -73,9 +72,32 @@ public class ItemCreator
         ob.SetActive(true);
 
         var rigid = ob.GetComponent<Rigidbody2D>();
-        rigid.AddForce(Vector2.down * ForcePower, ForceMode2D.Impulse);
 
-        var itemDrag = ob.GetComponent<ItemDrag>();
-        itemDrag.OnDestroyMe += AddToPool;
+        Vector2 localPoint = spawnPoint.up;
+
+        rigid.AddForce(localPoint * ForcePower, ForceMode2D.Impulse);
+
+        var handle = ob.GetComponent<ItemHandle>();
+        handle.OnDestroyMe += AddToPool;
     }
+
+    public void Debuger()
+    {
+        foreach (var item in Items.Keys)
+        {
+            List<GameObject> objs = new List<GameObject>(Items[item]);
+
+            for (int i = 0; i < objs.Count; i++)
+            {
+                if (objs[i] != null)
+                {
+                    Debug.Log($"{item} : {i}");
+                }else
+                {
+                    Debug.Log($"{item} : {i} : null");
+                }
+            }
+        }
+    }
+    public void ClearItem() => Items.Clear();
 }

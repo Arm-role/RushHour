@@ -1,7 +1,6 @@
 ﻿using Fusion;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 public class PlayerManager
 {
     private static PlayerManager _instance;
@@ -11,12 +10,9 @@ public class PlayerManager
     private Dictionary<PlayerRef, PlayerNetwork> players;
     public Dictionary<PlayerRef, PlayerNetwork> Players => players ??= DIPlayerContain.Instance.GetPlayers();
 
-    public delegate void SentPlayerNetwork(PlayerNetwork player);
-    public event SentPlayerNetwork OnSentPlayerNetwork;
-
     public PlayerManager()
     {
-        EvenManager.End += OnEnd;
+        GameEvents.Instance.OnGameState.Subscribe(OnGameRun);
 
         DIPlayerContain.Instance.RegisterAddPlayerNetwork(OnPlayerAdd);
         DIPlayerContain.Instance.RegisterRemovePlayerNetwork(OnPlayerRemove);
@@ -45,10 +41,10 @@ public class PlayerManager
 
         return new List<PlayerNetwork> { allplayer[previousIndex], allplayer[nextIndex] };
     }
-    
+
     public PlayerNetwork RandomPlayer()
     {
-        int rand = Random.Range(0, Players.Count);
+        int rand = UnityEngine.Random.Range(0, Players.Count);
         List<PlayerNetwork> allplayer = Players.Values.ToList();
 
         return allplayer[rand];
@@ -57,13 +53,13 @@ public class PlayerManager
     {
         return Players.Values.ToList();
     }
-    public void OnEnd(bool isEnd)
+    public void OnGameRun(EGameState gameState)
     {
-        if (isEnd)
+        if (gameState == EGameState.End)
         {
             foreach (var player in Players.Values)
             {
-                OnSentPlayerNetwork?.Invoke(player);
+                PlayerEvents.Instance.OnSentPlayerNetwork.Invoke(player);
             }
         }
     }

@@ -12,7 +12,7 @@ public class ReadySystem
     {
         foreach (var item in playerLobby.Values)
         {
-            Debug.Log(_playerReady[item.player]);
+            //Debug.Log(_playerReady[item.player]);
 
             if (item.player != null && _playerReady.TryGetValue(item.player, out bool isReady))
             {

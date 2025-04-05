@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,29 +33,50 @@ public class TimerHandle : MonoBehaviour
 
     [SerializeField]
     private float _Timer;
+
+    [SerializeField]
+    private float gameTimeChanged;
+    [SerializeField]
+    private float gameSpeedChanged;
+
+    private bool isGameSpeedChanged = false;
     void Start()
     {
-        EvenManager.SentTotalScore += GetTimer;
-        EvenManager.TimeSpeed += SetTimeSpeed;
+        GameEvents.Instance.OnSentTotalScore.Subscribe(GetTimer);
+        PlayerEvents.Instance.TimeSpeed.Subscribe(SetTimeSpeed);
+
         Timer = _Timer;
         UIEnd.SetActive(false);
     }
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnSentTotalScore.UnSubscribe(GetTimer);
+        PlayerEvents.Instance.TimeSpeed.UnSubscribe(SetTimeSpeed);
+    }
     private void Update()
     {
-        if (EvenManager.IsReady)
+        if (GameEvents.Instance.IsGameRun)
         {
-            Timer -= Time.deltaTime * TimeSpeed; 
-
+            Timer -= Time.deltaTime * TimeSpeed;
             if (Timer <= 0.1)
             {
                 Timer = 0;
                 OnEnd();
             }
+            if(!isGameSpeedChanged)
+            {
+                gameTimeChanged -= Time.deltaTime;
+            }
+            if (gameTimeChanged <= 0.1 && !isGameSpeedChanged)
+            {
+                TimeSpeed = gameSpeedChanged;
+                isGameSpeedChanged = true;
+            }
         }
     }
     public void GetTimer(float timer)
     {
-        Timer += timer;
+        Timer = MaxValue;
     }
     public void SetValue(float value)
     {
@@ -81,6 +100,6 @@ public class TimerHandle : MonoBehaviour
     public void OnEnd()
     {
         UIEnd.SetActive(true);
-        EvenManager.OnEnd(true);
+        GameEvents.Instance.OnGameState.Invoke(EGameState.End);
     }
 }

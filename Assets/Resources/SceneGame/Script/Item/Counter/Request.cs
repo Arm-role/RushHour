@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,15 +11,23 @@ public class Request : MonoBehaviour
 
     private void Start()
     {
-        EvenManager.foodStateDisplay += SetDisplay;
-        EvenManager.NextIngredient += SetState;
+        ItemEvents.Instance.OnFoodDisplay.Subscribe(SetDisplay);
+        ItemEvents.Instance.OnNextIngredient.Subscribe(SetState);
     }
-    public void SetState(Sprite sprite, int amount, int limmit)
+    private void OnDestroy()
+    {
+        if (ItemEvents.Instance != null)
+        {
+            ItemEvents.Instance.OnFoodDisplay.UnSubscribe(SetDisplay);
+            ItemEvents.Instance.OnNextIngredient.UnSubscribe(SetState);
+        }
+    }
+    public void SetState((Sprite sprite, int amount, int limmit) item)
     {
         SetDisplay(false);
-        Renderer.sprite = sprite;
-        one.text = amount.ToString();
-        two.text = limmit.ToString();
+        Renderer.sprite = item.sprite;
+        one.text = item.amount.ToString();
+        two.text = item.limmit.ToString();
 
     }
     public void SetDisplay(bool displayed)

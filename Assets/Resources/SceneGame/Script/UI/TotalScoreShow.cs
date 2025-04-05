@@ -1,9 +1,6 @@
-using Fusion;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 public class TotalScoreShow : MonoBehaviour
@@ -26,14 +23,18 @@ public class TotalScoreShow : MonoBehaviour
     public TextMeshProUGUI TextTotal;
     private void Start()
     {
-        PlayerManager.Instance.OnSentPlayerNetwork += CreateAllPlayer;
-        EvenManager.SentTotalScore += SetTotalScore;
+        PlayerEvents.Instance.OnSentPlayerNetwork.Subscribe(CreateAllPlayer);
+        GameEvents.Instance.OnSentTotalScore.Subscribe(SetTotalScore);
 
         TotalScore = 0;
     }
+    private void OnDestroy()
+    {
+        PlayerEvents.Instance.OnSentPlayerNetwork.UnSubscribe(CreateAllPlayer);
+        GameEvents.Instance.OnSentTotalScore.UnSubscribe(SetTotalScore);
+    }
     public void CreateAllPlayer(PlayerNetwork player)
     {
-        Debug.Log("CreatChild");
         GameObject playerObject = Instantiate(PlayerPrefab, AllPlayerParent);
         playerObject.transform.localScale = Vector3.one;
 

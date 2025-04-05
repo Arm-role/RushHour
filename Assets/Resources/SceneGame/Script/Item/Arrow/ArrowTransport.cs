@@ -10,7 +10,11 @@ public class ArrowTransport : MonoBehaviour
     {
         collider2d = GetComponent<Collider2D>();
 
-        EvenManager.ArrowTouchItemChanged += GetDelegate;
+        OtherEvents.Instance.OnArrowTouch.Subscribe(GetDelegate);
+    }
+    private void OnDestroy()
+    {
+        OtherEvents.Instance.OnArrowTouch.UnSubscribe(GetDelegate);
     }
     public void GetDelegate(bool isTouch)
     {
