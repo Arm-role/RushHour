@@ -42,9 +42,14 @@ public abstract class EventBase<T> : IEvent<T>
         }
     }
 }
+
+
+
+
+
 public abstract class EventBaseParam<T> : EventBase<T>
 {
-    private T _param = default;
+    protected T _param = default;
     public override void Invoke(T param)
     {
         base.Invoke(param); _param = param;

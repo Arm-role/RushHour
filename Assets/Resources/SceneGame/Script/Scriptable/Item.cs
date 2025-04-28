@@ -16,14 +16,6 @@ public class Item : ScriptableObject, IIdentifiable
     private void OnValidate()
     {
         _name = name;
-
-        if (id == -1)
-        {
-            id = IDManager.Instance.GenerateNewID<Item>();
-        }
     }
-    private void OnDisable()
-    {
-        //IDManager.Instance.RemoveID<Item>(id);
-    }
+ 
 }

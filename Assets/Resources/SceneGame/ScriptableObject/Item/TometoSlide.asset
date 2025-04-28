@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: TometoSlide
   m_EditorClassIdentifier: 
-  foodName: TometoSlide
+  id: 1026
+  _name: TometoSlide
+  kitchenType: 0
   prefab: {fileID: 7308353124805684698, guid: fbaaa7fc12d7e5f42929b5d0fc279257, type: 3}
   sprite: {fileID: 2204221490112661412, guid: c9a6ee5e96661ca4994b165ed2f34cfa, type: 3}
+  foodState: []

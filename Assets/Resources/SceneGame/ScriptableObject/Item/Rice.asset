@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Rice
   m_EditorClassIdentifier: 
-  foodName: Rice
+  id: 1020
+  _name: Rice
+  kitchenType: 0
   prefab: {fileID: 8387426806080676560, guid: 0d2a805ab5a55624a8de6eca761322ec, type: 3}
   sprite: {fileID: 21300000, guid: 89140afa171aace45afb584c237c656d, type: 3}
   foodState:

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: MashroomSlide
   m_EditorClassIdentifier: 
-  foodName: MashroomSlide
+  id: 1015
+  _name: MashroomSlide
+  kitchenType: 0
   prefab: {fileID: 837972933106345247, guid: e24416c9b49154c4dad075e0b03f8ca2, type: 3}
   sprite: {fileID: 21300000, guid: 5a8c248825c5db841a28d08e08192032, type: 3}
+  foodState: []

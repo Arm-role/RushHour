@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -23,28 +24,29 @@ public class TotalScoreShow : MonoBehaviour
     public TextMeshProUGUI TextTotal;
     private void Start()
     {
-        PlayerEvents.Instance.OnSentPlayerNetwork.Subscribe(CreateAllPlayer);
-        GameEvents.Instance.OnSentTotalScore.Subscribe(SetTotalScore);
+        PlayerEvents.Instance.OnSentPlayerScore.Subscribe(CreateAllPlayer);
 
         TotalScore = 0;
     }
     private void OnDestroy()
     {
-        PlayerEvents.Instance.OnSentPlayerNetwork.UnSubscribe(CreateAllPlayer);
-        GameEvents.Instance.OnSentTotalScore.UnSubscribe(SetTotalScore);
+        PlayerEvents.Instance.OnSentPlayerScore.UnSubscribe(CreateAllPlayer);
     }
-    public void CreateAllPlayer(PlayerNetwork player)
+    public void CreateAllPlayer((string, float) player)
     {
+        Debug.Log(player);
+
         GameObject playerObject = Instantiate(PlayerPrefab, AllPlayerParent);
         playerObject.transform.localScale = Vector3.one;
 
         if (playerObject.transform.TryGetComponent<PlayerScoreEnd>(out PlayerScoreEnd scoreEnd))
         {
-            string score = player.GetCurrentScore().ToString();
-            scoreEnd.Name = player.playerName;
+            string score = player.Item2.ToString();
+            scoreEnd.Name = player.Item1;
             scoreEnd.Score = score;
             playerObject.gameObject.name = score;
 
+            TotalScore += player.Item2;
         }
         SortChild();
     }
@@ -68,9 +70,5 @@ public class TotalScoreShow : MonoBehaviour
         {
             children[i].SetSiblingIndex(i);
         }
-    }
-    public void SetTotalScore(float score)
-    {
-        TotalScore += score;
     }
 }

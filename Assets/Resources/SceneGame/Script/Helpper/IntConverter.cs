@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class IntConverter
@@ -38,7 +39,6 @@ public static class IntConverter
                 ids.Add(id);
             }
         }
-
         return ids.ToArray();
     }
 }

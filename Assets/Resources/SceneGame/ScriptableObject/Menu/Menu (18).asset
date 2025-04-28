@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2513b35d7b3839a4f9212da12feb243c, type: 3}
   m_Name: Menu (18)
   m_EditorClassIdentifier: 
+  id: 1018
+  _name: Menu (18)
   FoodRequest:
   - item: {fileID: 11400000, guid: 9033ce8c824cffb4a97eeeb6d6556d73, type: 2}
     count: 1

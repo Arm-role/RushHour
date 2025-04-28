@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 public interface IState<T> where T : class
 {
     void Enter(T istate);

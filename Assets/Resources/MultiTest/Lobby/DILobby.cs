@@ -17,6 +17,7 @@ public class DILobby
         _playerReady[player] = isReady;
         ReadyChanged?.Invoke();
     }
+    public void RemoveReady(PlayerRef player) => _playerReady.Remove(player);
     public Dictionary<PlayerRef, bool> GetReadies() { return _playerReady; }
 
 
@@ -25,6 +26,12 @@ public class DILobby
     {
         _playerLobby[playerLobby.player] = playerLobby;
     }
+    public void RemovePlayerLobby(PlayerRef playerRef)
+    {
+        _playerLobby.Remove(playerRef);
+    }
+
+    public PlayerLobbyData GetPlayerLobbyData(PlayerRef playerRef) { return _playerLobby[playerRef]; }
     public Dictionary<PlayerRef, PlayerLobbyData> GetPlayerLobby() { return _playerLobby; }
 
 

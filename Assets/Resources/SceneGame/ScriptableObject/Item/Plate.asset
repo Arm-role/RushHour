@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Plate
   m_EditorClassIdentifier: 
-  id: 1029
+  id: 1019
   _name: Plate
   kitchenType: 1
   prefab: {fileID: 8969329921519395137, guid: ff86a930559da5f4b93c293318739575, type: 3}

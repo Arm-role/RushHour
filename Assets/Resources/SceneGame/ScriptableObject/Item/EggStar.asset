@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: EggStar
   m_EditorClassIdentifier: 
-  foodName: EggStar
+  id: 1008
+  _name: EggStar
+  kitchenType: 0
   prefab: {fileID: 4280131259847070788, guid: ca7608d80e200ff418634beb12d399ac, type: 3}
   sprite: {fileID: 21300000, guid: 69943c82d57f4fb4ca14f5b9dc975706, type: 3}
+  foodState: []

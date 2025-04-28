@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: WaterMelonSlide
   m_EditorClassIdentifier: 
-  foodName: WaterMelonSlide
+  id: 1028
+  _name: WaterMelonSlide
+  kitchenType: 0
   prefab: {fileID: 6031115640581042219, guid: 067d1b356dbe8284db2a88df268c1130, type: 3}
   sprite: {fileID: 21300000, guid: b0c6bb84abd0e154993568a490c77c04, type: 3}
+  foodState: []

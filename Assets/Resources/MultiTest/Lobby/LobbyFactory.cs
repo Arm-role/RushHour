@@ -1,5 +1,4 @@
 using Fusion;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,12 +15,13 @@ public class LobbyFactory
     }
     public PlayerLobbyData CreatePlayerLobby(PlayerNetwork playerNetwork)
     {
-        PlayerRef player = playerNetwork.playerRef;
+        PlayerRef player = playerNetwork.PlayerRef;
 
         string ObjectName = player.PlayerId.ToString();
-        string playerName = playerNetwork.playerName.ToString();
+        string playerName = playerNetwork.PlayerName.ToString();
 
         GameObject playerObject = Object.Instantiate(prefab, parent);
+
         PlayerLobbyData playerLobbyData;
 
         playerObject.transform.localScale = Vector3.one;
@@ -32,6 +32,7 @@ public class LobbyFactory
             playerLobbyData.GetReady(false);
             playerLobbyData.Name = playerName;
             playerLobbyData.player = player;
+            playerLobbyData.Object = playerObject;
         }
 
         SortChild();

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Tometo
   m_EditorClassIdentifier: 
-  foodName: Tometo
+  id: 1025
+  _name: Tometo
+  kitchenType: 0
   prefab: {fileID: 8191465069133378279, guid: 17963e49eb2a8a842aa83db5a4675a8c, type: 3}
   sprite: {fileID: 21300000, guid: 2dcca707e4801144092ea62b2d803f3b, type: 3}
   foodState:

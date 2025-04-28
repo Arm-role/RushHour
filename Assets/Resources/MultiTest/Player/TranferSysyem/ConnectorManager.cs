@@ -1,33 +1,37 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System.Linq;
 
 public static class ConnectorManager
 {
+    private static ISentItem sentItem = new SentItem();
     private static Dictionary<PlayerNetwork, List<int>> SortIDEachPlayer(Menu menu)
     {
         int[] ids = GetIdFromMenu(menu);
-        Dictionary<PlayerNetwork, List<int>> itemIds = new Dictionary<PlayerNetwork, List<int>>();
-        var players = PlayerManager.Instance.GetPlayerList();
+        Dictionary<PlayerNetwork, List<int>> playerIDs = new Dictionary<PlayerNetwork, List<int>>();
+
+        var containPlayer = DIPlayerContain.Instance.GetAllPlayers().Values;
+        List<PlayerNetwork> players = new List<PlayerNetwork>(containPlayer);
+
         int playerCount = players.Count;
 
         for (int i = 0; i < ids.Length; i++)
         {
             int playerIndex = Random.Range(0, playerCount);
+
             PlayerNetwork playNet = players[playerIndex];
 
             if (playNet != null)
             {
-                if (!itemIds.ContainsKey(playNet))
+                if (!playerIDs.ContainsKey(playNet))
                 {
-                    itemIds[playNet] = new List<int>();
+                    playerIDs[playNet] = new List<int>();
                 }
 
-                itemIds[playNet].Add(ids[i]);
+                playerIDs[playNet].Add(ids[i]);
             }
         }
-        return itemIds;
+        return playerIDs;
     }
     private static int[] GetIdFromMenu(Menu menu)
     {
@@ -38,6 +42,8 @@ public static class ConnectorManager
         {
             for (int i = 0; i < item.count; i++)
             {
+                //Debug.Log(item.item.Name);
+
                 int id = item.item.ID;
                 Ids.Add(id);
             }
@@ -46,15 +52,14 @@ public static class ConnectorManager
     }
     public static void TranferToPlayer(Menu menu)
     {
-        var itemIds = SortIDEachPlayer(menu);
+        //Debug.Log(menu.name);
 
-        foreach (var pair in itemIds)
+        var playerIDs = SortIDEachPlayer(menu);
+        var localPlayer = DIPlayerContain.Instance.LocalPlayer;
+
+        foreach (var pair in playerIDs)
         {
-            int[] id = pair.Value.ToArray();
-            byte[] data = IntConverter.PackRLEIDs(id);
-
-            PlayerNetwork player = DIPlayerContain.Instance.LocalPlayerNetwork();
-            player.TransportItems(pair.Key, data);
+            sentItem.OnSentItems(localPlayer, pair.Key, pair.Value.ToArray());
         }
     }
 }

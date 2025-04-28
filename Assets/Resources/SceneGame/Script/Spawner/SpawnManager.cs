@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SpawnManager : SingletonLazy<SpawnManager>
@@ -24,10 +23,8 @@ public class SpawnManager : SingletonLazy<SpawnManager>
         return DI_Spawnner[typeof(T)] as T;
     }
 
-    public void SpawnItem(Item item)
-    {
-        OnSpawnItem(item);
-    }
+    public void SpawnItem(Item item) => OnSpawnItem(item);
+
     public GameObject OnSpawnItem(Item item)
     {
         return ItemCreator.Spawn(item, InputSpawner.ForcePower, InputSpawner.SpawnPoint);
@@ -36,27 +33,29 @@ public class SpawnManager : SingletonLazy<SpawnManager>
     {
         return ItemCreator.Spawn(item, position);
     }
-    public void SpawnItems(IEnumerable<ItemAndCount> listItem)
-    {
-        foreach (var item in listItem)
-        {
-
-            Enumerable.Range(0, item.count).ToList().ForEach(_ =>
-            {
-                OnSpawnItem(item.item);
-            });
-        }
-    }
 
 
-    public void SortItemFromMenu(Menu menu)
-    {
-        IEnumerable<ItemAndCount> CombinedList = menu.FoodSpanw.Union(menu.OtherFoodSpawn);
-        SpawnItems(CombinedList);
-    }
-    public void ConvertToIEnumerable(ItemAndCount[] items)
-    {
-        IEnumerable<ItemAndCount> CombinedList = items;
-        SpawnItems(CombinedList);
-    }
+    //public void SpawnItems(IEnumerable<ItemAndCount> listItem)
+    //{
+    //    foreach (var item in listItem)
+    //    {
+
+    //        Enumerable.Range(0, item.count).ToList().ForEach(_ =>
+    //        {
+    //            OnSpawnItem(item.item);
+    //        });
+    //    }
+    //}
+
+
+    //public void SortItemFromMenu(Menu menu)
+    //{
+    //    IEnumerable<ItemAndCount> CombinedList = menu.FoodSpanw.Union(menu.OtherFoodSpawn);
+    //    SpawnItems(CombinedList);
+    //}
+    //public void ConvertToIEnumerable(ItemAndCount[] items)
+    //{
+    //    IEnumerable<ItemAndCount> CombinedList = items;
+    //    SpawnItems(CombinedList);
+    //}
 }

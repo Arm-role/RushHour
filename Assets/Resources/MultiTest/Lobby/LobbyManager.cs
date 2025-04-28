@@ -2,8 +2,8 @@ using Fusion;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -22,8 +22,7 @@ public class LobbyManager : MonoBehaviour
 
     private bool Ready = true;
 
-    private Dictionary<PlayerRef, PlayerNetwork> _players;
-    private Dictionary<PlayerRef, PlayerNetwork> players => _players ??= DIPlayerContain.Instance.GetPlayers() ?? new Dictionary<PlayerRef, PlayerNetwork>();
+    private Dictionary<PlayerRef, PlayerNetwork> players;
 
     private void Start()
     {
@@ -33,11 +32,22 @@ public class LobbyManager : MonoBehaviour
         readySystem = new ReadySystem();
         timerSystem = new TimerSystem();
 
-        DIPlayerContain.Instance.RegisterAddPlayerNetwork(GetPlayer);
-        DILobby.Instance.RegisterReady(OnReadyChanged);
+        var containPlayer = DIPlayerContain.Instance.GetAllPlayers();
+        players = new Dictionary<PlayerRef, PlayerNetwork>(containPlayer);
 
+        DIPlayerContain.Instance.OnPlayerAdd += GetPlayer;
+        DIPlayerContain.Instance.OnPlayerRemove += RemovePlayer;
+
+        DILobby.Instance.RegisterReady(OnReadyChanged);
         PlayerEvents.Instance.OnReady.Invoke(false);
 
+        CreatePlayerFirst();
+    }
+
+
+
+    public void CreatePlayerFirst()
+    {
         foreach (var player in players.Values)
         {
             GetPlayer(player);
@@ -48,14 +58,30 @@ public class LobbyManager : MonoBehaviour
         var playerLobby = factory.CreatePlayerLobby(playerNetwork);
 
         DILobby.Instance.AddPlayerLobby(playerLobby);
-        DILobby.Instance.OnReadyChanged(playerNetwork.playerRef, playerNetwork.IsReady);
+        DILobby.Instance.OnReadyChanged(playerNetwork.PlayerRef, playerNetwork.IsReady);
 
+        SetupPlayer(playerNetwork);
+    }   
+    public void RemovePlayer(PlayerRef playerRef)
+    {
+        var player = DILobby.Instance.GetPlayerLobbyData(playerRef);
+
+        DILobby.Instance.RemovePlayerLobby(playerRef);
+        DILobby.Instance.RemoveReady(playerRef);
+
+        Destroy(player.Object);
+    }
+
+    private void SetupPlayer(PlayerNetwork playerNetwork)
+    {
         if (playerNetwork.isLocalPlayer)
         {
-            readyButton.onClick.AddListener(() => playerNetwork.OnSetReady(true));
-            cancelButton.onClick.AddListener(() => playerNetwork.OnSetReady(false));
+            readyButton.onClick.AddListener(() => playerNetwork.SetReady(true));
+            cancelButton.onClick.AddListener(() => playerNetwork.SetReady(false));
         }
     }
+
+
     public void OnReadyChanged()
     {
         var playerReady = DILobby.Instance.GetReadies();
@@ -82,5 +108,6 @@ public class LobbyManager : MonoBehaviour
     {
         Ready = true;
         SceneController.Instance.LoadScene("Game");
+        GameEvents.Instance.OnGameScene?.Invoke(EGameScene.Game);
     }
 }

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: FriedSausage
   m_EditorClassIdentifier: 
-  foodName: FriedSausage
+  id: 1011
+  _name: FriedSausage
+  kitchenType: 0
   prefab: {fileID: 407650111272271521, guid: dd26462f3dca43c42845ba9e53c22a78, type: 3}
   sprite: {fileID: 21300000, guid: bfc0fa5137622a7498e1d05029306a0c, type: 3}
+  foodState: []

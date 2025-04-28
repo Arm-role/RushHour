@@ -1,65 +1,56 @@
 ﻿using Fusion;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 public class PlayerManager
 {
     private static PlayerManager _instance;
     public static PlayerManager Instance => _instance ??= new PlayerManager();
 
 
-    private Dictionary<PlayerRef, PlayerNetwork> players;
-    public Dictionary<PlayerRef, PlayerNetwork> Players => players ??= DIPlayerContain.Instance.GetPlayers();
-
+    public IReadOnlyDictionary<PlayerRef, PlayerNetwork> Player => DIPlayerContain.Instance.GetAllPlayers();
     public PlayerManager()
     {
-        GameEvents.Instance.OnGameState.Subscribe(OnGameRun);
+        GameEvents.Instance.OnGameState.Subscribe(OnGameStateChanged);
+    }
 
-        DIPlayerContain.Instance.RegisterAddPlayerNetwork(OnPlayerAdd);
-        DIPlayerContain.Instance.RegisterRemovePlayerNetwork(OnPlayerRemove);
-    }
-    public void OnPlayerAdd(PlayerNetwork player)
-    {
-        Players.Add(player.playerRef, player);
-    }
-    public void OnPlayerRemove(PlayerRef player)
-    {
-        Players.Remove(player);
-    }
     public PlayerNetwork GetNearPlayer(int index)
     {
-        return GetListNearPlayer(DIPlayerContain.Instance.LocalPlayer)[index];
-    }
-    private List<PlayerNetwork> GetListNearPlayer(PlayerNetwork OwnNetwork)
-    {
-        List<PlayerNetwork> allplayer = Players.Values.ToList();
+        var localPlayer = DIPlayerContain.Instance.LocalPlayer;
+        var NearbyPlayers = GetNearbyPlayers(localPlayer);
 
-        if (allplayer.Count <= 1) return new List<PlayerNetwork> { OwnNetwork, OwnNetwork };
-
-        int index = allplayer.IndexOf(OwnNetwork);
-        int previousIndex = (index - 1 + allplayer.Count) % allplayer.Count;
-        int nextIndex = (index + 1) % allplayer.Count;
-
-        return new List<PlayerNetwork> { allplayer[previousIndex], allplayer[nextIndex] };
+        return NearbyPlayers.ElementAtOrDefault(index);
     }
 
-    public PlayerNetwork RandomPlayer()
+    private List<PlayerNetwork> GetNearbyPlayers(PlayerNetwork ownPlayer)
     {
-        int rand = UnityEngine.Random.Range(0, Players.Count);
-        List<PlayerNetwork> allplayer = Players.Values.ToList();
+        var playerList = Player.Values.ToList();
 
-        return allplayer[rand];
+        if (playerList.Count <= 1) return new List<PlayerNetwork> { ownPlayer, ownPlayer };
+
+        int index = playerList.IndexOf(ownPlayer);
+        int priv = (index - 1 + playerList.Count) % playerList.Count;
+        int next = (index + 1) % playerList.Count;
+
+        Debug.Log($"{playerList[priv].PlayerName} : {playerList[next].PlayerName}");
+
+        return new List<PlayerNetwork> { playerList[priv], playerList[next] };
     }
-    public List<PlayerNetwork> GetPlayerList()
+    public void OnGameStateChanged(EGameState state)
     {
-        return Players.Values.ToList();
-    }
-    public void OnGameRun(EGameState gameState)
-    {
-        if (gameState == EGameState.End)
+        if (state == EGameState.End)
         {
-            foreach (var player in Players.Values)
+            foreach (var player in Player.Values)
             {
-                PlayerEvents.Instance.OnSentPlayerNetwork.Invoke(player);
+                PlayerEvents.Instance.OnSentPlayerScore?.Invoke((player.PlayerName, player.GetScore()));
+            }
+
+
+            var playerOnKeeper = PlayerEvents.Instance.OnKeepPlayerScore.GetParamiter();
+
+            foreach (var player in playerOnKeeper)
+            {
+                PlayerEvents.Instance.OnSentPlayerScore?.Invoke((player.Key, player.Value));
             }
         }
     }

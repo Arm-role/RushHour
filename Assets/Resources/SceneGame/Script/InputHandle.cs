@@ -9,7 +9,6 @@ public class InputHandle
     /// </summary>
     public static bool GetInputButtonUp()
     {
-        // ตรวจสอบเมาส์ซ้ายปล่อยคลิก
         if (Input.GetMouseButtonUp(0))
             return true;
 
@@ -25,7 +24,6 @@ public class InputHandle
     /// </summary>
     public static bool GetInputButton()
     {
-        // ตรวจสอบว่ากำลังกดเมาส์ซ้ายอยู่
         if (Input.GetMouseButton(0))
             return true;
 
@@ -41,7 +39,6 @@ public class InputHandle
     /// </summary>
     public static bool GetInputButtonDown()
     {
-        // ตรวจสอบว่ามีการกดเมาส์ซ้ายครั้งเดียว
         if (Input.GetMouseButtonDown(0))
             return true;
 
@@ -116,6 +113,14 @@ public class InputHandle
         {
             return true;
         }
+
+        return false;
+    }
+
+
+    public static bool EnterButton()
+    {
+        if(Input.GetKey(KeyCode.KeypadEnter)) return true;
 
         return false;
     }

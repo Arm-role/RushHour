@@ -113,8 +113,9 @@ public class CreateAndJoinLobby : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnEnterRoom()
     {
-        DIPlayerContain.Instance.SetNetworkRunner(_networkRunner);
+        //DIPlayerContain.Instance.SetNetworkRunner(_networkRunner);
         SceneController.Instance.LoadScene("Lobby");
+        GameEvents.Instance.OnGameScene?.Invoke(EGameScene.Lobby);
     }
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {

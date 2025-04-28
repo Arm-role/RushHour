@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Baesil
   m_EditorClassIdentifier: 
-  foodName: Baesil
+  id: 1001
+  _name: Baesil
+  kitchenType: 0
   prefab: {fileID: 8976346807666179692, guid: df98d9e9c468ef74eb00752cd39a2810, type: 3}
   sprite: {fileID: 21300000, guid: 2a4e8a5e0c6258640b8d11eeca991b4f, type: 3}
+  foodState: []

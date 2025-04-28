@@ -20,18 +20,10 @@ public class Menu : ScriptableObject, IIdentifiable
     private void OnValidate()
     {
         _name = name;
-        if (id == -1)
-        {
-            id = IDManager.Instance.GenerateNewID<Menu>();
-        }
-    }
-    private void OnDisable()
-    {
-        IDManager.Instance.RemoveID<Menu>(id);
     }
 }
 
-[Serializable]
+[Serializable]  
 public class ItemAndCount
 {
     public Item item;

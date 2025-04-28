@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: CutBean
   m_EditorClassIdentifier: 
-  foodName: CutBean
+  id: 1005
+  _name: CutBean
+  kitchenType: 0
   prefab: {fileID: 4329261879969594319, guid: e282ee402a66c5548ba3f1fc0db12808, type: 3}
   sprite: {fileID: 21300000, guid: 3e3ab272962acac42ac14f43d56508a6, type: 3}
+  foodState: []

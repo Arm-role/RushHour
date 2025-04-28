@@ -3,33 +3,19 @@ using UnityEngine;
 
 public class PlayerNetwork : Network_StateMachine<PlayerNetwork>
 {
-    private string _name;
-    [Networked]
-    public string playerName
-    {
-        get
-        { return _name; }
-        set
-        {
-            _name = value;
-            gameObject.name = _name;
-        }
-    }
+    [Networked] public string PlayerName { get; private set; }
+    [Networked] public PlayerRef PlayerRef { get; private set; }
 
-    #region Lobby
-
-    [Networked, OnChangedRender(nameof(isReadyChanged))]
+    [Networked, OnChangedRender(nameof(OnReadyChanged))]
     public bool IsReady { get; set; } = false;
 
-    #endregion
+    [Networked, OnChangedRender(nameof(OnScoreChange))]
+    private float Score { get; set; }
 
-    [Networked, OnChangedRender(nameof(isScoreChange))]
-    public float MyScore { get; set; }
-    [Networked]
-    private float currentScore { get; set; }
-
-    public PlayerRef playerRef { get; private set; }
     public bool isLocalPlayer => Object.HasInputAuthority;
+
+    private ReceiveItem _receiveItem;
+
 
     protected override void Awake()
     {
@@ -38,113 +24,63 @@ public class PlayerNetwork : Network_StateMachine<PlayerNetwork>
     }
     private void Start()
     {
+        _receiveItem = new ReceiveItem();
+
+        if (!isLocalPlayer) return;
         SetState(new PlayerLobbyState());
     }
-    void isReadyChanged()
-    {
-        DILobby.Instance.OnReadyChanged(playerRef, IsReady);
-    }
-    void isScoreChange()
-    {
-        GameEvents.Instance.OnSentTotalScore.Invoke(currentScore);
-    }
-
     void Update()
     {
         if (HasStateAuthority == false) return;
         Execute();
     }
-
     public override void Spawned()
     {
-        if (isLocalPlayer)
-        {
-            playerName = LoginManager.PlayerName;
-            playerRef = Object.InputAuthority;
-        }
-
         DIPlayerContain.Instance.RegisterPlayer(this);
+
+        if (!isLocalPlayer) return;
+
+        PlayerName = LoginManager.PlayerName;
+        PlayerRef = Object.InputAuthority;
     }
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        DIPlayerContain.Instance.UnregisterPlayer(playerRef);
+        DIPlayerContain.Instance.UnregisterPlayer(PlayerRef);
+        PlayerEvents.Instance.OnKeepPlayerScore.GetParamiter().Add(PlayerName, Score);
+
+        currentState?.Exit(this);
     }
 
-    public void OnSetReady(bool isReady) => IsReady = isReady;
-    public void OnSetScore(float score) => MyScore = score;
 
-    #region Score
-    public void GetScore(float score)
+    void OnReadyChanged()
     {
-        currentScore = score;
-        MyScore += score;
+        DILobby.Instance.OnReadyChanged(PlayerRef, IsReady);
     }
-    public float GetCurrentScore() => MyScore;
+    void OnScoreChange()
+    {
+        GameEvents.Instance.OnSentTotalScore.Invoke(Score);
+    }
+
+
+    #region Public API
+
+    public void SetReady(bool isReady) => IsReady = isReady;
+    public void SetScore(float score) => Score = score;
+    public void AddScore(float score) => Score += score;
+    public float GetScore() => Score;
 
     #endregion
 
 
     #region Transfer Item
-    public void TransportItem(PlayerNetwork targetnetwork, Item item)
-    {
-        if (HasInputAuthority)
-        {
-            RPC_SendItem(targetnetwork.playerRef, item.ID);
-        }
-        else
-        {
-            Debug.LogWarning("TransportStatus can only be called by the State Authority.");
-        }
-    }
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void RPC_SendItem(PlayerRef player, int ID)
-    {
-        if (player == playerRef)
-        {
-            ReceiveItem(ID);
-        }
-    }
-    public void ReceiveItem(int ID)
-    {
-        Item item = ScriptTable_Contain.instance.GetItem(ID);
-        if (item != null)
-        {
-            ItemEvents.Instance.OnSentItem.Invoke(item);
-        }
-    }
-
-    public void TransportItems(PlayerNetwork targetnetwork, byte[] item)
-    {
-        if (HasInputAuthority)
-        {
-            RPC_SendItems(targetnetwork.playerRef, item);
-        }
-        else
-        {
-            Debug.LogWarning("TransportStatus can only be called by the State Authority.");
-        }
-    }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void RPC_SendItems(PlayerRef player, byte[] ID)
-    {
-        if (playerRef == player)
-        {
-            ReceiveItem(ID);
-        }
-    }
-    public void ReceiveItem(byte[] ID)
-    {
-        int[] IDs = IntConverter.UnpackRLEIDs(ID);
+    public void RPC_SendItem(PlayerRef player, int ID) => _receiveItem?.RPC_SendItem(player, ID);
+    public void OnReceiveItem(int ID) => _receiveItem?.OnReceiveItem(ID);
 
-        foreach (int id in IDs)
-        {
-            Item item = ScriptTable_Contain.instance.GetItem(id);
-            if (item != null)
-            {
-                ItemEvents.Instance.OnSentItem.Invoke(item);
-            }
-        }
-    }
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void RPC_SendItems(PlayerRef player, byte[] ID) => _receiveItem?.RPC_SendItems(player, ID);
+    public void OnReceiveItems(byte[] ID) => _receiveItem?.OnReceiveItems(ID);
+
     #endregion
 }

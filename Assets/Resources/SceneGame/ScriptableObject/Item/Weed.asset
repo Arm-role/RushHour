@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Weed
   m_EditorClassIdentifier: 
-  foodName: Weed
+  id: 1029
+  _name: Weed
+  kitchenType: 0
   prefab: {fileID: 2200201905992679868, guid: 86162a5c33b37c345afc26806217fe05, type: 3}
   sprite: {fileID: 21300000, guid: 9ad998d34bd6b7f49852438c690da034, type: 3}
+  foodState: []

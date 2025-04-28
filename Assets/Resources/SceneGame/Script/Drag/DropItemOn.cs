@@ -21,36 +21,36 @@ public class PlateOnTrash : IDropItemTo
         ParticleManager.instance.CreateParticle("SmokeParticle", dragManager.currentItem.transform.position);
     }
 }
-public class OnArrowLeft : IDropItemTo
+
+
+public abstract class Arrow : IDropItemTo
 {
+    protected virtual int IndexNearPlayer { get; set; }
+    private ISentItem sentItem = new SentItem();
     public void Execute(DragManager dragManager)
     {
         ParticleManager.instance.CreateParticle("SmokeParticle", dragManager.currentItem.transform.position);
 
         Item item = MonoBehaviour.Instantiate(dragManager.currentHandle.Item);
 
-        PlayerNetwork player = DIPlayerContain.Instance.LocalPlayerNetwork();
-        PlayerNetwork playerNetwork = PlayerManager.Instance.GetNearPlayer(0);
-        player.TransportItem(playerNetwork, item);
+        PlayerNetwork player = DIPlayerContain.Instance.LocalPlayer;
+        PlayerNetwork playerNetwork = PlayerManager.Instance.GetNearPlayer(IndexNearPlayer);
+
+        sentItem.OnSentItem(player, playerNetwork, item.ID);
 
         dragManager.Self_Destruct();
     }
 }
-public class OnArrowRight : IDropItemTo
+public class OnArrowLeft : Arrow
 {
-    public void Execute(DragManager dragManager)
-    {
-        ParticleManager.instance.CreateParticle("SmokeParticle", dragManager.currentItem.transform.position);
-
-        Item item = MonoBehaviour.Instantiate(dragManager.currentHandle.Item);
-
-        PlayerNetwork player = DIPlayerContain.Instance.LocalPlayerNetwork();
-        PlayerNetwork playerNetwork = PlayerManager.Instance.GetNearPlayer(1);
-        player.TransportItem(playerNetwork, item);
-
-        dragManager.Self_Destruct();
-    }
+    protected override int IndexNearPlayer { get; set; } = 0;
 }
+public class OnArrowRight : Arrow
+{
+    protected override int IndexNearPlayer { get; set; } = 1;
+}
+
+
 public class OnCounter : IDropItemTo
 {
     Collider2D collider;

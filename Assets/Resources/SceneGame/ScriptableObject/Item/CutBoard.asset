@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: CutBoard
   m_EditorClassIdentifier: 
-  id: 1099
+  id: 1006
   _name: CutBoard
   kitchenType: 2
   prefab: {fileID: 7946573526266773568, guid: 833b4d63541ad35499afd1d54d2c22c0, type: 3}

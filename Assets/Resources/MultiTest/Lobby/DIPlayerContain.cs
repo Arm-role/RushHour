@@ -3,66 +3,42 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DIPlayerContain
+public class DIPlayerContain : SingletonBase<DIPlayerContain>
 {
-    private static DIPlayerContain _instance;
-    public static DIPlayerContain Instance => _instance ??= new DIPlayerContain();
+    private readonly Dictionary<PlayerRef, PlayerNetwork> _players = new();
 
-    private NetworkRunner runner;
-    private Dictionary<PlayerRef, PlayerNetwork> playerDataMap = new Dictionary<PlayerRef, PlayerNetwork>();
-    private List<Action<PlayerNetwork>> AddPlayerListener = new List<Action<PlayerNetwork>>();
-    private List<Action<PlayerRef>> RemovePlayerListener = new List<Action<PlayerRef>>();
+    public event Action<PlayerNetwork> OnPlayerAdd;
+    public event Action<PlayerRef> OnPlayerRemove;
 
     public PlayerNetwork LocalPlayer { get; private set; }
-    public void SetNetworkRunner(NetworkRunner runnerImport) => runner = runnerImport;
-    public NetworkRunner GetNetworkRunner() => runner;
 
+    protected DIPlayerContain() { }
 
-    public void RegisterPlayer(PlayerNetwork playerNetwork)
+    public void RegisterPlayer(PlayerNetwork player)
     {
-        if (playerNetwork != null && !playerDataMap.ContainsKey(playerNetwork.playerRef))
-        {
-            playerDataMap.Add(playerNetwork.playerRef, playerNetwork);
-            Debug.Log($"📌 Registered Player: {playerNetwork.playerName} (ID: {playerNetwork.playerRef.PlayerId})");
-        }
+        if (player == null && _players.ContainsKey(player.PlayerRef)) return;
 
-        foreach (var action in AddPlayerListener)
+        _players.Add(player.PlayerRef, player);
+
+
+        if (player.isLocalPlayer)
         {
-            action(playerNetwork);
+            LocalPlayer = player;
         }
-        if (playerNetwork.isLocalPlayer)
-        {
-            LocalPlayer = playerNetwork;
-        }
+        Debug.Log($"📌 Registered Player: {player.PlayerName} (ID: {player.PlayerRef.PlayerId})");
+
+        OnPlayerAdd?.Invoke(player);
     }
     public void UnregisterPlayer(PlayerRef playerRef)
     {
-        if (playerDataMap.ContainsKey(playerRef))
+        if (_players.Remove(playerRef))
         {
-            playerDataMap.Remove(playerRef);
+            OnPlayerRemove?.Invoke(playerRef);
             Debug.Log($"❌ Unregistered Player: {playerRef.PlayerId}");
         }
-
-        foreach (var action in RemovePlayerListener)
-        {
-            action(playerRef);
-        }
     }
 
 
-
-    public PlayerNetwork GetPlayer(PlayerRef playerRef) => playerDataMap.TryGetValue(playerRef, out var player) ? player : null;
-    public PlayerNetwork LocalPlayerNetwork() => playerDataMap[LocalPlayer.playerRef];
-    public Dictionary<PlayerRef, PlayerNetwork> GetPlayers() => playerDataMap;
-
-
-
-    public void RegisterAddPlayerNetwork(Action<PlayerNetwork> action)
-    {
-        AddPlayerListener.Add(action);
-    }
-    public void RegisterRemovePlayerNetwork(Action<PlayerRef> action)
-    {
-        RemovePlayerListener.Add(action);
-    }
+    public PlayerNetwork GetPlayer(PlayerRef playerRef) => _players.TryGetValue(playerRef, out var player) ? player : null;
+    public IReadOnlyDictionary<PlayerRef, PlayerNetwork> GetAllPlayers() => _players;
 }

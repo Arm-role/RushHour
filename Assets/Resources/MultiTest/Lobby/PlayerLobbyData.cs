@@ -45,6 +45,7 @@ public class PlayerLobbyData : MonoBehaviour
         }
     }
     public PlayerRef player { get; set; }
+    public GameObject Object;
     public void GetReady(bool isReady)
     {
         IsReady = isReady;

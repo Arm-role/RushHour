@@ -73,7 +73,7 @@ public class DragManager : StateMachine<DragManager>
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(InputHandle.GetTouchPosition());
         return new Vector2(mouseWorldPos.x, mouseWorldPos.y);
     }
-    public void MoveItem(Vector2 newPosition) => _currentRb?.MovePosition(newPosition);
+    public void MoveItem(Vector2 newPosition) => _currentRb.transform.position = newPosition;
     public void SetIsTrigger(bool isTrigger) => _currentColl.isTrigger = isTrigger;
     public void Self_Destruct() => currentHandle.Self_Destruct();
     public void SetSortOrder(bool isTouch)

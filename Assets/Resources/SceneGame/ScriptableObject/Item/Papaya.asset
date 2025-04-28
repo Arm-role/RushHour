@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: Papaya
   m_EditorClassIdentifier: 
-  foodName: Papaya
+  id: 1017
+  _name: Papaya
+  kitchenType: 0
   prefab: {fileID: 5424447248913757715, guid: f292f938f6aa3c647950acde27fb6aa7, type: 3}
   sprite: {fileID: 21300000, guid: 61177e227637293468626ab1ea285c67, type: 3}
   foodState:

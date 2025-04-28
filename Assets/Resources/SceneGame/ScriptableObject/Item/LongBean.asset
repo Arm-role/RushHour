@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97a1b3e387742d4f8e56babc9d28b81, type: 3}
   m_Name: LongBean
   m_EditorClassIdentifier: 
-  foodName: LongBean
+  id: 1013
+  _name: LongBean
+  kitchenType: 0
   prefab: {fileID: 938272491220940314, guid: 7eea50f0cdce0a8448c6b07612a71755, type: 3}
   sprite: {fileID: 21300000, guid: 411819df2e577c345bc88b8b810846bd, type: 3}
   foodState:
