@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1490bf2a44360542b0feb393e2cc73c, type: 3}
+  m_Name: TomatoSlide
+  m_EditorClassIdentifier: 
+  _name: TomatoSlide
+  Amount: 1
+  preRef:
+    m_AssetGUID: 8844c85e900c142439f196c930c1ffb4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  sprite: {fileID: 2204221490112661412, guid: c9a6ee5e96661ca4994b165ed2f34cfa, type: 3}
+  foodState: []

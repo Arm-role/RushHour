@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8109efdd1d8cc1947bd782f140c506c2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _particleLibrary: {fileID: 11400000, guid: 7979b576801db464192f586ea04794de, type: 2}
+  - _itemLibrary: {fileID: 11400000, guid: 8b7e4b458bae0c641ac38d06661a0103, type: 2}
+  - _gameObjectLibrary: {fileID: 11400000, guid: c5d96bb6657e65b46a447071ecee89d9, type: 2}
+  - _launcherConfig: {instanceID: 0}
+  - _transportItem: {instanceID: 0}
+  - _dragManager: {instanceID: 0}
+  - _itemMockTest: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

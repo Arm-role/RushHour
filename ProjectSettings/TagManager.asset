@@ -11,6 +11,8 @@ TagManager:
   - ArrowLeft
   - ArrowRight
   - Item
+  - ItemLabel
+  - Dragable
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - eff
   - Water
   - UI
-  - 
+  - MenuList
   - 
   - 
   - 
@@ -47,4 +49,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MenuList
+    uniqueID: 4166418159
     locked: 0

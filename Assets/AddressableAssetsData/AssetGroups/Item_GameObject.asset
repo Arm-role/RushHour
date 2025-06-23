@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Item_GameObject
+  m_EditorClassIdentifier: 
+  m_GroupName: Item_GameObject
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d184b1eea03c62b438b87ea7b050481b
+  m_SerializeEntries:
+  - m_GUID: 218899f8512df1d49a0cc8dd8ab53cdf
+    m_Address: EggStar Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2858bd10a179e5840858c7e72c082b77
+    m_Address: Weed Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d18408187f910f459c419c39b7ef1c3
+    m_Address: LongBean Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e78dc4b804bd6b4e9d0238d32616cf9
+    m_Address: Shrimp Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34728ec055fcf854e9695e3530f05c73
+    m_Address: Baesil
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 350309d180e28304298ae8a8d490de48
+    m_Address: Mushroom Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3fd3d915c1f025142a9dcd137f551e21
+    m_Address: Papaya Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 760d22e41abf13b488de7a116a48cb61
+    m_Address: FriedSausage Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77eb82c5aa24f834b8c3e3ee11e91e16
+    m_Address: Pan Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79ec4a079a725584abe79ac9306f4051
+    m_Address: Rice Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 818301773ba08254f946486d1069d54f
+    m_Address: FriedShrimp Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 81905e96aecb5994abc48b2e1bf6e543
+    m_Address: LongbeenCut
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 860c99a59488bfe4ba022436d9cef2e8
+    m_Address: Chilli Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86217e3d938d28942b264709a505afd8
+    m_Address: SalmonSlide Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8844c85e900c142439f196c930c1ffb4
+    m_Address: TometoSlide Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 892f54cc600852f449e97946e8590031
+    m_Address: Tometo Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bcd9146a938fd3498b578fbc4871cba
+    m_Address: Egg Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ab7c2eebe9903843bbdc783561c3b57
+    m_Address: Plate Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fd6a45d1e267a8469b8e56e019fc6e3
+    m_Address: FriedRice Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6707944744345e41b14648359afa058
+    m_Address: WaterMelonSlide Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7ae249e73f63a54f9ad53ce4bc463f2
+    m_Address: Salmon Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be29ee922583dcc46858c2c1df524d6b
+    m_Address: PapayaSlide
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf0ddf4a504b1d44b8a5aaefd40a920a
+    m_Address: Bread Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c883ba7085f392448b2bcc5b58da4cbd
+    m_Address: WaterMelon Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e29f2a23c56481443bcb3bd0127f98b1
+    m_Address: MushroomSlide
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb260cc99efa2684288cfc98297d66ef
+    m_Address: Sausage Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f88093995430a98468e336906be69259
+    m_Address: Fried Salmon Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbc8b5aa4b70a464c898cf42363e8edf
+    m_Address: CuttingBoard Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffab070db37fad04aa763362317f8bc9
+    m_Address: BreadCook Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: b2d93f4843a3eac408614f9838aa95af, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: b7915f00366b96946ad09ab459bb38c3, type: 2}
+    - {fileID: 11400000, guid: 16794af35f55e774a94d397e33fb9f60, type: 2}

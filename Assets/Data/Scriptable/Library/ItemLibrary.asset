@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b30a180ebcad0e04198b5ba6e3c906c9, type: 3}
+  m_Name: ItemLibrary
+  m_EditorClassIdentifier: 
+  Entries:
+  - Name: Pan
+    Id: 1000
+    Adressable1:
+      m_AssetGUID: 56244a0564aa4b043a5f815624cfdc06
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: 77eb82c5aa24f834b8c3e3ee11e91e16
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Name: Bread
+    Id: 1001
+    Adressable1:
+      m_AssetGUID: 20b6874ec48206745abbc53d2bde4ec5
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: bf0ddf4a504b1d44b8a5aaefd40a920a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Name: BreadCook
+    Id: 1002
+    Adressable1:
+      m_AssetGUID: 1dc3d38ebba4c284ca54c22f0ed388c0
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: ffab070db37fad04aa763362317f8bc9
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Name: CutBoard
+    Id: 1003
+    Adressable1:
+      m_AssetGUID: 5512aaa6623590945b93cfcff76c04af
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: fbc8b5aa4b70a464c898cf42363e8edf
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Name: Tomato
+    Id: 1004
+    Adressable1:
+      m_AssetGUID: bf14694d664d35c4fb84abb211ecd519
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: 892f54cc600852f449e97946e8590031
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Name: TomatoSlide
+    Id: 1005
+    Adressable1:
+      m_AssetGUID: d4583479ea3604f4da28a84f8e5e055e
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+    Adressable2:
+      m_AssetGUID: 8844c85e900c142439f196c930c1ffb4
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
