@@ -1,0 +1,23 @@
+{
+    "name": "6_Installer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27f764b3b84ae5c49b48cd2b0475604c",
+        "GUID:f19b771b7a8178d4e9c68a2d15c0a555",
+        "GUID:b7d8b493b5133334d9a4f81b7cfcc77b",
+        "GUID:bffdacbddef924547aedba97ab92e872",
+        "GUID:bc808591e5d3dff46b0713b00704a7be",
+        "GUID:8d1b00181cb3e374d8174cfa84429e95",
+        "GUID:1a6e74f6d3097304fa09e039c2651cea",
+        "GUID:aa61dce1fd471ea4089eb23d89cdf367"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

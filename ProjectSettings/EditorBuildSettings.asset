@@ -9,19 +9,22 @@ EditorBuildSettings:
     path: Assets/Scenes/Login.unity
     guid: 732190fac411c17409b0802d7f16b3da
   - enabled: 1
-    path: Assets/Scenes/CreateAndJoin.unity
-    guid: fcd46e14a07306b4588facf3afca8013
-  - enabled: 1
-    path: Assets/Scenes/Create.unity
-    guid: cca81d8f81adc1a40b30a3e79ff07219
-  - enabled: 1
-    path: Assets/Scenes/Join.unity
+    path: Assets/Scenes/Mode.unity
     guid: 2f0634ca2c21b214b8238edaad23578c
   - enabled: 1
+    path: Assets/Scenes/CreateAndJoin.unity
+    guid: ffb5f870649857a43bc3a84cc45617f7
+  - enabled: 1
     path: Assets/Scenes/Lobby.unity
-    guid: 7fcd0b7411300e047bb9354d4147f4cd
+    guid: 615f8a85e63c4ce4abecae5d873cb64a
   - enabled: 1
     path: Assets/Scenes/Game.unity
-    guid: 1981213b13732a04486dcb01c8c41d41
+    guid: 0ccdff6b32b825e469f9e5ba618a09bb
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 020fdc9efcfa2ff439a7852aa51f0aa9
+  - enabled: 1
+    path: Assets/Scenes/ConnectionLost.unity
+    guid: 22eeb6e42861439498abd57591d38715
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: fb6614a02c677cb4e93a08e74e346869, type: 2}

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b67fc8f67dae03a4a90dc78fead313d2, type: 3}
   m_Name: Order
   m_EditorClassIdentifier: 
-  id: 1001
   _name: Order
   Amount: 1
-  prefab: {fileID: 5717256814205026672, guid: 2c40ee5d24051454da7191d02ae454f3, type: 3}
-  sprite: {fileID: 21300000, guid: d4dc3a75be90eb34c9a9c0fc525c29f7, type: 3}
+  sprite: {fileID: 21300000, guid: 53549c7100387b7489a432273db7aa46, type: 3}
+  sprite2: {fileID: 21300000, guid: 8949c37feed743547a7ab8b1d0efb48e, type: 3}

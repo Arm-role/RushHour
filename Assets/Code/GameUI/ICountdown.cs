@@ -1,1 +1,0 @@
-﻿public interface ICountdown : IState<Countdown> { }

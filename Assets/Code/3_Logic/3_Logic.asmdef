@@ -1,0 +1,24 @@
+{
+    "name": "3_Logic",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27f764b3b84ae5c49b48cd2b0475604c",
+        "GUID:f19b771b7a8178d4e9c68a2d15c0a555",
+        "GUID:b7d8b493b5133334d9a4f81b7cfcc77b",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:49b49c76ee64f6b41bf28ef951cb0e50",
+        "GUID:e6234d6c1f7bf4e4db20eddc411c00b8",
+        "GUID:1baf1ffff1031e948b3b228ab3453251",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

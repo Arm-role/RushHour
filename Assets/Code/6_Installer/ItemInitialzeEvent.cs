@@ -1,0 +1,116 @@
+﻿using UnityEngine;
+using ItemEvents;
+using System.Collections.Generic;
+using System;
+
+public class ItemInitialzeEvent
+{
+    private readonly AssetProvider<Item> _cacheItem;
+    private readonly GameObjectSpawner _objectSpawner;
+    private readonly ItemDestroyService _itemDestroyService;
+    private readonly ItemWorkService _itemWorkService;
+    private ObjectActive[] _objectActives;
+
+    private readonly Dictionary<InteractableItem, List<(Action drag, Action release)>> _subscriptions
+        = new();
+
+    public ItemInitialzeEvent(
+        AssetProvider<Item> cacheItem, GameObjectSpawner objectSpawner, ItemDestroyService itemDestroyService,
+        ItemWorkService itemWorkService, ObjectActive[] objectActives)
+    {
+        _cacheItem = cacheItem;
+        _objectSpawner = objectSpawner;
+        _itemDestroyService = itemDestroyService;
+        _itemWorkService = itemWorkService;
+        _objectActives = objectActives;
+
+        EventManager.Subscribe<ItemSpawned>(InitialzeItem);
+    }
+
+    public void InitialzeItem(ItemSpawned evt)
+    {
+        if (evt.Interactable is InteractableItem interactable)
+        {
+            if(_itemDestroyService != null)
+            {
+                _itemDestroyService.OnRequestDestruction += interactable.RequestDestruction;
+            }
+
+            if (interactable.TryGetComponent<Station>(out var station))
+            {
+                station.Initialze(_cacheItem);
+            }
+
+
+            var orderlayerSystem = interactable.OrderLayerSystem;
+
+
+            if (interactable.TryGetComponent<ToolView>(out var toolView))
+            {
+                toolView.Initialze(orderlayerSystem, _objectSpawner);
+            }
+            if (interactable.TryGetComponent<WareView>(out var plateView))
+            {
+                plateView.Initialze(orderlayerSystem, _objectSpawner);
+            }
+            if (interactable.TryGetComponent<OrderView>(out var orderView))
+            {
+                orderView.Initialze(orderlayerSystem, _objectSpawner, _itemWorkService);
+            }
+
+            if (interactable.itemType == EItemType.Food)
+            {
+                SubscribeAction(interactable, _objectActives);
+            }
+        }
+    }
+
+    private void SubscribeAction(InteractableItem interactable, ObjectActive[] objectActives)
+    {
+        if (!_subscriptions.ContainsKey(interactable))
+            _subscriptions[interactable] = new List<(Action, Action)>();
+
+        foreach (var objectActive in objectActives)
+        {
+            Action dragHandler = () => objectActive.Show();
+            Action releaseHandler = () => objectActive.Hide();
+
+            interactable.OnDrag += dragHandler;
+            interactable.OnRelease += releaseHandler;
+
+            _subscriptions[interactable].Add((dragHandler, releaseHandler));
+        }
+
+        interactable.gameObject.AddComponent<Unsubscriber>().Setup(interactable, this);
+    }
+
+    public void UnsubscribeAll(InteractableItem interactable)
+    {
+        if (_subscriptions.TryGetValue(interactable, out var handlers))
+        {
+            foreach (var (drag, release) in handlers)
+            {
+                interactable.OnDrag -= drag;
+                interactable.OnRelease -= release;
+            }
+            _subscriptions.Remove(interactable);
+        }
+    }
+    private class Unsubscriber : MonoBehaviour
+    {
+        private InteractableItem _item;
+        private ItemInitialzeEvent _owner;
+
+        public void Setup(InteractableItem item, ItemInitialzeEvent owner)
+        {
+            _item = item;
+            _owner = owner;
+        }
+
+        private void OnDisable()
+        {
+            _owner.UnsubscribeAll(_item);
+            Destroy(this); 
+        }
+    }
+}

@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92337661f264b5048b3e6bf0bf7c888b, type: 3}
   m_Name: GameObjectLibrary
   m_EditorClassIdentifier: 
-  Entries: []
+  Entries:
+  - Name: SpriteObject
+    Id: 1000
+    Adressable:
+      m_AssetGUID: c106fe0c235c5d345a70788745db8298
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

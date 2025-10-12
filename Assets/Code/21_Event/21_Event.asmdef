@@ -1,0 +1,17 @@
+{
+    "name": "21_Event",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27f764b3b84ae5c49b48cd2b0475604c",
+        "GUID:f19b771b7a8178d4e9c68a2d15c0a555"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

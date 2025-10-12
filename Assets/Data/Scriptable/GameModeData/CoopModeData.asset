@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9f283f30c0b5945a9fcc6333c9ab16, type: 3}
+  m_Name: CoopModeData
+  m_EditorClassIdentifier: 
+  GameModeID: 9001
+  ModeName: CoopModeData
+  LevelLoop: 1
+  RandomLevelMin: 1
+  RandomLevelMax: 4
+  LevelList:
+  - {fileID: 11400000, guid: 7a3fc187a7cba274a80f9f82907f6c95, type: 2}
+  - {fileID: 11400000, guid: c1a549c4036152f419424087c9bcfe1b, type: 2}
+  - {fileID: 11400000, guid: d794d85c41c2e874b8691b30ffc16ca7, type: 2}
+  - {fileID: 11400000, guid: c59380813dddd6c468a6ec5863f2e438, type: 2}

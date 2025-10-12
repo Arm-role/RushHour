@@ -13,11 +13,6 @@ MonoBehaviour:
   m_Name: TomatoSlide
   m_EditorClassIdentifier: 
   _name: TomatoSlide
-  Amount: 1
-  preRef:
-    m_AssetGUID: 8844c85e900c142439f196c930c1ffb4
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
   sprite: {fileID: 2204221490112661412, guid: c9a6ee5e96661ca4994b165ed2f34cfa, type: 3}
+  localScale: {x: 1.2, y: 1.2, z: 1.2}
   foodState: []

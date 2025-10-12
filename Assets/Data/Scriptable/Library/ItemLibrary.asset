@@ -85,3 +85,27 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - Name: Plate
+    Id: 1006
+    Adressable1:
+      m_AssetGUID: f3fe4ece45bc6ee4187aeb05fd987ec4
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: 9ab7c2eebe9903843bbdc783561c3b57
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - Name: Order
+    Id: 1007
+    Adressable1:
+      m_AssetGUID: 27b1a2245560ffb419f0ae3ec674c3a8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    Adressable2:
+      m_AssetGUID: 2c40ee5d24051454da7191d02ae454f3
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

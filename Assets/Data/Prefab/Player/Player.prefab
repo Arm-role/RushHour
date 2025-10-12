@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4846978586852025214}
   - component: {fileID: 1095688982762846400}
-  - component: {fileID: 349205042200474804}
+  - component: {fileID: 6359063177076252938}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -50,8 +50,9 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 349205042200474804}
---- !u!114 &349205042200474804
+  - {fileID: 6359063177076252938}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &6359063177076252938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +64,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f47e6fffb36a054fa32e3030d8e735a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerName: 
-  _IsReady: 0
-  _MyScore: 0
-  _itemFromArrow: 
+  _IsHost: 0

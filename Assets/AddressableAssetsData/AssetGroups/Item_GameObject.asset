@@ -27,6 +27,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c40ee5d24051454da7191d02ae454f3
+    m_Address: Order Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d18408187f910f459c419c39b7ef1c3
     m_Address: LongBean Variant
     m_ReadOnly: 0
@@ -129,6 +134,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bf0ddf4a504b1d44b8a5aaefd40a920a
     m_Address: Bread Variant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c106fe0c235c5d345a70788745db8298
+    m_Address: SpriteObject
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
