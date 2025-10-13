@@ -20,10 +20,6 @@ MonoBehaviour:
     StartPopupSprite: {fileID: 21300000, guid: e62d388b38fccab41aa02ab608dd6338, type: 3}
   - timer: 3
     StartPopupSprite: {fileID: 21300000, guid: e62d388b38fccab41aa02ab608dd6338, type: 3}
-  - timer: 3
-    StartPopupSprite: {fileID: 21300000, guid: e62d388b38fccab41aa02ab608dd6338, type: 3}
-  - timer: 3
-    StartPopupSprite: {fileID: 21300000, guid: e62d388b38fccab41aa02ab608dd6338, type: 3}
   MenuList:
   - {fileID: 11400000, guid: 9060944d932c27b468ae17026290b31b, type: 2}
   - {fileID: 11400000, guid: f78906858215eaa418351ce9d3691a8c, type: 2}

@@ -7,7 +7,8 @@ public class FoodDrop : IDropType
     public readonly Dictionary<string, Func<Collider2D, IDrop>> _tagBasedStrategies = new()
     {
         { "ArrowLeft",  (col) => new FoodOverArrowL() },
-        { "ArrowRight", (col) => new FoodOverArrowR() }
+        { "ArrowRight", (col) => new FoodOverArrowR() },
+        { "Trash", (col) => new FoodOverTrash() }
     };
     public readonly Dictionary<EItemType, Func<Collider2D, IDrop>> _itemTypeBasedStrategies = new()
     {

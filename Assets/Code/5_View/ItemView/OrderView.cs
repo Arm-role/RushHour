@@ -108,12 +108,9 @@ public class OrderView : MonoBehaviour
 
     private async void OnIngredienAddToOrder(IngredienAddToOrder evt)
     {
-        Debug.Log("OnIngredienAddToOrder");
-
         if (evt.Station != _station) return;
 
-        _presenter.RemoveItemAll(spriteItem => _orderLayerSystem.Remove(spriteItem.Renderor));
-        _presenter.RemoveHelpAll(spriteToolItem => _orderLayerSystem.Remove(spriteToolItem.Renderor));
+        ClearIngredienView();
 
         if (evt.Ingredient.Item1 == 0 && evt.Ingredient.Item2 == null)
         {
@@ -149,6 +146,7 @@ public class OrderView : MonoBehaviour
 
         _isWorking = false;
         UpdateSliderState();
+        ClearIngredienView();
     }
     private void OnCancel(WorkCanceled evt)
     {
@@ -156,6 +154,7 @@ public class OrderView : MonoBehaviour
 
         _isWorking = false;
         UpdateSliderState();
+        ClearIngredienView();
     }
 
     private void SetActiveState(int state)
@@ -176,5 +175,11 @@ public class OrderView : MonoBehaviour
     private void UpdateSliderState()
     {
         timeSlider.gameObject.SetActive(_isGameRunning && _isWorking);
+    }
+
+    private void ClearIngredienView()
+    {
+        _presenter.RemoveItemAll(spriteItem => _orderLayerSystem.Remove(spriteItem.Renderor));
+        _presenter.RemoveHelpAll(spriteToolItem => _orderLayerSystem.Remove(spriteToolItem.Renderor));
     }
 }

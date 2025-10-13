@@ -52,7 +52,7 @@ public class OfflineGameController : MonoBehaviour
         _orderSpawner.OnOrderSpawnedAndReady += SpawnItemMaterials;
 
         _gameTimeController.OnGameTimeFinished += OnEndGame;
-        
+
         _popupController.OnPopupFinished += () => GameFlowState.Set(EGameFlow.Run);
 
         EventManager.Subscribe<SentMenu>(OnPlayerSubmitMenu);
@@ -78,7 +78,7 @@ public class OfflineGameController : MonoBehaviour
         if (_gameTimeController != null)
             _gameTimeController.OnGameTimeFinished -= OnEndGame;
         if (_popupController != null)
-        
+
             _popupController.OnPopupFinished -= () => GameFlowState.Set(EGameFlow.Run);
 
         EventManager.Unsubscribe<SentMenu>(OnPlayerSubmitMenu);
@@ -90,7 +90,7 @@ public class OfflineGameController : MonoBehaviour
         LevelData nextLevel = _levelProgression.AdvanceToNextLevel();
         if (nextLevel != null)
         {
-            _popupController.StartPopupSequence(nextLevel.StartPopupSprites);
+            _popupController.StartPopupSequence(_levelProgression.IsRandomLevel(), _levelProgression.CurrentLevelIndex, nextLevel);
             _questManager.SetupLevel(nextLevel, _players);
 
             EventManager.Invoke(new GameFlow(EGameFlow.Pause));
@@ -190,4 +190,4 @@ public class OfflineGameController : MonoBehaviour
 
         UpdatePlayerOrder(evt.PlayerId);
     }
-}   
+}

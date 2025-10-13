@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TrashBox
   - Wall
   - Counter
   - Tool
@@ -13,6 +12,7 @@ TagManager:
   - Item
   - ItemLabel
   - Dragable
+  - Trash
   layers:
   - Default
   - TransparentFX
@@ -49,6 +49,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Interaction
+    uniqueID: 417478649
+    locked: 0
+  - name: Item
+    uniqueID: 2225873833
     locked: 0
   - name: MenuList
     uniqueID: 4166418159

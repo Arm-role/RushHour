@@ -218,22 +218,42 @@ public class DragManager : MonoBehaviour
     }
     private Collider2D GetColliderAtTouchPoint()
     {
+        var colliders = GetAllCollidersAtTouchPoint();
+        return colliders.Length > 0 ? colliders[^1] : null;
+    }
+    private Collider2D[] GetAllCollidersAtTouchPoint()
+    {
         Vector2 touchPos = GetTouchPos();
         var colliders = Physics2D.OverlapPointAll(touchPos);
 
-        if (colliders.Length <= 0) return null;
+        if (colliders.Length <= 1)
+            return colliders;
 
         Array.Sort(colliders, (a, b) =>
         {
-            return a.transform.position.z.CompareTo(b.transform.position.z);
+            var srA = a.GetComponent<SpriteRenderer>();
+            var srB = b.GetComponent<SpriteRenderer>();
+
+            // ✅ ถ้ามี SpriteRenderer ทั้งคู่
+            if (srA != null && srB != null)
+            {
+                int layerCompare = srA.sortingLayerID.CompareTo(srB.sortingLayerID);
+                if (layerCompare != 0) return layerCompare; // layer สูงกว่า → อยู่บน
+
+                int orderCompare = srA.sortingOrder.CompareTo(srB.sortingOrder);
+                if (orderCompare != 0) return orderCompare; // order สูงกว่า → อยู่บน
+            }
+
+            // ✅ ถ้ามีแค่ตัวใดตัวหนึ่งมี SpriteRenderer → ให้ตัวนั้นอยู่บน
+            if (srA != null && srB == null) return 1;
+            if (srA == null && srB != null) return -1;
+
+            // ✅ ถ้าไม่มี SpriteRenderer ทั้งคู่ → ใช้ตำแหน่ง z แทน
+            return (-a.transform.position.z).CompareTo(-b.transform.position.z);
         });
 
-        Collider2D topCollider = colliders[^1];
-
-        return topCollider;
+        return colliders;
     }
-
-    private Collider2D[] GetAllCollidersAtTouchPoint() => Physics2D.OverlapPointAll(GetTouchPos());
 
     private void SetItem(Collider2D hitColl)
     {

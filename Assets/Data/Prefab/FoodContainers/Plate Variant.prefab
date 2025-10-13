@@ -240,6 +240,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.data[0].Name
+      value: Base
+      objectReference: {fileID: 0}
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.data[1].Name
+      value: TeamColor
+      objectReference: {fileID: 0}
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.data[0].SpriteRenderer
+      value: 
+      objectReference: {fileID: 7162180127729307664}
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.data[1].SpriteRenderer
+      value: 
+      objectReference: {fileID: 4626467048942503525}
     - target: {fileID: 2175593666742767834, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
       propertyPath: Item
       value: 

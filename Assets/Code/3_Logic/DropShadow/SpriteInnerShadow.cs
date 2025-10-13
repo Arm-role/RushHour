@@ -13,10 +13,17 @@ public class SpriteInnerShadow : MonoBehaviour
     private OrderLayerSystem orderLayerSystem;
     private InteractableItem interactableItem;
 
+    private ComponentHolder componentHolder;
+
+    private int sortingLayerID = -1;
+
     private void Start()
     {
         interactableItem = GetComponent<InteractableItem>();
         orderLayerSystem = interactableItem.OrderLayerSystem;
+
+        componentHolder = GetComponent<ComponentHolder>();
+        sortingLayerID = componentHolder.GetComponentByName<SpriteRenderer>("Base").sortingLayerID;
 
         CreateObject(orderLayerSystem, interactableItem);
     }
@@ -28,6 +35,7 @@ public class SpriteInnerShadow : MonoBehaviour
         transShadow.position = parent.position;
 
         shadowRenderer = transShadow.gameObject.AddComponent<SpriteRenderer>();
+        shadowRenderer.sortingLayerID = sortingLayerID;
         shadowRenderer.sortingOrder = 1;
         shadowRenderer.color = new Color(0, 0, 0, 0.25f);
 

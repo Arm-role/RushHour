@@ -510,8 +510,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2069093463
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 06061458c468af0468e1cfc7e0de0bfc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -532,6 +532,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.data[0].Name
+      value: Base
+      objectReference: {fileID: 0}
+    - target: {fileID: -6776034433935046566, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: holdData.Array.data[0].SpriteRenderer
+      value: 
+      objectReference: {fileID: 8818289466154409188}
     - target: {fileID: 1165467189134231451, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
       propertyPath: Item
       value: 

@@ -1,7 +1,5 @@
-using GameEvents;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using GameEvents;
 using UnityEngine;
 
 public class InteractableItem : MonoBehaviour, IInteractable
