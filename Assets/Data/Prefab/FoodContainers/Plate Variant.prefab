@@ -134,8 +134,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2069093463
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 711bec4ac1825794e8b82360b0c4bf22, type: 3}
   m_Color: {r: 0.52156866, g: 0.5137255, b: 0.5568628, a: 1}
@@ -218,8 +218,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2069093463
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 571f7bb0d3b7a89439892e99cdd270ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -408,6 +408,7 @@ MonoBehaviour:
       type: {class: ItemContainerData, ns: , asm: 3_Logic}
       data:
         Capacity: 5
+        FoodRequest: []
 --- !u!114 &7899899881191928953
 MonoBehaviour:
   m_ObjectHideFlags: 0

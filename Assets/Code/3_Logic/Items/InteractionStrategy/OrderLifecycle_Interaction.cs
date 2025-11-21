@@ -19,7 +19,7 @@ public class OrderLifecycle_Interaction : InteractionStrategy
 
         if (orderManager.CurrentState is OrderState_AwaitingActivation)
         {
-            var orderQuest_Work = new OrderQuest_Work(orderManager);
+            var orderQuest_Work = new OrderQuest_Work(orderManager, targetStation);
             targetStation.worker.BeginWork(orderQuest_Work, targetStation);
         }
 

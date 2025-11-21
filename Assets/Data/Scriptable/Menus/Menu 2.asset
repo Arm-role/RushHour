@@ -18,12 +18,12 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 1dc3d38ebba4c284ca54c22f0ed388c0, type: 2}
     count: 2
   - item: {fileID: 11400000, guid: d4583479ea3604f4da28a84f8e5e055e, type: 2}
-    count: 2
+    count: 1
   _FoodSpanw:
-  - item: {fileID: 11400000, guid: 20b6874ec48206745abbc53d2bde4ec5, type: 2}
+  - item: {fileID: 11400000, guid: 1dc3d38ebba4c284ca54c22f0ed388c0, type: 2}
     count: 2
-  - item: {fileID: 11400000, guid: bf14694d664d35c4fb84abb211ecd519, type: 2}
-    count: 2
+  - item: {fileID: 11400000, guid: d4583479ea3604f4da28a84f8e5e055e, type: 2}
+    count: 1
   _OtherFoodSpawn: []
   Score: 150
-  TimeLimit: 10
+  TimeLimit: 30

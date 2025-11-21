@@ -1,8 +1,6 @@
 ﻿using Fusion;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System;
 
 [RequireComponent(typeof(PlateLayoutManager))]
 public class NetworkedPlateController : NetworkBehaviour
@@ -31,7 +29,7 @@ public class NetworkedPlateController : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.StateAuthority)]
     private void RPC_PreSpawnAllPlates()
     {
-        if (_allSpawnedPlates.Count > 0) return; // Already spawned
+        if (_allSpawnedPlates.Count > 0) return; 
 
         for (int i = 0; i < _maxPlates; i++)
         {

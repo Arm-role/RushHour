@@ -1,4 +1,5 @@
 ﻿using System;
+
 public readonly struct WorkStarted
 {
     public readonly Station Station;
@@ -38,7 +39,6 @@ public readonly struct WorkCanceled
         Station = station;
     }
 }
-
 public readonly struct ItemAddToStation
 {
     public readonly Station Station;
@@ -48,6 +48,15 @@ public readonly struct ItemAddToStation
     {
         Station = station;
         Item = item;
+    }
+}
+public readonly struct OrderSpawnPlate
+{
+    public readonly Station Station;
+
+    public OrderSpawnPlate(Station station)
+    {
+        Station = station;
     }
 }
 
@@ -60,18 +69,6 @@ public readonly struct ItemRemoveFromStation
     {
         Station = station;
         Item = item;
-    }
-}
-
-public readonly struct StationConnect
-{
-    public readonly Station FromStation;
-    public readonly Station ToStation;
-
-    public StationConnect(Station from, Station to)
-    {
-        FromStation = from;
-        ToStation = to;
     }
 }
 public readonly struct IngredienAddToOrder
@@ -96,25 +93,30 @@ public readonly struct PlateServeToOrder
 }
 public readonly struct SentMenu
 {
-    public readonly int PlayerId;
     public readonly int MenuId;
     public readonly float ScoreValue;
 
-    public SentMenu(int playerId, int menuId, float score)
+    public SentMenu(int menuId, float score)
     {
-        PlayerId = playerId;
         MenuId = menuId;
         ScoreValue = score;
     }
 }
-
 public readonly struct OrderExpiredEvent
 {
-    public readonly int PlayerId;
     public readonly int MenuId;
-    public OrderExpiredEvent(int playerId, int menuId)
+    public OrderExpiredEvent(int menuId)
     {
-        PlayerId = playerId;
         MenuId = menuId;
+    }
+}
+
+public readonly struct SpawnOrderAgain
+{
+    public readonly InteractableItem Interactable;
+
+    public SpawnOrderAgain(InteractableItem interactable)
+    {
+        Interactable = interactable;
     }
 }

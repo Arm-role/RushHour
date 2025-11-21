@@ -1,12 +1,14 @@
 ﻿using ItemEvents;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ItemSpawnSystem
 {
-    private readonly ItemSpawnManager _itemManager;
+    private readonly ItemSpawnHandle _itemManager;
 
-    public ItemSpawnSystem(ItemSpawnManager itemManager)
+    public ItemSpawnSystem(ItemSpawnHandle itemManager)
     {
         _itemManager = itemManager;
 
@@ -15,8 +17,8 @@ public class ItemSpawnSystem
         EventManager.Subscribe<ItemIdEjectedLaunch>(GetItemIdForSpawn);
         EventManager.Subscribe<ItemNameEjectedLaunch>(GetItemNameForSpawn);
         EventManager.Subscribe<ItemSpawnRequested>(SpawnItemSpawnRequested);
-    }
 
+    }
     private async void GetItemForSpawn(ItemEjected evt)
     {
         await _itemManager.SpawnItem(evt.ItemName, new Vector3(evt.Position.x, evt.Position.y, 0));
@@ -37,5 +39,4 @@ public class ItemSpawnSystem
     {
         _itemManager.SpawnItemSpawnRequested(requested);
     }
-
 }

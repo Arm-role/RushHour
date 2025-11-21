@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PopupView : MonoBehaviour
 {
+    [Header("UI Elements")]
     [SerializeField] private GameObject popupPanel;
     [SerializeField] private Image popupImage;
     [SerializeField] private TextMeshProUGUI levelText;
@@ -19,6 +20,8 @@ public class PopupView : MonoBehaviour
         timerSlider.maxValue = 1f;
         timerSlider.value = 1f;
 
+        // ล้าง event ก่อน เพื่อกันซ้ำ
+        logic.OnTimeChanged -= UpdateUI;
         logic.OnTimeChanged += UpdateUI;
     }
 
@@ -37,13 +40,14 @@ public class PopupView : MonoBehaviour
     public void Show(Sprite sprite)
     {
         popupImage.sprite = sprite;
+        levelText.gameObject.SetActive(false);
         popupPanel.SetActive(true);
     }
+
     public void ShowRan(int levelID, Sprite sprite)
     {
-        levelText.text = $"LEVEL {levelID}";
         popupImage.sprite = sprite;
-
+        levelText.text = $"LEVEL {levelID}";
         levelText.gameObject.SetActive(true);
         popupPanel.SetActive(true);
     }

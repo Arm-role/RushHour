@@ -1,5 +1,6 @@
 ﻿using GameEvents;
 using System;
+using UnityEngine;
 
 public class PopupTimerLogic
 {
@@ -16,10 +17,7 @@ public class PopupTimerLogic
         OnTimeChanged?.Invoke(_timeLeft);
     }
 
-    public void Stop()
-    {
-        _isRunning = false;
-    }
+    public void Stop() => _isRunning = false;
 
     public void Tick(float deltaTime)
     {

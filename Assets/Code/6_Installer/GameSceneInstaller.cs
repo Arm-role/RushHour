@@ -2,46 +2,44 @@
 using System;
 using UnityEngine;
 
-public class GameSceneInstaller : SceneInstaller
+public class GameSceneInstaller : SceneInstaller, ILauncherConfigProvider, IObjectActives
 {
     [Header("Library")]
     [SerializeField] private ItemLibrary _itemLibrary;
     [SerializeField] private WorkLibrary _workLibrary;
     [SerializeField] private GameObjectLibrary _gameObjectLibrary;
+    [SerializeField] private MenuLibrary _menuLibrary;
 
     [Header("spawner")]
     [SerializeField] private ParticleLibrary _particleLibrary;
     [SerializeField] private LauncherConfig _launcherConfig;
+    [SerializeField] private OrderSpawner _orderSpawner;
 
-    [Header("Quest")]
-    [SerializeField] private OfflineGameController _offlineGameController;
-    [SerializeField] private GameEndController _gameEndController;
-    [SerializeField] private GameTimeController _gameTimeController;
-    [SerializeField] private PopupController _popupController;
+    [Header("Network Quest")]
+    [SerializeField] private MasterGameController _masterGameController;
 
     [Header("DragManager")]
-    [SerializeField] private DragManager _dragManager;
     [SerializeField] private ObjectActive[] _objectActives;
     [SerializeField] private TransportItem _transportItem;
 
-    [Header("Mock")]
-    [SerializeField] private ItemMockTest _itemMockTest;
+    public LauncherConfig LauncherConfig => _launcherConfig;
+    public ObjectActive[] ObjectActives => _objectActives;
 
     private event Action OnDestroyer;
     protected override void Start() => base.Start();
-
 
     protected override void Initialzed(DIContainerBase globalContainer)
     {
         AppInstaller.OnServiceReady -= Initialzed;
 
-        var container = new DIContainerBase(globalContainer);
+        var sceneContainer = new DIContainerBase(globalContainer);
+        sceneContainer.Register<ILauncherConfigProvider>(this);
+        sceneContainer.Register<IObjectActives>(this);
 
         _workLibrary.Initialize();
-        var gameSessionManager = FindObjectOfType<GameSessionManager>();
 
-        var poolService = container.GetObject<IAdressablePoolService>();
-        var CacheService = container.GetObject<IAdressableCacheService>();
+        var poolService = sceneContainer.GetObject<IAdressablePoolService>();
+        var CacheService = sceneContainer.GetObject<IAdressableCacheService>();
 
         var particalService = new ParticalService(poolService, _particleLibrary);
         var particleManager = new ParticleManager(particalService);
@@ -49,28 +47,42 @@ public class GameSceneInstaller : SceneInstaller
         var cacheItem = new AssetProvider<Item>(CacheService, _itemLibrary);
         var itemWorkService = new ItemWorkService(cacheItem, _workLibrary);
 
-        var objectSpawner = new GameObjectSpawner(poolService, _gameObjectLibrary);
-        var itemSpawner = new ItemSpawner(poolService, _itemLibrary);
-        var itemDestroyService = new ItemDestroyService(gameSessionManager);
+        var itemDestroyService = new ItemDestroyService();
 
-        var itemInitialzeEvent = new ItemInitialzeEvent(cacheItem, objectSpawner, itemDestroyService, itemWorkService, _objectActives);
+        var itemInitialzeEvent = sceneContainer.GetObject<ItemInitialzeEvent>();
+        if (itemInitialzeEvent == null)
+        {
+            var objectSpawner = new GameObjectSpawner(poolService, _gameObjectLibrary);
 
-        var ItemLauncherService = new ItemLauncherService();
-        var itemManager = new ItemSpawnManager(itemSpawner, ItemLauncherService, _launcherConfig);
+            itemInitialzeEvent = new ItemInitialzeEvent(cacheItem, objectSpawner, itemDestroyService, itemWorkService);
+            globalContainer.Register(itemInitialzeEvent);
+        }
+
+        itemInitialzeEvent.UpdateSceneDependencies(sceneContainer);
+
+        var itemManager = sceneContainer.GetObject<ItemSpawnHandle>();
+        if (itemManager == null)
+        {
+            var itemSpawner = new ItemSpawner(poolService, _itemLibrary);
+            var itemLauncherService = new ItemLauncherService();
+            itemManager = new ItemSpawnHandle(itemSpawner, itemLauncherService);
+            globalContainer.Register(itemManager);
+        }
+
+        itemManager.UpdateSceneDependencies(sceneContainer);
+
         var itemSpawnSystem = new ItemSpawnSystem(itemManager);
 
         var orderConnection = new OrderOrchestratorSystem(OnDestroyer);
 
-        container.Register(particleManager);
-        container.Register(itemDestroyService);
-
         _transportItem.Initialze(_itemLibrary);
+        _orderSpawner.Initialize(_menuLibrary, itemManager);
 
-        _itemMockTest.Initialze(itemManager);
+        _masterGameController.Initialze(sceneContainer.GetObject<GameState>(), cacheItem, itemManager);
 
-        _offlineGameController.Initialze(itemManager, _gameEndController, _gameTimeController, _popupController);
+        globalContainer.Register(particleManager);
+        globalContainer.Register(itemDestroyService);
 
-        GameFlowState.Set(EGameFlow.Start);
         Destroy(gameObject);
     }
 

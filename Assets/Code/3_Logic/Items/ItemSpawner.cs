@@ -38,7 +38,6 @@ public class ItemSpawner
     
     public void DespawnItem(InteractableItem item)
     {
-        Debug.Log("DespawnItem");
         var assetRef = _itemLibrary.Find2(item.Item.Name);
         if(assetRef != null)
         {

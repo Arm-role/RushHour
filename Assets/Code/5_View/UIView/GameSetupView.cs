@@ -29,7 +29,7 @@ public class GameSetupView : MonoBehaviour, IGameSetupView
 
     private bool _initialIsCreateRoom;
 
-    private void Start()
+    public void Start()
     {
         var player = PlayerRegistry.Instance.GetLocalPlayer();
         int playerCount = PlayerRegistry.Instance.GetAllPlayers().Count();
@@ -40,7 +40,8 @@ public class GameSetupView : MonoBehaviour, IGameSetupView
         _spriteView = GetComponent<GameSetupSpriteView>();
         _networkedPlateController = FindObjectOfType<NetworkedPlateController>();
 
-        _controller = new GameSetupController(this, networkManager, _spriteView, _networkedPlateController, playerCount);
+        var gameState = FindObjectOfType<GameState>();
+        _controller = new GameSetupController(gameState, this, networkManager, _spriteView, _networkedPlateController, playerCount);
 
         _spriteView.SetIconImage(PlayerRegistry.Instance.GetPlayerIndex(player));
 
@@ -48,6 +49,7 @@ public class GameSetupView : MonoBehaviour, IGameSetupView
         SubscribeToUIEvents();
         ShowLobbyView();
     }
+
     private void OnDisable() // Counterpart to OnEnable
     {
         UnsubscribeFromUIEvents();
@@ -139,4 +141,5 @@ public class GameSetupView : MonoBehaviour, IGameSetupView
     {
         _controller?.Shutdown(); // สั่งให้ Controller ยกเลิกการ Subscribe ทั้งหมด
     }
+
 }

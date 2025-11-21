@@ -1,5 +1,4 @@
 ﻿using Fusion;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +7,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
     [SerializeField] private NetworkPrefabRef _playerPrefab;
 
     private GameSessionManager _sessionManager;
+
     public void Start()
     {
         _sessionManager = FindObjectOfType<GameSessionManager>();
@@ -82,5 +82,9 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined, IPlayerLeft
                 pNet.RPC_SetMasterClient(shouldBeMaster);
             }
         }
+    }
+
+    public void Spawned()
+    {
     }
 }

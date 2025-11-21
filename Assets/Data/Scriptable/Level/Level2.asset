@@ -15,9 +15,12 @@ MonoBehaviour:
   LevelId: 1002
   LevelName: Level2
   RequestCount: 1
+  MaxGameTime: 100
   StartPopupSprites:
   - timer: 3
     StartPopupSprite: {fileID: 21300000, guid: e62d388b38fccab41aa02ab608dd6338, type: 3}
+  ItemHelp:
+  - {fileID: 11400000, guid: 56244a0564aa4b043a5f815624cfdc06, type: 2}
   MenuList:
   - {fileID: 11400000, guid: 1e791d29dc8ffae4181ea092f0edfd4b, type: 2}
   - {fileID: 11400000, guid: 0603cb67daedd934c92807da7e95a95d, type: 2}

@@ -1,8 +1,11 @@
 ﻿public enum EGameFlow
 {
     None,
-    Start,
-    Run,
-    Pause,
-    End
+    GameStart,
+    LevelStartPopup,
+    GamePlay,
+    LevelEnd,
+    GamePause,
+    GameEnd,
+    GameNetworkShutdow
 }

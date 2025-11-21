@@ -22,13 +22,6 @@ public class WareOverOrder : IDrop
             if (source.TryGetComponent<InteractableItem>(out var interactable))
             {
                 state.Source = interactable;
-                var shouldDestroy = state.Func(state.Source, state.Target);
-                result.ShouldDestroySelf = shouldDestroy;
-                result.ShouldDestroyTarget = shouldDestroy;
-            }
-            else
-            {
-                Debug.LogWarning("Not Found Source");
             }
         };
         result.TargetInteraction = (target) =>
@@ -39,10 +32,6 @@ public class WareOverOrder : IDrop
                 var shouldDestroy = state.Func(state.Source, state.Target);
                 result.ShouldDestroySelf = shouldDestroy;
                 result.ShouldDestroyTarget = shouldDestroy;
-            }
-            else
-            {
-                Debug.LogWarning("Not Found Target");
             }
         };
 

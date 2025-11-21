@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class AsyncObjectPool<T> where T : class
 {
-    private readonly Queue<T> pool = new();
+    private readonly Queue<T> _available = new();
     private readonly IAsyncGameObjectFactory<T> _factory;
     public AsyncObjectPool(IAsyncGameObjectFactory<T> factory)
     {
@@ -11,21 +12,28 @@ public class AsyncObjectPool<T> where T : class
     }
     public async Task<T> GetAsync()
     {
-        T obj;
-        if (pool.Count > 0)
+        while (_available.Count > 0)
         {
-            obj = pool.Dequeue();
-        }
-        else
-        {
-            obj = await _factory.CreateAsync();
+            var obj = _available.Dequeue();
+
+            if (obj is MonoBehaviour mb)
+            {
+                if (mb.gameObject.activeSelf)
+                    continue;
+            }
+
+            return obj;
         }
 
-        return obj;
+        return await _factory.CreateAsync();
     }
-
-    public void Return(T item)
+    public async void Return(T obj)
     {
-        pool.Enqueue(item);
+        if (obj is MonoBehaviour mb)
+        {
+            await Task.Yield();
+            if (mb == null) return;
+        }
+        _available.Enqueue(obj);
     }
 }

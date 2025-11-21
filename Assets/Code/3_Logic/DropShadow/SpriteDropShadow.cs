@@ -16,7 +16,6 @@ public class SpriteDropShadow : MonoBehaviour
     private ComponentHolder componentHolder;
 
     private int sortingLayerID = -1;
-
    
     private void Start()
     {

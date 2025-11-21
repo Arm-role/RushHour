@@ -65,7 +65,8 @@
         "Assembly-CSharp-firstpass",
         "Fusion.Addons.Physics",
         "Fusion.Addons.FSM",
-        "MyGamePlayLogic"
+        "3_Logic",
+        "4_Controller"
     ],
     "UseSerializableDictionary": true,
     "NullChecksForNetworkedProperties": true,

@@ -14,9 +14,9 @@ public class GameFlowSettup
 
         switch (evt.Flow)
         {
-            case EGameFlow.Start: OnStart(); break;
-            case EGameFlow.Run:   OnRun();   break;
-            case EGameFlow.End:   OnEnd();   break;
+            case EGameFlow.GameStart: OnStart(); break;
+            case EGameFlow.GamePlay:   OnRun();   break;
+            case EGameFlow.GameEnd:   OnEnd();   break;
         }
     }
     public void OnStart()

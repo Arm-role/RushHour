@@ -1,6 +1,4 @@
 ﻿using GameEvents;
-using ItemEvents;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,7 +37,7 @@ public class OrderView : MonoBehaviour
         _presenter = new VisualPresenter(_spriteObName, _keeper, objectSpawner, _helper, itemWorkService);
 
         EventManager.Subscribe<WorkStarted>(OnStart);
-        EventManager.Subscribe<ItemSpawnRequested>(OnSpawnPlate);
+        EventManager.Subscribe<OrderSpawnPlate>(OnSpawnPlate);
         EventManager.Subscribe<WorkProgress>(OnProgress);
         EventManager.Subscribe<WorkCompleted>(OnComplete);
         EventManager.Subscribe<WorkCanceled>(OnCancel);
@@ -47,14 +45,15 @@ public class OrderView : MonoBehaviour
 
         EventManager.Subscribe<GameFlow>(OnGameState);
 
-        _isGameRunning = (GameFlowState.Current == EGameFlow.Run);
+        _isGameRunning = (GameFlowState.Current == EGameFlow.GamePlay);
+
         UpdateSliderState();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         EventManager.Unsubscribe<WorkStarted>(OnStart);
-        EventManager.Unsubscribe<ItemSpawnRequested>(OnSpawnPlate);
+        EventManager.Unsubscribe<OrderSpawnPlate>(OnSpawnPlate);
         EventManager.Unsubscribe<WorkProgress>(OnProgress);
         EventManager.Unsubscribe<WorkCompleted>(OnComplete);
         EventManager.Unsubscribe<WorkCanceled>(OnCancel);
@@ -62,10 +61,9 @@ public class OrderView : MonoBehaviour
 
         EventManager.Unsubscribe<GameFlow>(OnGameState);
     }
-
     private void OnGameState(GameFlow evt)
     {
-        _isGameRunning = (evt.Flow == EGameFlow.Run);
+        _isGameRunning = (evt.Flow == EGameFlow.GamePlay);
         UpdateSliderState();
     }
 
@@ -86,8 +84,10 @@ public class OrderView : MonoBehaviour
         timeSlider.maxValue = data.RequirementData.TimeLimit;
         UpdateSliderState();
     }
-    private async void OnSpawnPlate(ItemSpawnRequested _)
+    private async void OnSpawnPlate(OrderSpawnPlate evt)
     {
+        if (evt.Station != _station) return;
+
         var spriteItem = await _presenter.AddItem(_currentItem.Item2, _currentSortOrder);
         if (spriteItem != null)
         {
@@ -155,6 +155,7 @@ public class OrderView : MonoBehaviour
         _isWorking = false;
         UpdateSliderState();
         ClearIngredienView();
+
     }
 
     private void SetActiveState(int state)

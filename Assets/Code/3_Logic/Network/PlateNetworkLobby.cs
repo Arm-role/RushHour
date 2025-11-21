@@ -13,7 +13,6 @@ public class PlateNetworkLobby : NetworkBehaviour
 
     [SerializeField] private GameObject textureObject;
     [SerializeField] private Image foodImage;
-    [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Sprite[] foodSprites;
     private void OnVisibilityChanged()
     {
@@ -21,8 +20,8 @@ public class PlateNetworkLobby : NetworkBehaviour
     }
     private void OnChangeFoodSprite()
     {
+        Debug.Log(foodSpriteId);
         foodImage.sprite = foodSprites[foodSpriteId];
-        text.text = foodSpriteId.ToString();
     }
     public override void Spawned()
     {

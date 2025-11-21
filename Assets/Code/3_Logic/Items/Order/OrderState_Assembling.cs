@@ -5,7 +5,10 @@ using ItemEvents;
 using System.Linq;
 public class OrderState_Assembling : IOrderState
 {
-    public void OnEnter(OrderLifecycleManager context) { }
+    public void OnEnter(OrderLifecycleManager context)
+    {
+        Debug.Log("ORDER Assembling!");
+    }
     public void OnIngredientAdded(OrderLifecycleManager context, Item ingredient)
     {
         bool required = context.RequirementData.RequiredItemAndCounts

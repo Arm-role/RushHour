@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using GameEvents;
+using ItemEvents;
 
 public class DragManager : MonoBehaviour
 {
@@ -36,13 +37,13 @@ public class DragManager : MonoBehaviour
     private void Start()
     {
         SetState(new Idle_DragState());
+        EventManager.Subscribe<GameFlow>(OnGameState);
     }
-    private void OnEnable() => EventManager.Subscribe<GameFlow>(OnGameState);
-    private void OnDisable() => EventManager.Unsubscribe<GameFlow>(OnGameState);
+    private void OnDestroy() => EventManager.Unsubscribe<GameFlow>(OnGameState);
 
     public void OnGameState(GameFlow evt)
     {
-        _isActive = (evt.Flow == EGameFlow.Run);
+        _isActive = (evt.Flow == EGameFlow.GamePlay);
     }
 
     #region Process
@@ -182,26 +183,28 @@ public class DragManager : MonoBehaviour
     {
         if (result == null) return;
 
-        if (result.TargetInteraction != null)
-        {
-            result.TargetInteraction.Invoke(targetCollider);
-        }
-
         if (result.SourceInteraction != null)
         {
             result.SourceInteraction.Invoke(sourceObject);
+        }
+
+        if (result.TargetInteraction != null)
+        {
+            result.TargetInteraction.Invoke(targetCollider);
         }
 
         if (result.ParticleToPlay != null)
         {
             EventManager.Invoke(new PlayParticle(result.ParticleToPlay, sourceObject.transform.position));
         }
+        bool destroySelf = await result.ShouldDestroySelf;
+        bool destroyTarget = await result.ShouldDestroyTarget;
 
-        if (await result.ShouldDestroySelf)
+        if (destroySelf)
         {
             sourceObject.RequestDestruction();
         }
-        if (await result.ShouldDestroyTarget)
+        if (destroyTarget)
         {
             if (targetCollider.TryGetComponent<InteractableItem>(out var targetObject))
             {

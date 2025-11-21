@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class OrderState_AwaitingActivation : IOrderState
 {
-    public void OnEnter(OrderLifecycleManager context) { }
+    public void OnEnter(OrderLifecycleManager context)
+    {
+    }
 
     public Task<bool> HandleInteraction(OrderLifecycleManager context, InteractableItem source)
     {
@@ -18,6 +20,11 @@ public class OrderState_AwaitingActivation : IOrderState
     public void OnUpdate(OrderLifecycleManager context)
     {
         context.CurrentTime -= Time.deltaTime;
+
+        if (context.CurrentTime <= 0)
+        {
+            context.SetState(new OrderState_Failed());
+        }
     }
     public void OnExit(OrderLifecycleManager context) { }
     public void OnIngredientAdded(OrderLifecycleManager context, Item ingredient) { }

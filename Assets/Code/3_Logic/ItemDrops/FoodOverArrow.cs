@@ -24,11 +24,6 @@ public abstract class FoodOverArrow : IDrop
             if (source.TryGetComponent<InteractableItem>(out var interactable))
             {
                 state.Source = interactable;
-                result.ShouldDestroySelf = state.Func(state.Source, state.Target);
-            }
-            else
-            {
-                Debug.LogWarning("Not Found Source");
             }
         };
         result.TargetInteraction = (target) =>
@@ -38,10 +33,6 @@ public abstract class FoodOverArrow : IDrop
             {
                 state.Target = trans;
                 result.ShouldDestroySelf = state.Func(state.Source, state.Target);
-            }
-            else
-            {
-                Debug.LogWarning("Not Found Target");
             }
         };
 

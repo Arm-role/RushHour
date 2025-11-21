@@ -1,4 +1,5 @@
-﻿using ItemEvents;
+﻿using GameEvents;
+using ItemEvents;
 
 public class RepetitiveAction_Work : IWorkStation
 {

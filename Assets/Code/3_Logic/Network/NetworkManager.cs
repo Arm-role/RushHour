@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
+
     private NetworkRunner _runner;
     public event Action OnJoinedLobbySuccess;
     public event Action<List<SessionInfo>> OnSessionListUpdatedEvent;

@@ -21,10 +21,9 @@ public class VisualPresenter
         _itemWorkService = itemWorkService;
     }
 
-
     public async Task<SpriteItem> AddItem(Item item, int sortOrder, bool isRandomRotation = false)
     {
-        GameObject spriteObject = await _spawner.SpawnOB(_spriteObName, _keepper.position);
+        GameObject spriteObject = await _spawner.SpawnAsync(_spriteObName, _keepper.position);
         spriteObject.transform.SetParent(_keepper);
         spriteObject.transform.localPosition = Vector3.zero;
 
@@ -35,7 +34,7 @@ public class VisualPresenter
         {
             spriteItem.Renderor.sprite = item.sprite;
             spriteItem.Renderor.sortingOrder += sortOrder;
-            spriteItem.OnRequestDestruction = _spawner.DespawnOB;
+            spriteItem.OnRequestDestruction = _spawner.Despawn;
 
             if (!_spriteObs.ContainsKey(item))
             {
@@ -83,7 +82,7 @@ public class VisualPresenter
 
         Item toolItem = await taskItem;
 
-        GameObject spriteObject = await _spawner.SpawnOB(_spriteObName, _helper.position);
+        GameObject spriteObject = await _spawner.SpawnAsync(_spriteObName, _helper.position);
         spriteObject.transform.SetParent(_helper);
         spriteObject.transform.localPosition = Vector3.zero;
 
@@ -93,7 +92,7 @@ public class VisualPresenter
         {
             spriteItem.Renderor.sprite = toolItem.sprite;
             spriteItem.Renderor.sortingOrder += sortOrder;
-            spriteItem.OnRequestDestruction = _spawner.DespawnOB;
+            spriteItem.OnRequestDestruction = _spawner.Despawn;
 
             if (!_spriteObsHelp.ContainsKey(toolItem))
             {

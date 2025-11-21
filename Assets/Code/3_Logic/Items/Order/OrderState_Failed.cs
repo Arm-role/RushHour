@@ -10,7 +10,7 @@ public class OrderState_Failed : IOrderState
         context.CollectedItems.Clear();
 
         EventManager.Invoke(new PlateServeToOrder(context.OrderStation));
-        EventManager.Invoke(new OrderExpiredEvent(1, context.RequirementData.MenuId));
+        EventManager.Invoke(new OrderExpiredEvent(context.RequirementData.MenuId));
     }
     public void OnUpdate(OrderLifecycleManager context)
     {

@@ -1,20 +1,37 @@
-﻿using System;
+﻿using GameEvents;
 using UnityEngine;
 
 public class GameEndController : MonoBehaviour
 {
     [SerializeField] private GameEndView endView;
-    private GameEndLogic _logic;
 
-    private void Awake()
+    private GameState _gameState;
+    private void Start()
     {
-        _logic = new GameEndLogic();
+        _gameState = FindAnyObjectByType<GameState>();
+        EventManager.Subscribe<GameFlow>(HandlePhaseChange);
     }
 
-    public void StartEndSequence(float totalScore)
+    private void OnDestroy()
+    {
+        EventManager.Unsubscribe<GameFlow>(HandlePhaseChange);
+    }
+
+    private void HandlePhaseChange(GameFlow evt)
+    {
+        if (evt.Flow == EGameFlow.GameEnd)
+        {
+            StartEndSequence(_gameState.TotalScore);
+        }
+        else
+        {
+            endView.Hide();
+        }
+    }
+
+    private void StartEndSequence(float totalScore)
     {
         endView.Show();
-        endView.Setup(_logic);
-        _logic.Start(totalScore);
+        endView.Setup(totalScore);
     }
 }

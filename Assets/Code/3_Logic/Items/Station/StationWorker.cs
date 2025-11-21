@@ -1,5 +1,6 @@
 ﻿using GameEvents;
 using UnityEngine;
+using static System.Collections.Specialized.BitVector32;
 
 public class StationWorker : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class StationWorker : MonoBehaviour
     private bool _isActive;
     private void Start()
     {
-        _isActive = (GameFlowState.Current == EGameFlow.Run);
+        _isActive = (GameFlowState.Current == EGameFlow.GamePlay);
         EventManager.Subscribe<GameFlow>(OnGameState);
     }
     private void OnDestroy()
@@ -19,7 +20,7 @@ public class StationWorker : MonoBehaviour
 
     private void OnGameState(GameFlow evt)
     {
-        _isActive = (evt.Flow == EGameFlow.Run);
+        _isActive = (evt.Flow == EGameFlow.GamePlay);
     }
     public void BeginWork(IWorkStation workStategy, Station station)
     {
@@ -44,9 +45,7 @@ public class StationWorker : MonoBehaviour
 
         if (_currentWork.IsCancel(_station))
         {
-            _currentWork.OnCancel(_station);
-            _currentWork = null;
-            enabled = false;
+            CancelWork();
         }
         else if (_currentWork.IsComplete(_station))
         {
@@ -58,5 +57,18 @@ public class StationWorker : MonoBehaviour
     public void ReceiveExternalInput()
     {
         _currentWork?.OnRecieveExternalInput(_station);
+    }
+    public void ForceCancel()
+    {
+        if (_currentWork == null) return;
+
+        Debug.Log($"[StationWorker] ForceCancel work on {_station.name}");
+        CancelWork();
+    }
+    private void CancelWork()
+    {
+        _currentWork.OnCancel(_station);
+        _currentWork = null;
+        enabled = false;
     }
 }

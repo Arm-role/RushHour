@@ -7,55 +7,23 @@ public class GameTimeController : MonoBehaviour
 {
     [SerializeField] private GameTimeView gameTimeView;
 
-    private float _gameSpeed = 1;
-    private float _currentMaxTime;
-
-    private GameTimerLogic _logic;
-
-    public event Action OnGameTimeFinished;
-    public bool _isRunning { get; set; }
-
-    private void Awake()
+    private void Start()
     {
-        _logic = new GameTimerLogic();
-        _logic.OnTimerFinished += GameTimeFinished;
-        EventManager.Subscribe<GameFlow>(OnGameState);
-        EventManager.Subscribe<TotalScoreEvent>(SetTime);
-    }
-
-    private void SetTime(TotalScoreEvent evt)
-    {
-        _logic.Start(evt.TotalScore, _currentMaxTime);
-    }
-
-    private void OnGameState(GameFlow evt)
-    {
-        _isRunning = (evt.Flow == EGameFlow.Run);
+        GameState.OnNetworkStateChanged += UpdateView;
     }
 
     private void OnDestroy()
     {
-        _logic.OnTimerFinished -= GameTimeFinished;
-        EventManager.Unsubscribe<GameFlow>(OnGameState);
-        EventManager.Unsubscribe<TotalScoreEvent>(SetTime);
-    }
-    private void Update()
-    {
-        if (_isRunning)
-        {
-            _logic.Tick(Time.deltaTime * _gameSpeed);
-        }
+        GameState.OnNetworkStateChanged -= UpdateView;
     }
 
-    public void StartGameTime(float toatalScore, float maxTime, float gameSpeed)
+    private void UpdateView()
     {
-        _gameSpeed = gameSpeed;
-        gameTimeView.Setup(_logic, maxTime);
-        _currentMaxTime = maxTime;
-        _logic.Start(toatalScore, maxTime);
-    }
-    private void GameTimeFinished()
-    {
-        OnGameTimeFinished?.Invoke();
+        var gameState = FindObjectOfType<GameState>();
+        if (gameState != null)
+        {
+            //Debug.Log(("TotalScore", gameState.TotalScore, "GameTimer", gameState.GameTimer, "MaxGameTime", gameState.MaxGameTime));
+            gameTimeView.UpdateUI(gameState.TotalScore, gameState.GameTimer, gameState.MaxGameTime);
+        }
     }
 }

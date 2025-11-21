@@ -45,6 +45,17 @@ namespace ItemEvents
         }
     }
 
+    public struct OrderIdEjectedAndSetUp
+    {
+        public readonly int OrderID;
+        public readonly int MenuID;
+
+        public OrderIdEjectedAndSetUp(int orderID, int menuID)
+        {
+            OrderID = orderID;
+            MenuID = menuID;
+        }
+    }
 
     public struct ItemSpawned
     {

@@ -1,15 +1,19 @@
 ﻿using GameEvents;
-using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class PopupController : MonoBehaviour
 {
     [SerializeField] private PopupView popupView;
-    [SerializeField] private PopupData _randomPopup;
+    [SerializeField] private PopupData _randomPopupData;
+    [SerializeField] private GameModeData _gameModeData;
 
     private PopupTimerLogic _logic;
-
+    private GameState _gameState;
     private PopupData[] _popupSequence;
+    private int _currentPopupIndex = -1;
+
     private struct SLevelData
     {
         public bool IsRandom;
@@ -22,31 +26,46 @@ public class PopupController : MonoBehaviour
         }
     }
 
-    private SLevelData levelData;
+    private SLevelData _levelData;
 
-    private int _currentPopupIndex = -1;
-
-    public event Action OnPopupFinished;
     private void Awake()
     {
         _logic = new PopupTimerLogic();
+        _gameState = FindAnyObjectByType<GameState>();
     }
 
-    private void Update()
+    private void Start() => EventManager.Subscribe<GameFlow>(HandleGameFlow);
+    private void OnDestroy() => EventManager.Unsubscribe<GameFlow>(HandleGameFlow);
+
+    private void Update() => _logic.Tick(Time.deltaTime);
+
+    private void HandleGameFlow(GameFlow evt)
     {
-        _logic.Tick(Time.deltaTime);
+        if (evt.Flow == EGameFlow.LevelStartPopup)
+        {
+            Debug.Log("[PopupController] LevelStartPopup triggered");
+
+            if (_gameState == null)
+                _gameState = FindAnyObjectByType<GameState>();
+
+            if (_gameState == null)
+            {
+                Debug.LogWarning("[PopupController] GameState not found");
+                return;
+            }
+
+            LevelData levelData = _gameModeData.LevelList.Find(i => i.LevelId == _gameState.GlobalLevelIndex);
+            StartPopupSequence(_gameState.IsRandomLevel, _gameState.CurrentRunLevelIndex, levelData);
+        }
     }
 
-    public void StartPopupSequence(bool isRandomLevel, int levelAmount, LevelData level)
+    private void StartPopupSequence(bool isRandomLevel, int levelAmount, LevelData level)
     {
-        levelData = new SLevelData(isRandomLevel, levelAmount);
-
-        PopupData[] popupSequence = level.StartPopupSprites;
-        _popupSequence = popupSequence;
+        _levelData = new SLevelData(isRandomLevel, levelAmount);
+        _popupSequence = level?.StartPopupSprites;
         _currentPopupIndex = -1;
 
         _logic.OnTimerFinished -= HandlePopupFinished;
-
         _logic.OnTimerFinished += HandlePopupFinished;
 
         ShowNextPopup();
@@ -59,46 +78,33 @@ public class PopupController : MonoBehaviour
         popupView.Hide();
         _currentPopupIndex++;
 
-        if (levelData.IsRandom)
+        if (_levelData.IsRandom)
         {
             if (_currentPopupIndex > 0)
             {
-                Debug.Log("Random popup finished after one show.");
+                Debug.Log("[PopupController] Random popup finished");
+                popupView.Hide();
                 _logic.OnTimerFinished -= HandlePopupFinished;
-                OnPopupFinished?.Invoke();
                 return;
             }
 
-            Debug.Log($"Showing random popup for {_randomPopup.timer} seconds.");
-
-            popupView.Bind(_logic, _randomPopup.timer);
-            popupView.ShowRan(levelData.LevelAmount, _randomPopup.StartPopupSprite);
-            _logic.Start(_randomPopup.timer);
+            popupView.Bind(_logic, _randomPopupData.timer);
+            popupView.ShowRan(_levelData.LevelAmount, _randomPopupData.StartPopupSprite);
+            _logic.Start(_randomPopupData.timer);
             return;
         }
 
         if (_popupSequence == null || _currentPopupIndex >= _popupSequence.Length)
         {
-            Debug.Log("Popup sequence finished.");
+            Debug.Log("[PopupController] Popup sequence finished");
+            popupView.Hide();
             _logic.OnTimerFinished -= HandlePopupFinished;
-            OnPopupFinished?.Invoke();
             return;
         }
 
         var popupData = _popupSequence[_currentPopupIndex];
-
-        Debug.Log($"Showing popup index {_currentPopupIndex} for {popupData.timer} seconds.");
-
         popupView.Bind(_logic, popupData.timer);
         popupView.Show(popupData.StartPopupSprite);
         _logic.Start(popupData.timer);
-    }
-
-    private void OnDestroy()
-    {
-        if (_logic != null)
-        {
-            _logic.OnTimerFinished -= HandlePopupFinished;
-        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Fusion;
 using ItemEvents;
 using NetworkEvents;
-using NUnit.Framework.Interfaces;
-using System;
 using UnityEngine;
 
 public class PlayerNetwork : NetworkBehaviour
@@ -17,16 +15,19 @@ public class PlayerNetwork : NetworkBehaviour
     [Networked, OnChangedRender(nameof(OnScoreChanged))]
     public float Score { get; set; }
 
+    private GameState _gameState;
+
     public override void Spawned()
     {
         Debug.Log("Create GameObject");
         PlayerRegistry.Instance.RegisterPlayer(this);
 
         UpdatePlayerName();
-        
+
         if (IsLocalPlayer)
         {
-
+            EventManager.Subscribe<SentMenu>(SentMenu);
+            EventManager.Subscribe<OrderExpiredEvent>(OnOrderExpired);
         }
 
         DontDestroyOnLoad(this);
@@ -37,6 +38,12 @@ public class PlayerNetwork : NetworkBehaviour
     {
         PlayerRegistry.Instance.UnregisterPlayer(this);
         EventManager.Invoke(new PlayerViewDespawned(this));
+
+        if (IsLocalPlayer)
+        {
+            EventManager.Unsubscribe<SentMenu>(SentMenu);
+            EventManager.Unsubscribe<OrderExpiredEvent>(OnOrderExpired);
+        }
     }
 
     private void OnScoreChanged()
@@ -57,10 +64,49 @@ public class PlayerNetwork : NetworkBehaviour
         }
     }
 
+
+    private void SentMenu(SentMenu menu)
+    {
+        if (_gameState == null) _gameState = FindAnyObjectByType<GameState>();
+
+        byte[] menuID = ByteConverter.IntToBytes(menu.MenuId);
+        byte[] score = ByteConverter.FloatToBytes(menu.ScoreValue);
+
+        _gameState.RPC_SentMenu(PlayerRef.PlayerId, menuID, score);
+    }
+    private void OnOrderExpired(OrderExpiredEvent evt)
+    {
+        if (_gameState == null) _gameState = FindAnyObjectByType<GameState>();
+
+        _gameState.RPC_PlayerOrderExpired(PlayerRef.PlayerId);
+    }
+
+
+
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_SetMasterClient(bool newMasterRef)
     {
         IsMaster = newMasterRef;
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
+    public void RPC_GetOrder(byte[] orderIDb, byte[] menuIDb)
+    {
+        int orderID = ByteConverter.BytesToInt(orderIDb);
+        int menuID = ByteConverter.BytesToInt(menuIDb);
+
+        EventManager.Invoke(new OrderIdEjectedAndSetUp(1007, menuID));
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
+    public void RPC_GetItems(byte[] itemsData)
+    {
+        int[] items = ByteConverter.BytesToIntArray(itemsData);
+
+        foreach (int itemID in items)
+        {
+            EventManager.Invoke(new ItemIdEjectedLaunch(itemID));
+        }
     }
 
     #region Transfer Item
@@ -68,10 +114,9 @@ public class PlayerNetwork : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
     public void RPC_ReceiveItem(byte[] itemData)
     {
-        int itemId = BitConverter.ToInt32(itemData, 0);
+        int itemId = ByteConverter.BytesToInt(itemData);
 
         EventManager.Invoke(new ItemIdEjectedLaunch(itemId));
-        Debug.Log($"I, {PlayerRef}, have received item {itemId}!");
     }
 
     #endregion

@@ -1,4 +1,5 @@
-﻿using ItemEvents;
+﻿using GameEvents;
+using ItemEvents;
 using System.Collections;
 using UnityEngine;
 

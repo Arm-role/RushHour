@@ -21,11 +21,6 @@ public class FoodOverTool : IDrop
             if (source.TryGetComponent<InteractableItem>(out var interactable))
             {
                 state.Source = interactable;
-                result.ShouldDestroySelf = state.Func(state.Source, state.Target);
-            }
-            else
-            {
-                Debug.LogWarning("Not Found Source");
             }
         };
         result.TargetInteraction = (target) =>
@@ -34,10 +29,6 @@ public class FoodOverTool : IDrop
             {
                 state.Target = station;
                 result.ShouldDestroySelf = state.Func(state.Source, state.Target);
-            }
-            else
-            {
-                Debug.LogWarning("Not Found Target");
             }
         };
 

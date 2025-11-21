@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
 using System.Threading.Tasks;
-using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 
 public class AdressablePoolingService : IAdressablePoolService
@@ -23,7 +23,6 @@ public class AdressablePoolingService : IAdressablePoolService
             pool = new AsyncObjectPool<GameObject>(factory);
             _pool.Add(assetRef, pool);
         }
-
         return await pool.GetAsync();
     }
     public void Return(AssetReference assetRef, GameObject instance)

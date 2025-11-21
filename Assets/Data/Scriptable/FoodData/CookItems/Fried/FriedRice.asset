@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1490bf2a44360542b0feb393e2cc73c, type: 3}
   m_Name: FriedRice
   m_EditorClassIdentifier: 
-  id: 1202
   _name: FriedRice
-  Amount: 1
-  prefab: {fileID: 0}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 012243992e379cd4f8f2146e2a22fbb9, type: 3}
+  localScale: {x: 1, y: 1, z: 1}
   foodState: []

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CombineOnWare_Strategy", menuName = "InteractionStrategy/CombineOnWare_Strategy")]
@@ -6,9 +7,9 @@ public class CombineOnWare_Strategy : InteractionStrategy
 {
     public override int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
-        if (source.Item is FoodData)
+        if (source.Item is FoodData && targetStation.TryGetData<ItemContainerData>(out var containerData))
         {
-            return 100;
+            if (containerData.FoodRequest.Contains(source.Item)) return 100;
         }
         return 0;
     }

@@ -1,14 +1,51 @@
-﻿using System;
+﻿using GameEvents;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ItemDestroyService
 {
-    public ItemDestroyService(GameSessionManager gameSessionManager = null)
+    public event Action OnRequestDestruction;
+
+    private readonly HashSet<Action> _handlers = new();
+
+    public ItemDestroyService()
     {
-        if (gameSessionManager == null) return;
- 
-        gameSessionManager.OnShutdown += RequestDestructionAll;
+        EventManager.Subscribe<GameFlow>(RequestDestructionAll);
     }
 
-    public event Action OnRequestDestruction;
-    public void RequestDestructionAll() => OnRequestDestruction?.Invoke();
+    public void Register(Action callback)
+    {
+        if (callback == null || _handlers.Contains(callback))
+            return;
+
+        OnRequestDestruction += callback;
+        _handlers.Add(callback);
+    }
+
+    public void Unregister(Action callback)
+    {
+        if (callback == null || !_handlers.Contains(callback))
+            return;
+
+        OnRequestDestruction -= callback;
+        _handlers.Remove(callback);
+    }
+
+    public void ClearAll()
+    {
+        foreach (var h in _handlers)
+            OnRequestDestruction -= h;
+
+        _handlers.Clear();
+    }
+
+    private void RequestDestructionAll(GameFlow evt)
+    {
+        if(evt.Flow != EGameFlow.GamePlay)
+        {
+            OnRequestDestruction?.Invoke();
+            ClearAll();
+        }
+    }
 }

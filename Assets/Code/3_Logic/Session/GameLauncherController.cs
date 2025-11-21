@@ -113,7 +113,7 @@ public class GameLauncherController
     }
     private void HandleStartGamePressed()
     {
-        _networkManager.StartGameScene(SceneIndex: 3);
+        _networkManager.StartGameScene(SceneIndex: 2);
     }
     private void HandleLeaveRoomPressed()
     {

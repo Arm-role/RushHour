@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Threading.Tasks;
 
 public class GameObjectSpawner
 {
@@ -12,17 +12,17 @@ public class GameObjectSpawner
         _gameObjectLibrary = itemLibrary;
     }
 
-    public async Task<GameObject> SpawnOB(string itemName, Vector3 position)
+    public async Task<GameObject> SpawnAsync(string itemName, Vector3 position)
     {
         var assetRef = _gameObjectLibrary.Find(itemName);
-
         GameObject instance = await _poolService.AsyncGet(assetRef);
         instance.name = itemName;
         instance.transform.position = position;
         instance.SetActive(true);
         return instance;
     }
-    public async Task<GameObject> SpawnOB(int id, Vector3 position)
+
+    public async Task<GameObject> SpawnAsync(int id, Vector3 position)
     {
         var assetRef = _gameObjectLibrary.Find(id);
         if (assetRef == null || !assetRef.RuntimeKeyIsValid()) return null;
@@ -33,7 +33,7 @@ public class GameObjectSpawner
         return instance;
     }
 
-    public async Task<GameObject> SpawnOB(string itemName)
+    public async Task<GameObject> SpawnAsync(string itemName)
     {
         var assetRef = _gameObjectLibrary.Find(itemName);
 
@@ -42,7 +42,8 @@ public class GameObjectSpawner
         instance.SetActive(true);
         return instance;
     }
-    public async Task<GameObject> SpawnOB(int id)
+
+    public async Task<GameObject> SpawnAsync(int id)
     {
         var assetRef = _gameObjectLibrary.Find(id);
         if (assetRef == null || !assetRef.RuntimeKeyIsValid()) return null;
@@ -52,7 +53,7 @@ public class GameObjectSpawner
         return instance;
     }
 
-    public void DespawnOB(GameObject Ob)
+    public void Despawn(GameObject Ob)
     {
         var assetRef = _gameObjectLibrary.Find(Ob.name);
         if (assetRef != null)

@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using GameEvents;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,22 +9,25 @@ public class GameTimeView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Slider timerSlider;
 
-    private float _maxTime;
-
-    public void Setup(GameTimerLogic logic, float maxTime)
+    private void OnEnable()
     {
-        _maxTime = maxTime;
-        timerSlider.minValue = 0f;
-        timerSlider.maxValue = 1f;
-        timerSlider.value = 1f;
-
-        logic.OnTimeChanged += UpdateUI;
+        EventManager.Subscribe<GameFlow>(HandlePhaseChange);
     }
 
-    private void UpdateUI(float totalScore, float timeLeft)
+    private void OnDisable()
+    {
+        EventManager.Unsubscribe<GameFlow>(HandlePhaseChange);
+    }
+    private void HandlePhaseChange(GameFlow ent)
+    {
+        timerSlider.gameObject.SetActive(ent.Flow == EGameFlow.GamePlay);
+        scoreText.gameObject.SetActive(ent.Flow == EGameFlow.GamePlay);
+    }
+
+    public void UpdateUI(float totalScore, float timeLeft, float maxTime)
     {
         scoreText.text = $"{totalScore}P";
-        float normalized = timeLeft / _maxTime;
+        float normalized = (maxTime > 0) ? timeLeft / maxTime : 0;
         timerSlider.value = normalized;
     }
 }

@@ -1,75 +1,69 @@
-﻿using UnityEngine;
+﻿using GameEvents;
+using UnityEngine;
 
 public class OrderQuest_Work : IWorkStation
 {
-    private OrderLifecycleManager _orderLifeCycle;
-    public OrderQuest_Work(OrderLifecycleManager orderLifecycle)
+    private OrderLifecycleManager _orderLifecycle;
+    private Station _station;
+    public OrderQuest_Work(OrderLifecycleManager orderLifecycle, Station station)
     {
-        _orderLifeCycle = orderLifecycle;
+        _orderLifecycle = orderLifecycle;
+        _station = station;
     }
     public void OnStart(Station station)
     {
+        if (station != _station) return;
         EventManager.Invoke(new WorkStarted(station));
     }
     public void OnUpdate(Station station)
     {
-        _orderLifeCycle.Update();
+        if (station != _station) return;
+
+        _orderLifecycle.Update();
         EventManager.Invoke(new WorkProgress(station));
     }
 
     public void OnRecieveExternalInput(Station station) { }
     public bool IsComplete(Station station)
     {
-        return _orderLifeCycle.CurrentState is OrderState_Fulfilled;
+        if (station != _station) return false;
+
+        return _orderLifecycle.CurrentState is OrderState_Fulfilled;
     }
 
     public void OnComplete(Station station)
     {
+        if (station != _station) return;
+
         EventManager.Invoke(new WorkCompleted(station));
     }
 
     public bool IsCancel(Station station)
     {
-        return _orderLifeCycle.CurrentState is OrderState_Failed;
+        if (station != _station) return false;
+
+        return _orderLifecycle.CurrentState is OrderState_Failed;
     }
 
     public void OnCancel(Station station)
     {
+        if (station != _station) return;
+
         EventManager.Invoke(new WorkCanceled(station));
-        Debug.Log("Cancel Work");
 
-        if (station == null)
+        if (_orderLifecycle.OrderStation != null)
         {
-            Debug.LogError("❌ OnCancel() failed: station is null");
-            return;
-        }
-
-        if (!station.TryGetData<OrderLifecycleManager>(out var result))
-        {
-            Debug.LogError($"❌ OnCancel() failed: {station.name} has no OrderLifecycleManager data.");
-            return;
-        }
-
-        if (result == null)
-        {
-            Debug.LogError("❌ OnCancel() failed: result (OrderLifecycleManager) is null.");
-            return;
-        }
-
-        if (result.OrderStation != null)
-        {
-            if (result.OrderStation.TryGetComponent<InteractableItem>(out var order))
+            if (_orderLifecycle.OrderStation.TryGetComponent<InteractableItem>(out var order))
+            {
                 order.RequestDestruction();
-            else
-                Debug.LogWarning("⚠️ OnCancel: OrderStation has no InteractableItem");
+            }
         }
 
-        if (result.LinkedPlate != null)
+        if (_orderLifecycle.LinkedPlate == null) return;
+
+        if (_orderLifecycle.LinkedPlate.TryGetComponent<InteractableItem>(out var plate))
         {
-            if (result.LinkedPlate.TryGetComponent<InteractableItem>(out var plate))
-                plate.RequestDestruction();
-            else
-                Debug.LogWarning("⚠️ OnCancel: LinkedPlate has no InteractableItem");
+            plate.RequestDestruction();
         }
     }
 }

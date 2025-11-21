@@ -10,6 +10,8 @@ public class GameSetupController
     private int _playerCount;
     private List<int> _selectedKeys = new List<int>();
 
+    private GameState _gameState;
+
     private IGameSetupView _view;
     private NetworkManager _networkManager;
 
@@ -19,11 +21,13 @@ public class GameSetupController
     public event Action<List<int>> OnRollKey;
     public event Action<List<int>> OnResetKey;
 
+   
 
-
-    public GameSetupController(IGameSetupView view, NetworkManager networkManager, GameSetupSpriteView _spriteView,
+    public GameSetupController(GameState gameState, IGameSetupView view, NetworkManager networkManager, GameSetupSpriteView _spriteView,
                                NetworkedPlateController _networkedPlateController, int playerCount)
     {
+        _gameState = gameState;
+
         _view = view;
         _networkManager = networkManager;
 
@@ -97,21 +101,19 @@ public class GameSetupController
 
         var playerNetworks = PlayerRegistry.Instance.GetAllPlayers().OrderBy(p => p.PlayerRef.PlayerId).ToList();
         var finalPlayerOrder = new List<PlayerRef>();
-        
+
         for (int i = 0; i < _selectedKeys.Count; i++)
         {
             finalPlayerOrder.Add(playerNetworks[_selectedKeys[i]].PlayerRef);
         }
 
-        var gameState = MonoBehaviour.FindObjectOfType<GameState>();
-
-        gameState.SeatingOrder.Clear();
+        _gameState.SeatingOrder.Clear();
         foreach (var playerRef in finalPlayerOrder)
         {
-            gameState.SeatingOrder.Add(playerRef);
+            _gameState.SeatingOrder.Add(playerRef);
         }
 
-        _networkManager.StartGameScene(SceneIndex: 4);
+        _networkManager.StartGameScene(SceneIndex: 3);
     }
     private void HandleLeaveRoomPressed()
     {
@@ -121,4 +123,6 @@ public class GameSetupController
     {
         // Unsubscribe all events to prevent memory leaks
     }
+
+  
 }

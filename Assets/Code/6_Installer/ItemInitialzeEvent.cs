@@ -1,67 +1,83 @@
-﻿using UnityEngine;
-using ItemEvents;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System;
 
-public class ItemInitialzeEvent
+public class ItemInitialzeEvent : ISceneDependencyUpdatable
 {
     private readonly AssetProvider<Item> _cacheItem;
     private readonly GameObjectSpawner _objectSpawner;
     private readonly ItemDestroyService _itemDestroyService;
     private readonly ItemWorkService _itemWorkService;
+
+    private readonly ItemSpawnHandle _itemSpawnHandle;
+
     private ObjectActive[] _objectActives;
 
     private readonly Dictionary<InteractableItem, List<(Action drag, Action release)>> _subscriptions
         = new();
 
     public ItemInitialzeEvent(
-        AssetProvider<Item> cacheItem, GameObjectSpawner objectSpawner, ItemDestroyService itemDestroyService,
-        ItemWorkService itemWorkService, ObjectActive[] objectActives)
+        AssetProvider<Item> cacheItem,
+        GameObjectSpawner objectSpawner,
+        ItemDestroyService itemDestroyService,
+        ItemWorkService itemWorkService,
+        ItemSpawnHandle itemSpawnHandle)
     {
         _cacheItem = cacheItem;
         _objectSpawner = objectSpawner;
         _itemDestroyService = itemDestroyService;
         _itemWorkService = itemWorkService;
-        _objectActives = objectActives;
 
-        EventManager.Subscribe<ItemSpawned>(InitialzeItem);
+        _itemSpawnHandle = itemSpawnHandle;
+
+        _itemSpawnHandle.OnSpawnCompleted += SubscribeItem;
     }
 
-    public void InitialzeItem(ItemSpawned evt)
+    public void UpdateSceneDependencies(DIContainerBase sceneContainer)
     {
-        if (evt.Interactable is InteractableItem interactable)
+        var configProvider = sceneContainer.GetObject<IObjectActives>();
+        if (configProvider != null)
         {
-            if(_itemDestroyService != null)
-            {
-                _itemDestroyService.OnRequestDestruction += interactable.RequestDestruction;
-            }
+            _objectActives = configProvider.ObjectActives;
+            Debug.Log("ItemSpawnManager: Scene dependencies (LauncherConfig) have been updated!");
+        }
+    }
+    private void SubscribeItem(InteractableItem interactable)
+    {
+        if (_itemDestroyService != null)
+        {
+            _itemDestroyService.Register(interactable.RequestDestruction);
+        }
 
-            if (interactable.TryGetComponent<Station>(out var station))
-            {
-                station.Initialze(_cacheItem);
-            }
+        if (interactable.TryGetComponent<Station>(out var station))
+        {
+            station.Initialze(_cacheItem);
+
+            _itemDestroyService.Register(station.worker.ForceCancel);
+        }
 
 
-            var orderlayerSystem = interactable.OrderLayerSystem;
+        var orderlayerSystem = interactable.OrderLayerSystem;
 
 
-            if (interactable.TryGetComponent<ToolView>(out var toolView))
-            {
-                toolView.Initialze(orderlayerSystem, _objectSpawner);
-            }
-            if (interactable.TryGetComponent<WareView>(out var plateView))
-            {
-                plateView.Initialze(orderlayerSystem, _objectSpawner);
-            }
-            if (interactable.TryGetComponent<OrderView>(out var orderView))
-            {
-                orderView.Initialze(orderlayerSystem, _objectSpawner, _itemWorkService);
-            }
+        if (interactable.TryGetComponent<ToolView>(out var toolView))
+        {
+            toolView.Initialze(orderlayerSystem, _objectSpawner);
+        }
 
-            if (interactable.itemType == EItemType.Food)
-            {
-                SubscribeAction(interactable, _objectActives);
-            }
+        if (interactable.TryGetComponent<WareView>(out var plateView))
+        {
+            plateView.Initialze(orderlayerSystem, _objectSpawner);
+        }
+
+        if (interactable.TryGetComponent<OrderView>(out var orderView))
+        {
+            orderView.Initialze(orderlayerSystem, _objectSpawner, _itemWorkService);
+        }
+
+        if (interactable.itemType == EItemType.Food)
+        {
+            SubscribeAction(interactable, _objectActives);
         }
     }
 
@@ -96,6 +112,7 @@ public class ItemInitialzeEvent
             _subscriptions.Remove(interactable);
         }
     }
+
     private class Unsubscriber : MonoBehaviour
     {
         private InteractableItem _item;
@@ -110,7 +127,7 @@ public class ItemInitialzeEvent
         private void OnDisable()
         {
             _owner.UnsubscribeAll(_item);
-            Destroy(this); 
+            Destroy(this);
         }
     }
 }

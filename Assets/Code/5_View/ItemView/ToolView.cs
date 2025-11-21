@@ -49,8 +49,8 @@ public class ToolView : MonoBehaviour
 
     private void OnGameState(GameFlow evt)
     {
-        if (!isWorking && evt.Flow == EGameFlow.Run) return;
-        slider.gameObject.SetActive(evt.Flow == EGameFlow.Run);
+        if (!isWorking && evt.Flow == EGameFlow.GamePlay) return;
+        slider.gameObject.SetActive(evt.Flow == EGameFlow.GamePlay);
     }
     private async void OnItemAddToStation(ItemAddToStation evt)
     {

@@ -1,4 +1,5 @@
 ﻿using Fusion;
+using GameEvents;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,8 +10,6 @@ public class GameSessionManager : MonoBehaviour
     private PlayerSpawner _playerSpawner;
 
     private const string CONNECTION_LOST_SCENE_NAME = "ConnectionLost";
-
-    public event Action OnShutdown;
 
     private void Start()
     {
@@ -67,7 +66,7 @@ public class GameSessionManager : MonoBehaviour
 
         if (runner != null && !runner.IsShutdown)
         {
-            OnShutdown?.Invoke();
+            GameFlowState.Set(EGameFlow.GameNetworkShutdow);
             runner.Shutdown(); // We don't need to await this.
         }
 

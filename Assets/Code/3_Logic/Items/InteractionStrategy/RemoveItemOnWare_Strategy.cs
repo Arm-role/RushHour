@@ -7,10 +7,10 @@ public class RemoveItemOnWare_Strategy : InteractionStrategy
 {
     public override int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
-        if (source == null && targetStation.GetData<ItemContainerData>().FoodContainer.Count > 0)
-        {
-            return 100;
-        }
+        //if (source == null && targetStation.GetData<ItemContainerData>().FoodContainer.Count > 0)
+        //{
+        //    return 100;
+        //}
         return 0;
     }
     public override Task<bool> Execute(InteractableItem source, Station targetStation)

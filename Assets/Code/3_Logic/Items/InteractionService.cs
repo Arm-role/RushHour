@@ -19,8 +19,6 @@ public class InteractionService
         return null;
     }
 
-
-
     public readonly Dictionary<EItemType, IDropType> dropTypes = new Dictionary<EItemType, IDropType>
     {
         {EItemType.Food, new FoodDrop() },

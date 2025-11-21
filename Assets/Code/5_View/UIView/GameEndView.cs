@@ -7,12 +7,7 @@ public class GameEndView : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI totalScore;
 
-    public void Setup(GameEndLogic logic)
-    {
-        logic.OnScoreChanged += UpdateUI;
-    }
-
-    private void UpdateUI(float totalScore)
+    public void Setup(float totalScore)
     {
         this.totalScore.text = $"{totalScore}P";
     }

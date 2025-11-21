@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 public class OrderState_SpawnPlate : IOrderState
 {
     private Guid _sessionId;
-    public void OnEnter(OrderLifecycleManager context) { }
+    public void OnEnter(OrderLifecycleManager context)
+    {
+    }
 
     public Task<bool> HandleInteraction(OrderLifecycleManager context, InteractableItem source)
     {
@@ -20,8 +22,11 @@ public class OrderState_SpawnPlate : IOrderState
                 if (evt.Plate is InteractableItem interactable &&
                 interactable.TryGetComponent<Station>(out var plateStation))
                 {
+                    var itemContainer = plateStation.GetData<ItemContainerData>();
+
                     EventManager.Unsubscribe(onPlateReadyHandler);
                     context.LinkedPlate = plateStation;
+                    itemContainer.FoodRequest = context.RequirementData.RequestItems.ToArray();
                     context.SetState(new OrderState_Assembling());
                 }
             }
@@ -29,6 +34,7 @@ public class OrderState_SpawnPlate : IOrderState
 
         EventManager.Subscribe(onPlateReadyHandler);
         EventManager.Invoke(new ItemSpawnRequested("Plate", context.OrderStation.transform.position, _sessionId));
+        EventManager.Invoke(new OrderSpawnPlate(context.OrderStation));
 
         return Task.FromResult(true);
     }
