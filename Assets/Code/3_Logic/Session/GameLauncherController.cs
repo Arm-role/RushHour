@@ -7,6 +7,7 @@ using System.Linq;
 public class GameLauncherController
 {
     private bool _isCreateRoom;
+    private bool _isReady;
 
     private int _keyCodeLength = 5;
     private List<int> _currentCode = new List<int>();
@@ -113,7 +114,11 @@ public class GameLauncherController
     }
     private void HandleStartGamePressed()
     {
-        _networkManager.StartGameScene(SceneIndex: 2);
+        if (_isReady)
+        {
+            _networkManager.StartGameScene(SceneIndex: 2);
+            _isReady = false;
+        }
     }
     private void HandleLeaveRoomPressed()
     {
@@ -156,6 +161,7 @@ public class GameLauncherController
     private void HandlePlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         _view.UpdatePlayerCount(runner.ActivePlayers.Count(), runner.SessionInfo.MaxPlayers);
+        _isReady = true;
     }
     private void HandlePlayerLeaved(NetworkRunner runner, PlayerRef player)
     {

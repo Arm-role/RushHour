@@ -19,10 +19,12 @@ public class Dropped_DragState : IDrag // ตกใส่เป้าหมา�
 
         return StateExecutionResult.TransitionTo(new Idle_DragState());
     }
+
     public InteractionResult OnExit()
     {
         return null;
     }
+
     private Collider2D FindBestTarget(Collider2D[] colliders, InteractableItem source)
     {
         if (colliders == null || source == null) return null;

@@ -2,10 +2,9 @@
 using ItemEvents;
 using System.Threading.Tasks;
 
-[CreateAssetMenu(fileName = "RemoveItemOnWare_Strategy", menuName = "InteractionStrategy/RemoveItemOnWare_Strategy")]
-public class RemoveItemOnWare_Strategy : InteractionStrategy
+public class RemoveItemOnWare_Strategy : IInteractionStrategy
 {
-    public override int GetExecutionPriority(InteractableItem source, Station targetStation)
+    public int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
         //if (source == null && targetStation.GetData<ItemContainerData>().FoodContainer.Count > 0)
         //{
@@ -13,7 +12,7 @@ public class RemoveItemOnWare_Strategy : InteractionStrategy
         //}
         return 0;
     }
-    public override Task<bool> Execute(InteractableItem source, Station targetStation)
+    public Task<bool> Execute(InteractableItem source, Station targetStation)
     {
         var food = targetStation.GetData<ItemContainerData>().FoodContainer.Pop();
         var itemEject = new ItemEjected(food.Name, targetStation.transform.position);

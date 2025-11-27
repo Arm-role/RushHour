@@ -4,6 +4,8 @@ public class LevelProgression
 {
     private readonly GameModeData _gameModeData;
     private int _currentLevelIndex = -1;
+    private int _randRequestCount = 20;
+
     public int CurrentLevelIndex => _currentLevelIndex;
     public LevelData CurrentLevel { get; private set; }
 
@@ -13,7 +15,7 @@ public class LevelProgression
     }
     public bool IsRandomLevel()
     {
-        if (_currentLevelIndex >= _gameModeData.LevelList.Count - 1)
+        if (_currentLevelIndex + 1 >= _gameModeData.RandomStartLevel)
         {
             return true;
         }
@@ -23,9 +25,10 @@ public class LevelProgression
     {
         _currentLevelIndex++;
 
-        if (_currentLevelIndex >= _gameModeData.LevelList.Count - 1)
+        if (IsRandomLevel())
         {
-            CurrentLevel = _gameModeData.GetRandomLevel();
+            CurrentLevel = ScriptableObject.Instantiate(_gameModeData.GetRandomLevel());
+            CurrentLevel.RequestCount = _randRequestCount += 3;
         }
         else
         {

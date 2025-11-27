@@ -2,18 +2,17 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CombineOnWare_Strategy", menuName = "InteractionStrategy/CombineOnWare_Strategy")]
-public class CombineOnWare_Strategy : InteractionStrategy
+public class CombineOnWare_Strategy : IInteractionStrategy
 {
-    public override int GetExecutionPriority(InteractableItem source, Station targetStation)
+    public int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
         if (source.Item is FoodData && targetStation.TryGetData<ItemContainerData>(out var containerData))
         {
-            if (containerData.FoodRequest.Contains(source.Item)) return 100;
+            if (containerData.FoodRequest.Contains(source.Item.Name)) return 100;
         }
         return 0;
     }
-    public override Task<bool> Execute(InteractableItem source, Station targetStation)
+    public Task<bool> Execute(InteractableItem source, Station targetStation)
     {
         FoodData food = source.Item as FoodData;
 

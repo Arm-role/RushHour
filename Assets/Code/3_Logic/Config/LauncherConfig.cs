@@ -3,5 +3,6 @@
 public class LauncherConfig : MonoBehaviour
 {
     public float ForcePower = 5;
-    public Transform[] SpawnPoints;
+    public Transform SpawnPointLeft;
+    public Transform SpawnPointRight;
 }

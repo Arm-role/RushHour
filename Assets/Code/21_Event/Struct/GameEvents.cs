@@ -55,13 +55,26 @@ namespace GameEvents
         }
     }
 
-    public struct PlaySound
+    public struct PlayMusicSound
     {
         public readonly string SoundName;
 
-        public PlaySound(string soundName)
+        public PlayMusicSound(string soundName)
         {
             SoundName = soundName;
+        }
+    }
+    public struct PlaySFXSound
+    {
+        public readonly string SoundName;
+        public readonly Vector2 Position;
+        public readonly float? Timer;
+
+        public PlaySFXSound(string soundName, Vector2 position, float? timer = null)
+        {
+            SoundName = soundName;
+            Position = position;
+            Timer = timer;
         }
     }
 

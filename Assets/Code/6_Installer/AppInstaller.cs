@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameEvents;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -40,5 +41,9 @@ public class AppInstaller : MonoBehaviour
 
         IsReady = true;
         OnServiceReady?.Invoke(Container);
+    }
+    private void Start()
+    {
+        EventManager.Invoke(new GameFlow(EGameFlow.GameStart));
     }
 }

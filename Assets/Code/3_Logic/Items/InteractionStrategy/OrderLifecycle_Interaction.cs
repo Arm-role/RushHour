@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using UnityEngine;
 
-[CreateAssetMenu(fileName = "OrderLifecycle_Interaction", menuName = "InteractionStrategy/OrderLifecycle_Interaction")]
-public class OrderLifecycle_Interaction : InteractionStrategy
+public class OrderLifecycle_Interaction : IInteractionStrategy
 {
-    public override int GetExecutionPriority(InteractableItem source, Station targetStation)
+    public int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
         if (source == null && targetStation.TryGetData<OrderLifecycleManager>(out _))
         {
@@ -13,7 +11,7 @@ public class OrderLifecycle_Interaction : InteractionStrategy
         return 0;
     }
 
-    public override async Task<bool> Execute(InteractableItem source, Station targetStation)
+    public async Task<bool> Execute(InteractableItem source, Station targetStation)
     {
         var orderManager = targetStation.GetData<OrderLifecycleManager>();
 
@@ -23,6 +21,6 @@ public class OrderLifecycle_Interaction : InteractionStrategy
             targetStation.worker.BeginWork(orderQuest_Work, targetStation);
         }
 
-        return await orderManager.OnInteract(source); 
+        return await orderManager.OnInteract(source);
     }
 }

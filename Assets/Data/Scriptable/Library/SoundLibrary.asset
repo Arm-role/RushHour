@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94b91fc1ebbc1a4e900b690a2c4a0e2, type: 3}
+  m_Name: SoundLibrary
+  m_EditorClassIdentifier: 
+  Entries:
+  - Id: StartMusic
+    Clip: {fileID: 8300000, guid: 3a50bb72e0b919f4ba13ec54c84837c3, type: 3}
+    Volume: 0.4
+    Loop: 1
+  - Id: GameMusic
+    Clip: {fileID: 8300000, guid: c8bdb399df62c0f40853577025e47aba, type: 3}
+    Volume: 0.4
+    Loop: 1
+  - Id: Pop
+    Clip: {fileID: 8300000, guid: 990a75024748fe54fb189f679f756e63, type: 3}
+    Volume: 1
+    Loop: 0
+  - Id: Fried
+    Clip: {fileID: 8300000, guid: 2e0d1a6af8080b548ad5ff29598bb965, type: 3}
+    Volume: 1
+    Loop: 0
+  - Id: Cut
+    Clip: {fileID: 8300000, guid: b20de9a89c6a7a9499453b832597c819, type: 3}
+    Volume: 1
+    Loop: 0

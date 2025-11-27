@@ -30,8 +30,12 @@ public class ItemInitialzeEvent : ISceneDependencyUpdatable
 
         _itemSpawnHandle = itemSpawnHandle;
 
+        _itemSpawnHandle.OnSpawnCompleted += InitialzeItem;
+
         _itemSpawnHandle.OnSpawnCompleted += SubscribeItem;
+        _itemSpawnHandle.OnDespawnCompleted += UnsubscribeItem;
     }
+
 
     public void UpdateSceneDependencies(DIContainerBase sceneContainer)
     {
@@ -42,7 +46,25 @@ public class ItemInitialzeEvent : ISceneDependencyUpdatable
             Debug.Log("ItemSpawnManager: Scene dependencies (LauncherConfig) have been updated!");
         }
     }
+ 
     private void SubscribeItem(InteractableItem interactable)
+    {
+        if (interactable.TryGetComponent<IDestructible>(out var destructible))
+        {
+            destructible.OnRequestDestruction += _itemSpawnHandle.Despawn;
+
+        }
+    }
+
+    private void UnsubscribeItem(InteractableItem interactable)
+    {
+        if (interactable.TryGetComponent<IDestructible>(out var destructible))
+        {
+            destructible.OnRequestDestruction -= _itemSpawnHandle.Despawn;
+        }
+    }
+
+    private void InitialzeItem(InteractableItem interactable)
     {
         if (_itemDestroyService != null)
         {
@@ -51,7 +73,37 @@ public class ItemInitialzeEvent : ISceneDependencyUpdatable
 
         if (interactable.TryGetComponent<Station>(out var station))
         {
-            station.Initialze(_cacheItem);
+            switch (interactable.itemType)
+            {
+                case EItemType.Order:
+                    station.Initialze(_cacheItem,
+                        new OrderLifecycleManager(),
+                        new IInteractionStrategy[] { new OrderServe_Interaction() },
+                        new IInteractionStrategy[] { new OrderLifecycle_Interaction() });
+                    break;
+
+                case EItemType.Tool:
+                    if (station.toolType == EToolType.Fried)
+                    {
+                        station.Initialze(_cacheItem, new ToolWorkData(),
+                            new IInteractionStrategy[] { new StartCooking_Interaction() },
+                            new IInteractionStrategy[] { new CancelItemWoking_Strategy() });
+                    }
+                    else if (station.toolType == EToolType.Cutted)
+                    {
+                        station.Initialze(_cacheItem, new ToolWorkData(),
+                            new IInteractionStrategy[] { new StartCutting_Interaction() },
+                            new IInteractionStrategy[] { new CancelItemWoking_Strategy() });
+                    }
+
+                    break;
+
+                case EItemType.Ware:
+                    station.Initialze(_cacheItem, new ItemContainerData(),
+                        new IInteractionStrategy[] { new CombineOnWare_Strategy() },
+                        new IInteractionStrategy[] { new RemoveItemOnWare_Strategy() });
+                    break;
+            }
 
             _itemDestroyService.Register(station.worker.ForceCancel);
         }
@@ -88,8 +140,8 @@ public class ItemInitialzeEvent : ISceneDependencyUpdatable
 
         foreach (var objectActive in objectActives)
         {
-            Action dragHandler = () => objectActive.Show();
-            Action releaseHandler = () => objectActive.Hide();
+            Action dragHandler = objectActive.Show;
+            Action releaseHandler = objectActive.Hide;
 
             interactable.OnDrag += dragHandler;
             interactable.OnRelease += releaseHandler;
@@ -99,7 +151,6 @@ public class ItemInitialzeEvent : ISceneDependencyUpdatable
 
         interactable.gameObject.AddComponent<Unsubscriber>().Setup(interactable, this);
     }
-
     public void UnsubscribeAll(InteractableItem interactable)
     {
         if (_subscriptions.TryGetValue(interactable, out var handlers))
@@ -112,7 +163,6 @@ public class ItemInitialzeEvent : ISceneDependencyUpdatable
             _subscriptions.Remove(interactable);
         }
     }
-
     private class Unsubscriber : MonoBehaviour
     {
         private InteractableItem _item;

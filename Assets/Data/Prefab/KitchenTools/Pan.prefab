@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5447853243896765516}
   - component: {fileID: 692168623863626653}
   - component: {fileID: 2902230299036331308}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: ShowTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -128549137
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &692168623863626653
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4205106995917396796}
   - component: {fileID: 8431967452448890299}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8135601449629633459}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 8506311611093451401}
   - component: {fileID: 4871894931205747901}
   - component: {fileID: 3492615857797434066}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2580895544748793302}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Keeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 586177218092683255}
   - component: {fileID: 7295584987154849488}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6093917847818594845}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 2606218247426326779}
   - component: {fileID: 580270624646033710}
   - component: {fileID: 8855575263672843895}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,6 +600,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pan
       objectReference: {fileID: 0}
+    - target: {fileID: 8088417203757469023, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088417203757469023, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: m_TagString
+      value: Tool
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -734,24 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940c06333e7fe2e4fa7f608d6f5c8bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StationData:
-    rid: 5244782068909998083
-  _interactionStrategie:
-  - {fileID: 11400000, guid: 216490665f40eff46965a660e0ece919, type: 2}
-  _nullInteractionStrategie:
-  - {fileID: 11400000, guid: 7996fc571846dac4294c6b61e6bc9d61, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: 5244782068909998083
-      type: {class: ToolWorkData, ns: , asm: 3_Logic}
-      data:
-        IsWorking: 0
-        IsCancel: 0
-        ActionCount: 0
-        RequiredActions: 0
-        SourceItem: {fileID: 0}
-        ResultItem: {fileID: 0}
+  toolType: 1
 --- !u!114 &-8823325299166495452
 MonoBehaviour:
   m_ObjectHideFlags: 0

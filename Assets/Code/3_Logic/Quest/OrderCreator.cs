@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 public class OrderCreator
 {
     private AssetProvider<Item> _itemCache;
@@ -16,8 +18,18 @@ public class OrderCreator
     public async Task CreateOrder(int playerID, Menu menu)
     {
         Item orderItem = await _itemCache.Get("Order");
-
         OnOrderSpawn?.Invoke((orderItem, menu.ID), playerID);
-        OnItemSpawn?.Invoke(menu.FoodSpanw);
+
+        var foodSpawn = menu.FoodSpanw;
+        var oterSpawn = menu.OtherFoodSpawn;
+
+        var combineFood = foodSpawn.Concat(oterSpawn).ToList();
+
+        foreach (var item in combineFood)
+        {
+            Debug.Log(item.Name + "OrderCreator--------------------");
+        }
+
+        OnItemSpawn?.Invoke(combineFood);
     }
 }

@@ -1,4 +1,6 @@
-﻿public class Idle_DragState : IDrag //อยู่นิ่งๆ
+﻿using UnityEngine;
+
+public class Idle_DragState : IDrag //อยู่นิ่งๆ
 {
     public InteractionResult OnEnter()
     {
@@ -9,9 +11,10 @@
     {
         if (context.IsTouch)
         {
-            if (context.HitCollider != null && context.HitCollider.CompareTag("Dragable"))
+            if (context.HitCollider != null && context.HitCollider.gameObject.layer == 3)
             {
-                var interaction = InteractionResult.SetItem(context.HitCollider);
+                var hitCollider = FindSorce(context.HitColliders);
+                var interaction = InteractionResult.SetItem(hitCollider);
                 return StateExecutionResult.TransitionWithInteraction(new Grabbed_DragState(), interaction);
             }
         }
@@ -20,6 +23,21 @@
 
     public InteractionResult OnExit()
     {
+        return null;
+    }
+
+    private Collider2D FindSorce(Collider2D[] colliders)
+    {
+        if (colliders == null) return null;
+
+        foreach (var col in colliders)
+        {
+            if (col.gameObject.layer == 3)
+            {
+                return col;
+            }
+        }
+
         return null;
     }
 }

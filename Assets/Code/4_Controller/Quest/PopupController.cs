@@ -1,6 +1,4 @@
 ﻿using GameEvents;
-using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class PopupController : MonoBehaviour

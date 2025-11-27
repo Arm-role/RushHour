@@ -40,7 +40,5 @@ public class OrderSpawner : MonoBehaviour
         }
 
         EventManager.Invoke(new SpawnOrderAgain(interactableItem));
-
-        Debug.LogWarning($"SpawnOrder-----------{interactableItem.transform.position}---------{interactableItem.gameObject.name}-------------------");
     }
 }

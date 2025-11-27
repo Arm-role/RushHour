@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class Station : MonoBehaviour
 {
-    [SerializeReference, SubclassSelector] public StationDataComponent StationData;
-    [SerializeField] private InteractionStrategy[] _interactionStrategie;
-    [SerializeField] private InteractionStrategy[] _nullInteractionStrategie;
+    public EToolType toolType;
+    public StationDataComponent StationData;
+    private IInteractionStrategy[] _interactionStrategie;
+    private IInteractionStrategy[] _nullInteractionStrategie;
 
     [HideInInspector] public AssetProvider<Item> CacheItem;
 
@@ -17,20 +17,32 @@ public class Station : MonoBehaviour
         worker = gameObject.AddComponent<StationWorker>();
         worker.enabled = false;
     }
-    public void Initialze(AssetProvider<Item> cacheItem)
+
+    public void Initialze(
+        AssetProvider<Item> cacheItem,
+        StationDataComponent stationData,
+        IInteractionStrategy[] interaction,
+        IInteractionStrategy[] nullInteraction)
     {
         CacheItem = cacheItem;
+
+        StationData = stationData;
+
+        _interactionStrategie = interaction;
+        _nullInteractionStrategie = nullInteraction;
     }
+
     public async Task<bool> Interact(InteractableItem sourceItem)
     {
-        if(_interactionStrategie.Length == 0) return false;
+        if (_interactionStrategie.Length == 0) return false;
 
         IInteractionStrategy bastStrategy = null;
         int highesPriority = 0;
 
-        foreach (IInteractionStrategy strategy in _interactionStrategie)
+        foreach (var strategy in _interactionStrategie)
         {
             int currentPrivority = strategy.GetExecutionPriority(sourceItem, this);
+
             if (currentPrivority > highesPriority)
             {
                 highesPriority = currentPrivority;
@@ -47,7 +59,7 @@ public class Station : MonoBehaviour
     }
     public async Task<bool> Interact()
     {
-        if(_nullInteractionStrategie.Length == 0) return false;
+        if (_nullInteractionStrategie.Length == 0) return false;
 
         IInteractionStrategy bastStrategy = null;
         int highesPriority = 0;

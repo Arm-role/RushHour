@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "StartCutting_Interaction", menuName = "InteractionStrategy/StartCutting_Interaction")]
-public class StartCutting_Interaction : InteractionStrategy
+public class StartCutting_Interaction : IInteractionStrategy
 {
-    public override int GetExecutionPriority(InteractableItem source, Station targetStation)
+    public int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
         if (source.Item is FoodData foodData && !targetStation.GetData<ToolWorkData>().IsWorking && foodData.CanCook(EToolType.Cutted))
         {
@@ -12,7 +11,7 @@ public class StartCutting_Interaction : InteractionStrategy
         }
         return 0;
     }
-    public override async Task<bool> Execute(InteractableItem source, Station targetStation)
+    public async Task<bool> Execute(InteractableItem source, Station targetStation)
     {
         FoodData food = source.Item as FoodData;
 

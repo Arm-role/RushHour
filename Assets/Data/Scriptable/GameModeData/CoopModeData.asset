@@ -15,10 +15,14 @@ MonoBehaviour:
   GameModeID: 9001
   ModeName: CoopModeData
   LevelLoop: 1
-  RandomLevelMin: 1
-  RandomLevelMax: 4
+  RandomStartLevel: 4
+  RandomLevelMin: 4
+  RandomLevelMax: 7
   LevelList:
   - {fileID: 11400000, guid: 7a3fc187a7cba274a80f9f82907f6c95, type: 2}
   - {fileID: 11400000, guid: c1a549c4036152f419424087c9bcfe1b, type: 2}
   - {fileID: 11400000, guid: d794d85c41c2e874b8691b30ffc16ca7, type: 2}
   - {fileID: 11400000, guid: c59380813dddd6c468a6ec5863f2e438, type: 2}
+  - {fileID: 11400000, guid: fcb16429dfda7f44fa0afedccf39066d, type: 2}
+  - {fileID: 11400000, guid: 059b31e8da393104883b95ae7aba016d, type: 2}
+  - {fileID: 11400000, guid: 46634435b037ea34083aca37faa50fc2, type: 2}

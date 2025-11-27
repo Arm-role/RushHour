@@ -49,36 +49,48 @@ public class GameSceneInstaller : SceneInstaller, ILauncherConfigProvider, IObje
 
         var itemDestroyService = new ItemDestroyService();
 
+        var itemSpawnHandle = sceneContainer.GetObject<ItemSpawnHandle>();
+        if (itemSpawnHandle == null)
+        {
+            var itemSpawner = new ItemSpawner(poolService, _itemLibrary);
+            var itemLauncherService = new ItemLauncherService();
+            itemSpawnHandle = new ItemSpawnHandle(itemSpawner, itemLauncherService);
+            globalContainer.Register(itemSpawnHandle);
+        }
+
+        itemSpawnHandle.UpdateSceneDependencies(sceneContainer);
+
+        var itemSpawnSystem = new ItemSpawnSystem(itemSpawnHandle);
+
         var itemInitialzeEvent = sceneContainer.GetObject<ItemInitialzeEvent>();
         if (itemInitialzeEvent == null)
         {
             var objectSpawner = new GameObjectSpawner(poolService, _gameObjectLibrary);
 
-            itemInitialzeEvent = new ItemInitialzeEvent(cacheItem, objectSpawner, itemDestroyService, itemWorkService);
+            itemInitialzeEvent = new ItemInitialzeEvent(
+                cacheItem, 
+                objectSpawner, 
+                itemDestroyService, 
+                itemWorkService, 
+                itemSpawnHandle);
+
             globalContainer.Register(itemInitialzeEvent);
         }
 
         itemInitialzeEvent.UpdateSceneDependencies(sceneContainer);
 
-        var itemManager = sceneContainer.GetObject<ItemSpawnHandle>();
-        if (itemManager == null)
-        {
-            var itemSpawner = new ItemSpawner(poolService, _itemLibrary);
-            var itemLauncherService = new ItemLauncherService();
-            itemManager = new ItemSpawnHandle(itemSpawner, itemLauncherService);
-            globalContainer.Register(itemManager);
-        }
+        var spawnListeners = new IOnSpawnListener[] { };
+        var despawnListeners = new IOnDespawnListener[] { };
 
-        itemManager.UpdateSceneDependencies(sceneContainer);
+        var spawnBroker = new SpawnEventBroker(itemSpawnHandle, spawnListeners, despawnListeners);
 
-        var itemSpawnSystem = new ItemSpawnSystem(itemManager);
 
         var orderConnection = new OrderOrchestratorSystem(OnDestroyer);
 
         _transportItem.Initialze(_itemLibrary);
-        _orderSpawner.Initialize(_menuLibrary, itemManager);
+        _orderSpawner.Initialize(_menuLibrary, itemSpawnHandle);
 
-        _masterGameController.Initialze(sceneContainer.GetObject<GameState>(), cacheItem, itemManager);
+        _masterGameController.Initialze(sceneContainer.GetObject<GameState>(), cacheItem, itemSpawnHandle);
 
         globalContainer.Register(particleManager);
         globalContainer.Register(itemDestroyService);

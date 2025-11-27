@@ -34,7 +34,13 @@ public class ItemSpawnHandle : ISceneDependencyUpdatable
         var interactionItem = await spawnAction();
         if (interactionItem.TryGetComponent<IPoolable<InteractableItem>>(out var poolable))
         {
-            poolable.OnSpawnFromPool(interactionItem);
+            if (!poolable.IsAlive)
+                poolable.OnSpawnFromPool(interactionItem);
+            else
+            {
+                Debug.LogError("-----------Is Alive----------");
+            }
+                
         }
 
         OnSpawnCompleted?.Invoke(interactionItem);
@@ -46,7 +52,12 @@ public class ItemSpawnHandle : ISceneDependencyUpdatable
     {
         if (interaction.TryGetComponent<IPoolable<InteractableItem>>(out var poolable))
         {
-            poolable.OnReturnToPool(interaction);
+            if (poolable.IsAlive)
+                poolable.OnReturnToPool(interaction);
+            else
+            {
+                Debug.LogError("-----------Don't Alive----------");
+            }
         }
 
         OnDespawnCompleted?.Invoke(interaction);
@@ -65,10 +76,13 @@ public class ItemSpawnHandle : ISceneDependencyUpdatable
 
     public async Task<InteractableItem> SpawnItemLaunch(string name)
     {
-        int Randomer = UnityEngine.Random.Range(0, _launcherConfig.SpawnPoints.Length);
-        Transform spawnPoint = _launcherConfig.SpawnPoints[Randomer];
+        float Randomer = UnityEngine.Random.Range(
+            _launcherConfig.SpawnPointLeft.position.x,
+            _launcherConfig.SpawnPointRight.position.x);
 
-        var interactionItem = await CoreSpawn(() => _itemSpawner.SpawnItem(name, spawnPoint.position));
+        Vector2 spawnPoint = new Vector2(Randomer, _launcherConfig.SpawnPointLeft.position.y);
+
+        var interactionItem = await CoreSpawn(() => _itemSpawner.SpawnItem(name, spawnPoint));
 
         if (interactionItem != null)
         {
@@ -80,10 +94,13 @@ public class ItemSpawnHandle : ISceneDependencyUpdatable
 
     public async Task<InteractableItem> SpawnItemLaunch(int id)
     {
-        int Randomer = UnityEngine.Random.Range(0, _launcherConfig.SpawnPoints.Length);
-        Transform spawnPoint = _launcherConfig.SpawnPoints[Randomer];
+        float Randomer = UnityEngine.Random.Range(
+            _launcherConfig.SpawnPointLeft.position.x,
+            _launcherConfig.SpawnPointRight.position.x);
 
-        var interactionItem = await CoreSpawn(() => _itemSpawner.SpawnItem(id, spawnPoint.position));
+        Vector2 spawnPoint = new Vector2(Randomer, _launcherConfig.SpawnPointLeft.position.y);
+
+        var interactionItem = await CoreSpawn(() => _itemSpawner.SpawnItem(id, spawnPoint));
 
         if (interactionItem != null)
         {

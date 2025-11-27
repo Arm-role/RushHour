@@ -1,14 +1,13 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
 
 public class SpawnEventBroker : IDisposable
 {
-    private readonly SpawnerHandle _spawnerHandle; 
+    private readonly ItemSpawnHandle _spawnerHandle; 
     private readonly List<IOnSpawnListener> _spawnListeners;
     private readonly List<IOnDespawnListener> _despawnListeners;
 
-    public SpawnEventBroker(SpawnerHandle spawnerHandle,
+    public SpawnEventBroker(ItemSpawnHandle spawnerHandle,
         IEnumerable<IOnSpawnListener> spawnListeners,
         IEnumerable<IOnDespawnListener> despawnListeners)
     {
@@ -20,16 +19,16 @@ public class SpawnEventBroker : IDisposable
         _spawnerHandle.OnDespawnCompleted += HandleDespawn;
     }
 
-    private void HandleSpawn(GameObject obj)
+    private void HandleSpawn(InteractableItem interactable)
     {
         for (int i = 0; i < _spawnListeners.Count; i++)
-            _spawnListeners[i].OnSpawned(obj);
+            _spawnListeners[i].OnSpawned(interactable.gameObject);
     }
 
-    private void HandleDespawn(GameObject obj)
+    private void HandleDespawn(InteractableItem interactable)
     {
         for (int i = 0; i < _despawnListeners.Count; i++)
-            _despawnListeners[i].OnDespawned(obj);
+            _despawnListeners[i].OnDespawned(interactable.gameObject);
     }
 
     public void Dispose()

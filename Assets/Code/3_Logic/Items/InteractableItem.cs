@@ -2,7 +2,7 @@ using System;
 using GameEvents;
 using UnityEngine;
 
-public class InteractableItem : MonoBehaviour, IInteractable, IPoolable<InteractableItem>
+public class InteractableItem : MonoBehaviour, IInteractable, IPoolable<InteractableItem>, IDestructible
 {
     public Item Item;
     public EItemType itemType => Item.itemType;
@@ -12,9 +12,10 @@ public class InteractableItem : MonoBehaviour, IInteractable, IPoolable<Interact
     public Action OnDrag { get; set; }
     public Action OnRelease { get; set; }
     public Action OnLateUpdate { get; set; }
-    public Action<InteractableItem> OnRequestDestruction { get; set; }
 
+    public event Action<InteractableItem> OnRequestDestruction;
     public bool IsAlive { get; set; }
+
 
     private void Start()
     {
@@ -40,27 +41,11 @@ public class InteractableItem : MonoBehaviour, IInteractable, IPoolable<Interact
     private void LateUpdate() => OnLateUpdate?.Invoke();
     public void RequestDestruction()
     {
-        Debug.LogWarning($"<color=#FFD700>---------RequestDestruction : {name}</color> ({transform.position})");
+        
         EventManager.Invoke(new PlayParticle("Smoke", transform.position));
         OnRequestDestruction?.Invoke(this);
     }
 
-    void OnDisable()
-    {
-        Debug.LogWarning($"<color=#FFD700>---------OnDisable : {name}</color> ({transform.position})");
-    }
-
-    void OnDestroy()
-    {
-        Debug.LogError($"<color=red>---------OnDestroy : {name}</color>");
-    }
-
-    void OnEnable()
-    {
-        Debug.Log($"<color=green>---------OnEnable : {name}</color>");
-    }
-
     public void OnSpawnFromPool(InteractableItem ob) => IsAlive = true;
-
     public void OnReturnToPool(InteractableItem ob) => IsAlive = false;
 }

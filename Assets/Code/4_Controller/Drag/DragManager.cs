@@ -17,6 +17,31 @@ public class DragManager : MonoBehaviour
 
     private InteractionService _interactionService = new();
 
+    private int layerDragable;
+    private int layerInteractable;
+
+    private readonly Dictionary<int, int> LayerPriority = new();
+
+    private void Awake()
+    {
+        layerDragable = LayerMask.NameToLayer("Dragable");
+        layerInteractable = LayerMask.NameToLayer("Interactable");
+
+        LayerPriority[layerDragable] = 100;
+        LayerPriority[layerInteractable] = 50;
+    }
+
+    private readonly Dictionary<string, int> TagPriority = new()
+    {
+        { "Food", 100 },
+        { "Tool", 90 },
+        { "Counter", 80 },
+        { "Trash", 60 },
+        { "ArrowLeft", 50 },
+        { "ArrowRight", 40 },
+    };
+
+
     #region dragState
 
     [Header("Drag Settings")]
@@ -160,6 +185,11 @@ public class DragManager : MonoBehaviour
             EventManager.Invoke(new PlayParticle(result.ParticleToPlay, sourceObject.transform.position));
         }
 
+        if (result.SFXPlay != null)
+        {
+            EventManager.Invoke(new PlaySFXSound(result.SFXPlay, sourceObject.transform.position));
+        }
+
         if (result.ShouldDestroySelf)
         {
             sourceObject.RequestDestruction();
@@ -197,6 +227,12 @@ public class DragManager : MonoBehaviour
         {
             EventManager.Invoke(new PlayParticle(result.ParticleToPlay, sourceObject.transform.position));
         }
+
+        if (result.SFXPlay != null)
+        {
+            EventManager.Invoke(new PlaySFXSound(result.SFXPlay, sourceObject.transform.position));
+        }
+
         bool destroySelf = await result.ShouldDestroySelf;
         bool destroyTarget = await result.ShouldDestroyTarget;
 
@@ -222,7 +258,7 @@ public class DragManager : MonoBehaviour
     private Collider2D GetColliderAtTouchPoint()
     {
         var colliders = GetAllCollidersAtTouchPoint();
-        return colliders.Length > 0 ? colliders[^1] : null;
+        return colliders.Length > 0 ? colliders[0] : null;
     }
     private Collider2D[] GetAllCollidersAtTouchPoint()
     {
@@ -234,26 +270,42 @@ public class DragManager : MonoBehaviour
 
         Array.Sort(colliders, (a, b) =>
         {
+            int layerA = a.gameObject.layer;
+            int layerB = b.gameObject.layer;
+
+            int priA = LayerPriority.TryGetValue(layerA, out var pa) ? pa : 0;
+            int priB = LayerPriority.TryGetValue(layerB, out var pb) ? pb : 0;
+
+            // 1) Compare LayerPriority
+            int compare = priB.CompareTo(priA);
+            if (compare != 0)
+                return compare;
+
+            // 2) Compare TagPriority
+            string tagA = a.tag;
+            string tagB = b.tag;
+
+            int tagPriA = TagPriority.TryGetValue(tagA, out var tpa) ? tpa : 0;
+            int tagPriB = TagPriority.TryGetValue(tagB, out var tpb) ? tpb : 0;
+
+            compare = tagPriB.CompareTo(tagPriA);
+            if (compare != 0)
+                return compare;
+
+            // 3) sortingOrder (สูงสุดอยู่หน้า)
             var srA = a.GetComponent<SpriteRenderer>();
             var srB = b.GetComponent<SpriteRenderer>();
+            int orderA = srA != null ? srA.sortingOrder : 0;
+            int orderB = srB != null ? srB.sortingOrder : 0;
 
-            // ✅ ถ้ามี SpriteRenderer ทั้งคู่
-            if (srA != null && srB != null)
-            {
-                int layerCompare = srA.sortingLayerID.CompareTo(srB.sortingLayerID);
-                if (layerCompare != 0) return layerCompare; // layer สูงกว่า → อยู่บน
+            compare = orderB.CompareTo(orderA);
+            if (compare != 0)
+                return compare;
 
-                int orderCompare = srA.sortingOrder.CompareTo(srB.sortingOrder);
-                if (orderCompare != 0) return orderCompare; // order สูงกว่า → อยู่บน
-            }
-
-            // ✅ ถ้ามีแค่ตัวใดตัวหนึ่งมี SpriteRenderer → ให้ตัวนั้นอยู่บน
-            if (srA != null && srB == null) return 1;
-            if (srA == null && srB != null) return -1;
-
-            // ✅ ถ้าไม่มี SpriteRenderer ทั้งคู่ → ใช้ตำแหน่ง z แทน
-            return (-a.transform.position.z).CompareTo(-b.transform.position.z);
+            // 4) fallback: Z (สูงสุดอยู่หน้า)
+            return b.transform.position.z.CompareTo(a.transform.position.z);
         });
+
 
         return colliders;
     }

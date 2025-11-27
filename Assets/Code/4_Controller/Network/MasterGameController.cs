@@ -1,11 +1,9 @@
 ﻿using Fusion;
-using System;
 using System.Linq;
 using UnityEngine;
 using PlayerEvents;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class MasterGameController : NetworkBehaviour
 {
@@ -39,13 +37,15 @@ public class MasterGameController : NetworkBehaviour
 
         _gameState.OnSentItem += OnPlayerSubmitMenu;
         _gameState.OnPlayerOrderExpired += OnOrderExpired;
-        _gameState.CurrentPhase = EGameFlow.GameStart;
 
         StartNextLevel();
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
+        _orderSpawner.OnOrderSpawn -= SpawnOrder;
+        _orderSpawner.OnItemSpawn -= SpawnItemMaterials;
+
         _gameState.OnSentItem -= OnPlayerSubmitMenu;
         _gameState.OnPlayerOrderExpired -= OnOrderExpired;
     }
@@ -219,6 +219,11 @@ public class MasterGameController : NetworkBehaviour
 
     private async void SpawnItemMaterials(List<Item> items)
     {
+        foreach (var item in items)
+        {
+            Debug.Log(item.Name + "Master--------------------");
+        }
+
         var players = PlayerRegistry.Instance.GetAllPlayers();
 
         Dictionary<PlayerRef, List<Item>> playerItemMap = new Dictionary<PlayerRef, List<Item>>();
@@ -244,6 +249,8 @@ public class MasterGameController : NetworkBehaviour
         {
             PlayerRef target = kvp.Key;
             List<Item> playerItems = kvp.Value;
+
+            playerItems.ForEach(i => Debug.Log(i.Name + "----------------"));
 
             int[] itemIds = playerItems.Select(i => _itemLibrary.FindIdByName(i.Name)).ToArray();
             byte[] itemBytes = ByteConverter.IntArrayToBytes(itemIds);

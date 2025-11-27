@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using UnityEngine;
 
-[CreateAssetMenu(fileName = "OrderServe_Interaction", menuName = "InteractionStrategy/OrderServe_Interaction")]
-public class OrderServe_Interaction : InteractionStrategy
+public class OrderServe_Interaction : IInteractionStrategy
 {
-    public override int GetExecutionPriority(InteractableItem source, Station targetStation)
+    public int GetExecutionPriority(InteractableItem source, Station targetStation)
     {
         if (source != null && targetStation.TryGetData<OrderLifecycleManager>(out var orderLifecycle) &&
             source.TryGetComponent<Station>(out var station) && station == orderLifecycle.LinkedPlate)
@@ -13,9 +11,9 @@ public class OrderServe_Interaction : InteractionStrategy
         }
         return 0;
     }
-    public override Task<bool> Execute(InteractableItem source, Station targetStation)
+    public Task<bool> Execute(InteractableItem source, Station targetStation)
     {
         var orderManager = targetStation.GetData<OrderLifecycleManager>();
-        return orderManager.OnInteract(source); 
+        return orderManager.OnInteract(source);
     }
 }

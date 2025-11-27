@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 public abstract class CombineLibraryBase<T1, T2> : ScriptableObject, ILibrary where T1 : AssetReference where T2 : AssetReference
 {
     public List<ObjectEntry<T1, T2>> Entries;
-
+        
     public T1 Find1(string friendlyName)
     {
         var entries = Entries.Find(l => friendlyName == l.Name);

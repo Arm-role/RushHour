@@ -27,6 +27,8 @@ public class TimeCooking_Work : IWorkStation
         _stationData.SourceItem = _rawItem;
         _stationData.ResultItem = _cookedItem;
 
+        EventManager.Invoke(new PlaySFXSound("Fried", station.transform.position, _requestTime));
+
         EventManager.Invoke(new ItemAddToStation(station, _rawItem));
         EventManager.Invoke(new WorkStarted(station));
     }

@@ -1,7 +1,4 @@
-﻿using GameEvents;
-using UnityEngine;
-
-public class OrderQuest_Work : IWorkStation
+﻿public class OrderQuest_Work : IWorkStation
 {
     private OrderLifecycleManager _orderLifecycle;
     private Station _station;
@@ -53,7 +50,7 @@ public class OrderQuest_Work : IWorkStation
 
         if (_orderLifecycle.OrderStation != null)
         {
-            if (_orderLifecycle.OrderStation.TryGetComponent<InteractableItem>(out var order))
+            if (_orderLifecycle.OrderStation.TryGetComponent<IDestructible>(out var order))
             {
                 order.RequestDestruction();
             }
@@ -61,7 +58,7 @@ public class OrderQuest_Work : IWorkStation
 
         if (_orderLifecycle.LinkedPlate == null) return;
 
-        if (_orderLifecycle.LinkedPlate.TryGetComponent<InteractableItem>(out var plate))
+        if (_orderLifecycle.LinkedPlate.TryGetComponent<IDestructible>(out var plate))
         {
             plate.RequestDestruction();
         }

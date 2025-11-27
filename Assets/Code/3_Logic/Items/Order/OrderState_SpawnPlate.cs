@@ -2,6 +2,7 @@
 using UnityEngine;
 using ItemEvents;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class OrderState_SpawnPlate : IOrderState
 {
@@ -26,7 +27,9 @@ public class OrderState_SpawnPlate : IOrderState
 
                     EventManager.Unsubscribe(onPlateReadyHandler);
                     context.LinkedPlate = plateStation;
-                    itemContainer.FoodRequest = context.RequirementData.RequestItems.ToArray();
+                    var foodRequest = context.RequirementData.RequestItems.Select(item => item.Name);
+                    itemContainer.FoodRequest = foodRequest.ToArray();
+
                     context.SetState(new OrderState_Assembling());
                 }
             }

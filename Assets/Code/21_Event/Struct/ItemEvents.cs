@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace ItemEvents
 {
-    public struct TimeOutEvent { }
     public struct ItemEjected
     {
         public readonly string ItemName;
@@ -31,6 +30,15 @@ namespace ItemEvents
         public readonly int ItemId;
 
         public ItemIdEjectedLaunch(int itemId)
+        {
+            ItemId = itemId;
+        }
+    }
+    public struct ItemIdsEjectedLaunch
+    {
+        public readonly int[] ItemId;
+
+        public ItemIdsEjectedLaunch(int[] itemId)
         {
             ItemId = itemId;
         }

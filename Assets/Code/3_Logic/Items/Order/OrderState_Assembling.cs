@@ -1,22 +1,19 @@
 ﻿using UnityEngine;
 using GameEvents;
 using System.Threading.Tasks;
-using ItemEvents;
 using System.Linq;
 public class OrderState_Assembling : IOrderState
 {
-    public void OnEnter(OrderLifecycleManager context)
-    {
-        Debug.Log("ORDER Assembling!");
-    }
+    public void OnEnter(OrderLifecycleManager context) { }
+
     public void OnIngredientAdded(OrderLifecycleManager context, Item ingredient)
     {
         bool required = context.RequirementData.RequiredItemAndCounts
-        .Any(list => list.Contains(ingredient));
+            .Any(list => list.Any(i => i.Name == ingredient.Name));
 
         if (required)
         {
-            context.CollectedItems.Add(ingredient);
+            context.CollectedItems.Add(ingredient.Name);
 
             var ingredientAddToOrder = new IngredienAddToOrder(
                 context.OrderStation,
@@ -28,9 +25,9 @@ public class OrderState_Assembling : IOrderState
     }
     public void OnIngredientRemoved(OrderLifecycleManager context, Item ingredient)
     {
-        if (context.CollectedItems.Contains(ingredient))
+        if (context.CollectedItems.Contains(ingredient.Name))
         {
-            context.CollectedItems.Remove(ingredient);
+            context.CollectedItems.Remove(ingredient.Name);
         }
     }
     public void OnUpdate(OrderLifecycleManager context)
@@ -54,12 +51,11 @@ public class OrderState_Assembling : IOrderState
             else
             {
                 Debug.Log(context.CollectedItems.Count + " : " + context.RequirementData.RequestItems.Count);
-                EventManager.Invoke(new PlaySound("ErrorSound"));
             }
         }
         return Task.FromResult(false);
     }
     public void OnExit(OrderLifecycleManager context) { }
 
-   
+
 }

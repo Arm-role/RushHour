@@ -9,19 +9,17 @@ TagManager:
   - Tool
   - ArrowLeft
   - ArrowRight
-  - Item
-  - ItemLabel
-  - Dragable
   - Trash
+  - Food
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - eff
+  - Dragable
   - Water
   - UI
   - MenuList
-  - 
+  - Interactable
   - 
   - 
   - 

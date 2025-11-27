@@ -6,31 +6,23 @@ public class FoodOverWare : IDrop
     public DropExecutionResult Execute(InteractableItem intercatableItem)
     {
         var result = new DropExecutionResult();
-        var state = new ProcessState<InteractableItem, Station>();
+        InteractableItem interactable = null;
+        bool haveSource = false;
+        bool haveTarget = false;
 
-        result.ParticleToPlay = "Smoke";
-
-        state.Func = async (interactable, station) =>
-        {
-            if (interactable != null && station != null)
-            {
-                return await station.Interact(interactable);
-            }
-            return false;
-        };
         result.SourceInteraction = (source) =>
         {
-            if (source.TryGetComponent<InteractableItem>(out var interactable))
-            {
-                state.Source = interactable;
-            }
+            haveSource = source.TryGetComponent(out interactable);
         };
         result.TargetInteraction = (target) =>
         {
-            if (target.TryGetComponent<Station>(out var station))
+            haveTarget = target.TryGetComponent<Station>(out var station);
+
+            if (haveSource && haveTarget)
             {
-                state.Target = station;
-                result.ShouldDestroySelf = state.Func(state.Source, state.Target);
+                result.SFXPlay = "Pop";
+                result.ParticleToPlay = "Smoke";
+                result.ShouldDestroySelf = station.Interact(interactable);
             }
         };
 

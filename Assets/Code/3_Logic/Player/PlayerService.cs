@@ -73,7 +73,7 @@ public class PlayerService : MonoBehaviour
             if (_gameState == null) return;
         }
 
-        if (_gameState.SeatingOrder.Count <= 1)
+        if (_gameState.SeatingOrder.Count == 0)
         {
             LeftNeighbor = RightNeighbor = null;
             return;
@@ -83,6 +83,12 @@ public class PlayerService : MonoBehaviour
             _localPlayer = PlayerRegistry.Instance.GetLocalPlayer();
 
         if (_localPlayer == null) return;
+
+        if (_gameState.SeatingOrder.Count == 1)
+        {
+            LeftNeighbor = RightNeighbor = _localPlayer;
+            return;
+        }
 
         List<PlayerRef> seatingOrder = _gameState.SeatingOrder.ToList();
         int myIndex = seatingOrder.IndexOf(_localPlayer.PlayerRef);

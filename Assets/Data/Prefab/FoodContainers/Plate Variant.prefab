@@ -312,6 +312,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plate Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8088417203757469023, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: m_TagString
+      value: Tool
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -395,20 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940c06333e7fe2e4fa7f608d6f5c8bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StationData:
-    rid: 5244782068909998084
-  _interactionStrategie:
-  - {fileID: 11400000, guid: de6ebdfc94a81a34e9079d306a615ca7, type: 2}
-  _nullInteractionStrategie:
-  - {fileID: 11400000, guid: 0d5de9718e3e3ae4fbac33dc1d4c4236, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: 5244782068909998084
-      type: {class: ItemContainerData, ns: , asm: 3_Logic}
-      data:
-        Capacity: 5
-        FoodRequest: []
+  toolType: 3
 --- !u!114 &7899899881191928953
 MonoBehaviour:
   m_ObjectHideFlags: 0

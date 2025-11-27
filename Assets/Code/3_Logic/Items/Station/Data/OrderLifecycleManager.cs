@@ -17,7 +17,7 @@ public class OrderLifecycleManager : StationDataComponent
     public float CurrentTime { get; set; }
 
     public int CurrentScore { get; set; }
-    public List<Item> CollectedItems = new List<Item>();
+    public List<string> CollectedItems { get; set; } = new();
 
     // --- Public API ---
     public void Initialize(Station ownerStation, OrderRequirementData data)
@@ -47,7 +47,7 @@ public class OrderLifecycleManager : StationDataComponent
         {
             foreach (var item in group)
             {
-                int collectedCount = CollectedItems.Count(c => c == item);
+                int collectedCount = CollectedItems.Count(c => c == item.Name);
 
                 int requiredCount = group.Count(i => i == item);
 

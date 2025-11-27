@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2513b35d7b3839a4f9212da12feb243c, type: 3}
+  m_Name: Shrimp_Fried_Rice
+  m_EditorClassIdentifier: 
+  id: 2028
+  _name: Shrimp_Fried_Rice
+  _FoodRequest:
+  - item: {fileID: 11400000, guid: 86c2e93336e4f074f9bb892ed67fb5f6, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 8eb938273da007744a6a58c4490cc7bb, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: f72d41e6cfa86b84bb967fb7f87f829e, type: 2}
+    count: 1
+  _FoodSpanw:
+  - item: {fileID: 11400000, guid: 77f1d88daa2d72d4996c8ef8420fb169, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: ff75fa46c264d7d499ea64f61a045009, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: d54c5bb2d28458d4886db5d4707c4f1e, type: 2}
+    count: 1
+  _OtherFoodSpawn:
+  - item: {fileID: 11400000, guid: 20b6874ec48206745abbc53d2bde4ec5, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: bf14694d664d35c4fb84abb211ecd519, type: 2}
+    count: 1
+  Score: 200
+  TimeLimit: 30

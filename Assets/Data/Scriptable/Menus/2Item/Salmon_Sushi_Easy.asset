@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2513b35d7b3839a4f9212da12feb243c, type: 3}
+  m_Name: Salmon_Sushi_Easy
+  m_EditorClassIdentifier: 
+  id: 2022
+  _name: Salmon_Sushi_Easy
+  _FoodRequest:
+  - item: {fileID: 11400000, guid: 77f1d88daa2d72d4996c8ef8420fb169, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: d3eccc88d2ced8e45b7e6454230f502f, type: 2}
+    count: 1
+  _FoodSpanw:
+  - item: {fileID: 11400000, guid: 77f1d88daa2d72d4996c8ef8420fb169, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: d3eccc88d2ced8e45b7e6454230f502f, type: 2}
+    count: 1
+  _OtherFoodSpawn:
+  - item: {fileID: 11400000, guid: f74a299b45f52e84097ef58d2a929d55, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: d54c5bb2d28458d4886db5d4707c4f1e, type: 2}
+    count: 1
+  Score: 200
+  TimeLimit: 30

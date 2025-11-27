@@ -34,6 +34,7 @@ public class RepetitiveAction_Work : IWorkStation
     public void OnRecieveExternalInput(Station station)
     {
         _stationData.ActionCount++;
+        EventManager.Invoke(new PlaySFXSound("Cut", station.transform.position));
         EventManager.Invoke(new WorkProgress(station));
     }
 

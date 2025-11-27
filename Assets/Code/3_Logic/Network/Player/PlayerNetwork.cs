@@ -95,7 +95,7 @@ public class PlayerNetwork : NetworkBehaviour
         int orderID = ByteConverter.BytesToInt(orderIDb);
         int menuID = ByteConverter.BytesToInt(menuIDb);
 
-        EventManager.Invoke(new OrderIdEjectedAndSetUp(1007, menuID));
+        EventManager.Invoke(new OrderIdEjectedAndSetUp(orderID, menuID));
     }
 
     [Rpc(RpcSources.All, RpcTargets.InputAuthority)]
@@ -103,10 +103,7 @@ public class PlayerNetwork : NetworkBehaviour
     {
         int[] items = ByteConverter.BytesToIntArray(itemsData);
 
-        foreach (int itemID in items)
-        {
-            EventManager.Invoke(new ItemIdEjectedLaunch(itemID));
-        }
+        EventManager.Invoke(new ItemIdsEjectedLaunch(items));
     }
 
     #region Transfer Item

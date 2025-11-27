@@ -7,6 +7,7 @@ public class FoodOverTrash : IDrop
         var result = new DropExecutionResult
         {
             ShouldDestroySelf = Task.FromResult(true),
+            SFXPlay = "Pop",
             ParticleToPlay = "Smoke"
         };
         return result;

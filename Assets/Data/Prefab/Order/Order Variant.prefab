@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7017621845857709080}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Texture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 6474746689517399987}
   - component: {fileID: 1737045115846617484}
   - component: {fileID: 7950949886719878917}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: ShowTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: -2069093463
+  m_SortingLayerID: -128549137
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1737045115846617484
@@ -148,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6323287885572863974}
   - component: {fileID: 1449503875094632099}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 2049625445237939928}
   - component: {fileID: 5039471874497950920}
   - component: {fileID: 2755775468596757937}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7754521433948883719}
   - component: {fileID: 8999872060709820634}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: State (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7303781953179040306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Keeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2246975881747886949}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Helper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4570057179429130613}
   - component: {fileID: 7239909015718714924}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: State (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -603,7 +603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4356240255363884556}
   - component: {fileID: 3521802535710532289}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ColorTeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -687,7 +687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 18034921272822737}
   - component: {fileID: 4859684294525551183}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 2460076707607286774}
   - component: {fileID: 9117976602595804748}
   - component: {fileID: 684648695250502713}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -848,7 +848,7 @@ GameObject:
   - component: {fileID: 8900085746985887171}
   - component: {fileID: 377656201256531533}
   - component: {fileID: 818390865121725682}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 4045118966052047789}
   - component: {fileID: 5863440566661474817}
   - component: {fileID: 597000094976851435}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1022,7 +1022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6236505622687640717}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1061,7 +1061,7 @@ GameObject:
   - component: {fileID: 4362639660336894626}
   - component: {fileID: 5866366886255278518}
   - component: {fileID: 7827092602213943347}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,7 +1162,7 @@ GameObject:
   - component: {fileID: 2459266543138674531}
   - component: {fileID: 5177553010555768258}
   - component: {fileID: 6190987043602578363}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1295,7 +1295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 639606866174809728}
   - component: {fileID: 8705846926050564942}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: State (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1457,6 +1457,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Order Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8088417203757469023, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8088417203757469023, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: m_TagString
+      value: Counter
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1548,19 +1556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940c06333e7fe2e4fa7f608d6f5c8bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StationData:
-    rid: 5244782068909998080
-  _interactionStrategie:
-  - {fileID: 11400000, guid: 4e6fce875eb6ebe4997be0432a75d338, type: 2}
-  _nullInteractionStrategie:
-  - {fileID: 11400000, guid: 357bae001294de7438ef482786db2f3e, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: 5244782068909998080
-      type: {class: OrderLifecycleManager, ns: , asm: 3_Logic}
-      data:
-        CollectedItems: []
+  toolType: 0
 --- !u!114 &2808085404860262856
 MonoBehaviour:
   m_ObjectHideFlags: 0

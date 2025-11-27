@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelId: 1001
   LevelName: Level1
-  RequestCount: 1
+  RequestCount: 5
   MaxGameTime: 100
   StartPopupSprites:
   - timer: 5
     StartPopupSprite: {fileID: 21300000, guid: 0642d170bedca8043875a3d259cc8dce, type: 3}
   - timer: 5
     StartPopupSprite: {fileID: 21300000, guid: d6753212865a4d6449f1ba543ed9e584, type: 3}
+  - timer: 5
+    StartPopupSprite: {fileID: 21300000, guid: 0093ac5f581c7d9409518a9f916d1b51, type: 3}
   ItemHelp: []
   MenuList:
-  - {fileID: 11400000, guid: c18708fbdb04e5e42bc6f312512ad3cc, type: 2}
-  - {fileID: 11400000, guid: 1e791d29dc8ffae4181ea092f0edfd4b, type: 2}
+  - {fileID: 11400000, guid: 1f3f77bd0cda6bc4b9efb35ffef9a325, type: 2}
+  - {fileID: 11400000, guid: 046520704e29a5d409232065e7712a77, type: 2}
+  - {fileID: 11400000, guid: 81b13947527bee545a6853b87d1da505, type: 2}
+  - {fileID: 11400000, guid: c95f07a3829a5a64099a60439ce9fa37, type: 2}
+  - {fileID: 11400000, guid: 981afb76d1b536b4e9a0ba119faed30a, type: 2}
+  - {fileID: 11400000, guid: b80bb82009eca96449c93034d862af23, type: 2}
+  - {fileID: 11400000, guid: e7b929c32d77edc4e9878ac67c9bed51, type: 2}
+  - {fileID: 11400000, guid: 1cdfada9e45a4a44192cc7a01f376fe4, type: 2}

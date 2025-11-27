@@ -9,6 +9,7 @@ public abstract class FoodOverArrow : IDrop
         var result = new DropExecutionResult();
         var state = new ProcessState<InteractableItem, TransportItem>();
 
+        result.SFXPlay = "Pop";
         result.ParticleToPlay = "Smoke";
 
         state.Func = (interactable, transportItem) =>

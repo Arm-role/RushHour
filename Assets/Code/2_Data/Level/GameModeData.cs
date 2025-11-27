@@ -10,6 +10,8 @@ public class GameModeData : ScriptableObject
 
     public bool LevelLoop;
 
+    public int RandomStartLevel;
+
     public int RandomLevelMin;
     public int RandomLevelMax;
 

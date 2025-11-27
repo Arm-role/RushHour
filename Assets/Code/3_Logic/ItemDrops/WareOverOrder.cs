@@ -7,6 +7,7 @@ public class WareOverOrder : IDrop
         var result = new DropExecutionResult();
         var state = new ProcessState<InteractableItem, Station>();
 
+        result.SFXPlay = "Pop";
         result.ParticleToPlay = "Smoke";
 
         state.Func = async (interactable, station) =>

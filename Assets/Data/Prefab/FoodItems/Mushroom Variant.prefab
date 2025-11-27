@@ -192,6 +192,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8088417203757469023, guid: 54cabd00a43b98d4b8a0542ef824f8ac, type: 3}
+      propertyPath: m_TagString
+      value: Food
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
